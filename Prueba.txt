@@ -1,7 +1,0 @@
-1 2 3 4
-
-HOLAA QUE TAL??
-
-hola, este es un ejemplo de como es el commit en visual studio,
-y como es que no se puede hacer algo un poco mas, ???
-coomo es que no me sale nada? si no podemos
