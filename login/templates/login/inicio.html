@@ -33,6 +33,15 @@
 </head>
 <body>
     <form id="formulario" action="submit">
+        {% if request.user.is_authenticated %}
+            <hr>
+            <h4>{{user.username | upper}}, Welcome </h4>
+            <a href="{% url 'exit' %}">Cerrar Sesión</a>
+        {% else %}
+            <h1>No estas autenticado</h1>
+            <br>
+            <a href="{% url 'login' %}" id="2" class="btnbtn-primary">Login</a>
+        {% endif %}
         <h3>Inicio</h3>
         <a href="{% url 'base' %}" id="1" class="btnbtn-primary">Base</a>
         <a href="{% url 'base2' %}" id="2" class="btnbtn-primary">Base2</a>
