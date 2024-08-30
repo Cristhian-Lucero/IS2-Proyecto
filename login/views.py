@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required #genera la necesidad de logearse para poder ingresar a una vista
+from django.contrib.auth.decorators import login_required #para redirigir a login obligandolo a logearse
 
 # Create your views here.
 
