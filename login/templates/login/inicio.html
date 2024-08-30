@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;700&family=Raleway:wght@400;700&family=Dancing+Script&family=Lora:wght@400;700&family=Merriweather:wght@400;700&family=Pacifico&family=Quicksand:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color:rgb(223, 11, 223); 
+            font-family: 'Pacifico', cursive;
+        }
+        h3 {
+            font-size: 3em;
+            text-decoration: underline blue;
+        }
+        #formulario {
+            background-color:white; 
+            position: relative;
+            left: 35vw;
+            text-align: center;
+            border: 5px solid rgb(46, 46, 54);
+            padding: 1vw;
+            width: 30vw;
+        }
+        .btnbtn-primary {
+            font-family: 'Pacifico', cursive;
+            color: rgb(44, 44, 56);
+            font-size: 10mm;
+            margin: 4mm;
+        }
+    </style>
+</head>
+<body>
+    <form id="formulario" action="submit">
+        <h3>Inicio</h3>
+        <a href="{% url 'base' %}" id="1" class="btnbtn-primary">Base</a>
+        <a href="{% url 'base2' %}" id="2" class="btnbtn-primary">Base2</a>
+    </form>
+</body>
+</html>

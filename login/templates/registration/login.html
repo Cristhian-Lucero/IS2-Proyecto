@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;700&family=Raleway:wght@400;700&family=Dancing+Script&family=Lora:wght@400;700&family=Merriweather:wght@400;700&family=Pacifico&family=Quicksand:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color:rgb(51, 50, 51); 
+            font-family: 'Pacifico', cursive;
+        }
+       .item {
+            text-decoration: underline black;
+            color: blue;
+            font-size: 2em;
+            margin: 4mm;
+        } 
+        h3 {
+            font-size: 3em;
+            text-decoration: underline blue;
+        }
+        #formulario {
+            background-color:white; 
+            position: relative;
+            left: 35vw;
+            text-align: center;
+            border: 5px solid blue;
+            padding: 1vw;
+            width: 30vw;
+        }
+        #ingresar {
+            font-family: 'Pacifico', cursive;
+            color: blue;
+            font-size: 10mm;
+            margin: 4mm;
+        }
+        .datos {
+            margin: 4mm;
+            font-size: 8mm;
+        }
+    </style>
+</head>
+<body>
+    <form id="formulario" action="submit">
+        <h3>Inicio de Sesión</h3>
+        <div class="item">
+            <label id="correo" class="red">Correo Electrónico</label><br>
+            <input id="correo1" class="datos" type="text">
+        </div>
+        <div class="item">
+            <label id="contra" class="blue">Contraseña</label><br>
+            <input id="password1" class="datos" type="password">
+        </div>
+        <a href="{% url 'base2' %}" id="ingresar" class="btn btn-primary">Ingresar</a>
+    </form>
+</body>
+</html>
