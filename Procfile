@@ -1,1 +1,0 @@
-web: gunicorn IS2_Proyecto.wsgi --log-file -
