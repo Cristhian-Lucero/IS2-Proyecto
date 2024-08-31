@@ -4,38 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;700&family=Raleway:wght@400;700&family=Dancing+Script&family=Lora:wght@400;700&family=Merriweather:wght@400;700&family=Pacifico&family=Quicksand:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color:rgb(223, 11, 223); 
-            font-family: 'Pacifico', cursive;
+            background-color: #f0f2f5; /* Fondo suave y neutro */
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         h3 {
-            font-size: 3em;
-            text-decoration: underline blue;
+            font-size: 2.5em;
+            text-decoration: underline;
+            color: #4a90e2; /* Azul suave */
+            margin-bottom: 20px;
         }
         #formulario {
-            background-color:white; 
-            position: relative;
-            left: 35vw;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            border: 5px solid rgb(46, 46, 54);
-            padding: 1vw;
-            width: 30vw;
+            border: 2px solid #e1e1e1;
+            padding: 2em;
+            width: 400px;
         }
-        .btnbtn-primary {
-            font-family: 'Pacifico', cursive;
-            color: rgb(44, 44, 56);
-            font-size: 10mm;
-            margin: 4mm;
+        .btn-primary {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            background-color: #4a90e2;
+            font-size: 1em;
+            padding: 0.75em 1.5em;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-primary:hover {
+            background-color: #357abd;
+        }
+        a {
+            text-decoration: none;
+            color: #4a90e2;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <form id="formulario" action="submit">
+    <div id="formulario">
+        {% if request.user.is_authenticated %}
+            <hr>
+            <h4>{{ user.username | upper }}, Bienvenido</h4>
+            <a href="{% url 'exit' %}" class="btn-primary">Cerrar Sesión</a>
+        {% else %}
+            <h1>No estás autenticado</h1>
+            <br>
+            <a href="{% url 'login' %}" class="btn-primary">Login</a>
+        {% endif %}
         <h3>Inicio</h3>
-        <a href="{% url 'base' %}" id="1" class="btnbtn-primary">Base</a>
-        <a href="{% url 'base2' %}" id="2" class="btnbtn-primary">Base2</a>
-    </form>
+        <a href="{% url 'base' %}" class="btn-primary">Base</a>
+        <a href="{% url 'base2' %}" class="btn-primary">Base2</a>
+    </div>
 </body>
 </html>

@@ -4,55 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;700&family=Raleway:wght@400;700&family=Dancing+Script&family=Lora:wght@400;700&family=Merriweather:wght@400;700&family=Pacifico&family=Quicksand:wght@400;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color:rgb(51, 50, 51); 
-            font-family: 'Pacifico', cursive;
-        }
-       .item {
-            text-decoration: underline black;
-            color: blue;
-            font-size: 2em;
-            margin: 4mm;
-        } 
-        h3 {
-            font-size: 3em;
-            text-decoration: underline blue;
+            background-color: #f0f2f5; /* Fondo claro */
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
         #formulario {
-            background-color:white; 
-            position: relative;
-            left: 35vw;
+            background-color: white; 
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 2em;
+            width: 350px;
             text-align: center;
-            border: 5px solid blue;
-            padding: 1vw;
-            width: 30vw;
         }
-        #ingresar {
-            font-family: 'Pacifico', cursive;
-            color: blue;
-            font-size: 10mm;
-            margin: 4mm;
+        h3 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
         }
-        .datos {
-            margin: 4mm;
-            font-size: 8mm;
+        .item {
+            margin-bottom: 1.5em;
+            text-align: left;
+        }
+        label {
+            font-size: 1em;
+            color: #333;
+            margin-bottom: 0.5em;
+            display: block;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.75em;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            margin-top: 0.5em;
+        }
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 0.75em;
+            font-size: 1.2em;
+            color: white;
+            background-color: #4a90e2;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1em;
+        }
+        button:hover {
+            background-color: #357abd;
         }
     </style>
 </head>
 <body>
-    <form id="formulario" action="submit">
+    <form id="formulario" action="" method="post">
+        {% csrf_token %}
         <h3>Inicio de Sesión</h3>
         <div class="item">
-            <label id="correo" class="red">Correo Electrónico</label><br>
-            <input id="correo1" class="datos" type="text">
+            <label for="correo1">Nombre de Usuario</label>
+            <input id="correo1" name="username" type="text" placeholder="Nombre de Usuario" required>
         </div>
         <div class="item">
-            <label id="contra" class="blue">Contraseña</label><br>
-            <input id="password1" class="datos" type="password">
+            <label for="password1">Contraseña</label>
+            <input id="password1" name="password" type="password" placeholder="Contraseña" required>
         </div>
-        <a href="{% url 'base2' %}" id="ingresar" class="btn btn-primary">Ingresar</a>
+        <button type="submit">Iniciar Sesión</button>
     </form>
 </body>
 </html>
