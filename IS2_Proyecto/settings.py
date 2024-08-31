@@ -38,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'login',
+    'django.contrib.sites',  # Necesario para allauth
+    'allauth',               # Base de django-allauth
+    'allauth.account',        # Gestión de cuentas de usuario
+    'allauth.socialaccount',  # Gestión de cuentas sociales
+    'allauth.socialaccount.providers.google',  # Proveedor de Google SSO
 ]
 
 MIDDLEWARE = [

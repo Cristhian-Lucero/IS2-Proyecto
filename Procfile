@@ -1,1 +1,1 @@
-web: guncorn IS2_Proyecto.wsgi --log-file -
+web: gunicorn IS2_Proyecto.wsgi --log-file -
