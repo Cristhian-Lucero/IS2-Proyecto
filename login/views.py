@@ -36,7 +36,9 @@ def agregarRol(request):
 def gestionCategoria(request):
     x = list(Rol.objects.all())
     y = list(Categoria.objects.all())
+    z = list(Permiso.objects.all())
     return render(request, 'rol/gestionCategoria.html', {
         'roles': x,
-        'categorias': y
+        'categorias': y,
+        'permisos': z
     })
