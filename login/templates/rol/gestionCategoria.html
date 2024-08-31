@@ -103,7 +103,7 @@
                 <td> {{ i.descripcion_larga }} </td>
                 <td> {{ i.estado }} </td>
                 <td>
-                    <button class="btn-edit" onclick="editCategory('{{ i.id }} ')">Editar</button>
+                    <button class="btn-edit" onclick="window.location.href='{% url 'editar_categoria' i.id %}'">Editar</button>
                     <form action="{% url 'eliminar_categoria' i.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn-delete">Eliminar</button>

@@ -39,7 +39,7 @@ def agregarRol(request):
 def gestionCategoria(request):
     if request.method == 'GET':
         #Si se entra desde el metodo GET 'visita la pagina'
-        x = list(Categoria.objects.all())
+        x = list((Categoria.objects.all()).order_by('id'))
         return render(request, 'rol/gestionCategoria.html', {
         'categorias': x,
         'form': CreateNewCategoria()
@@ -60,5 +60,29 @@ def eliminarCategoria(request, categoria_id):
     categoria = get_object_or_404(Categoria, id=categoria_id)
     categoria.delete()
     return redirect('gestioncategoria')
+
+def editarCategoria(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+    
+    if request.method == 'POST':
+        form = CreateNewCategoria(request.POST)
+        if form.is_valid():
+            categoria.descripcion_corta = form.cleaned_data['box_descripcion_corta']
+            categoria.descripcion_larga = form.cleaned_data['box_descripcion_larga']
+            categoria.estado = form.cleaned_data['box_estado']
+            categoria.save()
+            return redirect('gestioncategoria')
+    else:
+        form = CreateNewCategoria(initial={
+            'box_descripcion_corta': categoria.descripcion_corta,
+            'box_descripcion_larga': categoria.descripcion_larga,
+            'box_estado': categoria.estado
+        })
+
+    return render(request, 'rol/editarCategoria.html', {
+        'form': form,
+        'categoria': categoria
+    })
         
+
         
