@@ -76,23 +76,11 @@
     <h1>Gestión de Categorías</h1>
 
     <!-- Formulario para añadir o modificar una categoría -->
-    <form action="/add-or-update-category" method="post">
-        <div class="form-group">
-            <label for="category-name">Descripcion Corta de la Categoria:</label>
-            <input type="text" id="category-name" name="category-name" required>
-        </div>
-        <div class="form-group">
-            <label for="category-description">Descripción:</label>
-            <textarea id="category-description" name="category-description" rows="4" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="category-status">Estado:</label>
-            <select id="category-status" name="category-status" required>
-                <option value="activo">Activo</option>
-                <option value="inactivo">Inactivo</option>
-            </select>
-        </div>
-        <button type="submit">Guardar Categoría</button>
+
+    <form method="POST"> 
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Crear Categoría</button>
     </form>
 
     <!-- Tabla de categorías existentes -->
@@ -116,7 +104,10 @@
                 <td> {{ i.estado }} </td>
                 <td>
                     <button class="btn-edit" onclick="editCategory('{{ i.id }} ')">Editar</button>
-                    <button class="btn-delete" onclick="deleteCategory('{{ i.id }} ')">Eliminar</button>
+                    <form action="{% url 'eliminar_categoria' i.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-delete">Eliminar</button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}

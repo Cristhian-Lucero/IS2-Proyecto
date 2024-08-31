@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from .models import *
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import *
 
 from django.contrib.auth.decorators import login_required #para redirigir a login obligandolo a logearse
 from django.contrib.auth import logout
@@ -21,8 +22,10 @@ def exit(request):
 
 def gestionarRol(request):
     x = list(Categoria.objects.all())
+    y = list(Rol.objects.all())
     return render(request, 'rol/gestionRol.html', {
-        'categorias': x
+        'categorias': x,
+        'roles': y
     })
 
 def agregarRol(request):
@@ -34,11 +37,28 @@ def agregarRol(request):
     })
 
 def gestionCategoria(request):
-    x = list(Rol.objects.all())
-    y = list(Categoria.objects.all())
-    z = list(Permiso.objects.all())
-    return render(request, 'rol/gestionCategoria.html', {
-        'roles': x,
-        'categorias': y,
-        'permisos': z
-    })
+    if request.method == 'GET':
+        #Si se entra desde el metodo GET 'visita la pagina'
+        x = list(Categoria.objects.all())
+        return render(request, 'rol/gestionCategoria.html', {
+        'categorias': x,
+        'form': CreateNewCategoria()
+        })
+    else:
+        #Si se entra desde el metodo POST 'si se envia datos'
+        Categoria.objects.create(
+            descripcion_corta=request.POST['box_descripcion_corta'], 
+            descripcion_larga=request.POST['box_descripcion_larga'], 
+            estado=request.POST['box_estado']
+        )
+        return render(request, 'rol/gestionCategoria.html', {
+            'categorias': list(Categoria.objects.all()),
+            'form': CreateNewCategoria() 
+        })
+
+def eliminarCategoria(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+    categoria.delete()
+    return redirect('gestioncategoria')
+        
+        

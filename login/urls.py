@@ -9,5 +9,6 @@ urlpatterns = [
     path('logout/',exit,name='exit'),
     path('gestionrol/', gestionarRol),
     path('adicionrol/', agregarRol),
-    path('gestioncategoria/', gestionCategoria),
+    path('gestioncategoria/', gestionCategoria, name='gestioncategoria'),
+    path('eliminar_categoria/<int:categoria_id>/', eliminarCategoria, name='eliminar_categoria'),
 ]
