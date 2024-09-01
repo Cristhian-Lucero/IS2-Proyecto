@@ -31,10 +31,23 @@ def gestionarRol(request):
 def agregarRol(request):
     x = list(Rol.objects.all())
     y = list(Permiso.objects.all())
-    return render(request, 'rol/crudRol.html', {
-        'roles': x,
-        'permisos': y
-    })
+    if request.method == 'GET':
+        return render(request, 'rol/crudRol.html', {
+            'roles': x,
+            'permisos': y,
+            'form': CreateNewRol()
+        })
+    else:
+        permisos_seleccionados = request.POST.getlist('permisos')
+        nuevo_rol = Rol.objects.create(nombre=request.POST['box_nombre'], descripcion=request.POST['box_descripcion'])
+        nuevo_rol.permisos.set(permisos_seleccionados)
+        nuevo_rol.save()
+        return redirect('adicionrol')
+
+def eliminarRol(request, rol_id):
+    rol_seleccionado = get_object_or_404(Rol, id=rol_id)
+    rol_seleccionado.delete()
+    return redirect('adicionrol')
 
 def gestionCategoria(request):
     if request.method == 'GET':
@@ -83,6 +96,3 @@ def editarCategoria(request, categoria_id):
         'form': form,
         'categoria': categoria
     })
-        
-
-        

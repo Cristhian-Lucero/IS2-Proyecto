@@ -62,23 +62,10 @@
     <h1>Gestión de Roles</h1>
 
     <!-- Formulario para añadir un nuevo rol -->
-    <form action="/add-role" method="post">
-        <div class="form-group">
-            <label for="role-name">Nombre del nuevo rol:</label>
-            <input type="text" id="role-name" name="role-name" required>
-        </div>
-    
-        <div class="form-group">
-            <label>Permisos:</label><br>
-            {% for i in permisos %}
-                <div style="margin-bottom: 8px;">
-                    <input type="checkbox" id="permiso_{{ i.id }}" name="permisos" value="{{ i.descripcion }}">
-                    <label for="permiso_{{ i.id }}" style="display: inline-block; margin-left: 5px;">{{ i.nombre }}</label>
-                </div>
-            {% endfor %}
-        </div>
-    
-        <button type="submit">Añadir Rol</button>
+    <form method="POST"> 
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Crear Categoría</button>
     </form>
     
 
@@ -89,6 +76,7 @@
             <tr>
                 <th>Rol</th>
                 <th>Descripción</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -98,6 +86,14 @@
             <tr>
                 <td> {{ i.nombre }} </td>
                 <td> {{ i.descripcion }} </td>
+                <td>
+                   {# <!--  <button class="btn-edit" onclick="window.location.href='{% url 'editar_rol' i.id %}'">Editar</button>--> #}
+                    
+                    <form action="{% url 'eliminar_rol' i.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-delete">Eliminar</button>
+                    </form>
+                </td>
             </tr>
 
             {% endfor %}
