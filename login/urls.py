@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from .views import *
 
 urlpatterns = [
@@ -7,13 +8,8 @@ urlpatterns = [
     path('base/', base, name='base'),
     path('base2/', base2, name='base2'),
     path('logout/',exit,name='exit'),
-
+    path('rol/', rol, name='rol' ),
     path('gestionrol/', gestionarRol),
-    
-    path('adicionrol/', agregarRol, name='adicionrol'),
-    path('eliminar_rol/<int:rol_id>/', eliminarRol, name='eliminar_rol'),
-
-    path('gestioncategoria/', gestionCategoria, name='gestioncategoria'),
-    path('editar_categoria/<int:categoria_id>/', editarCategoria, name='editar_categoria'),
-    path('eliminar_categoria/<int:categoria_id>/', eliminarCategoria, name='eliminar_categoria'),
+    path('adicionrol/', agregarRol),
+    path('gestioncategoria/', gestionCategoria),
 ]

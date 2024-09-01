@@ -20,6 +20,9 @@ def exit(request):
     logout(request)
     return redirect('inicio')
 
+def rol(request):
+    return render(request, "rol/gestionRol.html")
+
 def gestionarRol(request):
     x = list(Categoria.objects.all())
     y = list(Rol.objects.all())
