@@ -46,7 +46,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount',  # Gestión de cuentas sociales'
     'allauth.socialaccount.providers.google',  # Proveedor de Google SSO
 
+    "crispy_forms", #crispy forms
+    'crispy_bootstrap4',
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 SITE_ID = 1
 
@@ -68,7 +72,7 @@ ROOT_URLCONF = 'IS2_Proyecto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -136,6 +140,7 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 
 # Default primary key field type
