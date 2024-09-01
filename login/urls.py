@@ -11,6 +11,7 @@ urlpatterns = [
     path('gestionrol/', gestionarRol),
     
     path('adicionrol/', agregarRol, name='adicionrol'),
+    path('editar_rol/<int:rol_id>/', editarRol, name='editar_rol'),
     path('eliminar_rol/<int:rol_id>/', eliminarRol, name='eliminar_rol'),
 
     path('gestioncategoria/', gestionCategoria, name='gestioncategoria'),
