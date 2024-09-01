@@ -6,7 +6,17 @@
     <title>App</title>
 </head>
 <body>
-    <h2>base</h2>
-    
+    <h2>Base</h2>
+    <a href="{% url 'base2' %}" id="2" class="btnbtn-primary">Base</a>
+    <br>
+    <a href="{% url 'inicio' %}" id="2" class="btnbtn-primary">Inicio</a>
+    <br>
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'exit' %}">Cerrar Sesión</a>
+    {% else %}
+        <h1>No estas autenticado</h1>
+        <br>
+        <a href="{% url 'login' %}" id="2" class="btnbtn-primary">Login</a>
+    {% endif %}
 </body>
 </html>

@@ -19,6 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include('login.urls')),
+    path('', include('publicaciones.urls')),
     path('admin/', admin.site.urls),
     path('accounts/',include('django.contrib.auth.urls')),
     path('publicaciones/', include('publicaciones.urls')),  # Incluye las URLs de publicaciones

@@ -1,0 +1,147 @@
+{% extends 'rol/encabezado.html' %}
+
+{% block content%}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Categorías</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .btn-edit {
+            background-color: #007bff;
+        }
+        .btn-edit:hover {
+            background-color: #0056b3;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+        }
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Gestión de Categorías</h1>
+
+    <!-- Formulario para añadir o modificar una categoría -->
+    <form action="/add-or-update-category" method="post">
+        <div class="form-group">
+            <label for="category-name">Descripcion Corta de la Categoria:</label>
+            <input type="text" id="category-name" name="category-name" required>
+        </div>
+        <div class="form-group">
+            <label for="category-description">Descripción:</label>
+            <textarea id="category-description" name="category-description" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="category-status">Estado:</label>
+            <select id="category-status" name="category-status" required>
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
+            </select>
+        </div>
+        <button type="submit">Guardar Categoría</button>
+    </form>
+
+    <!-- Tabla de categorías existentes -->
+    <h2>Categorías Existentes</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Descripción Corta</th>
+                <th>Descripción Larga</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in categorias %}
+            <tr>
+                <td> {{ i.id }} </td>
+                <td> {{ i.descripcion_corta }} </td>
+                <td> {{ i.descripcion_larga }} </td>
+                <td> {{ i.estado }} </td>
+                <td>
+                    <button class="btn-edit" onclick="editCategory('{{ i.id }} ')">Editar</button>
+                    <button class="btn-delete" onclick="deleteCategory('{{ i.id }} ')">Eliminar</button>
+                </td>
+            </tr>
+            {% endfor %}
+            
+            <!-- Más categorías -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function editCategory(code) {
+        // Aquí puedes agregar la lógica para cargar los datos de la categoría en el formulario para editar
+        alert('Editar categoría con código: ' + code);
+    }
+
+    function deleteCategory(code) {
+        // Aquí puedes agregar la lógica para confirmar y eliminar la categoría
+        if (confirm('¿Estás seguro de que deseas eliminar la categoría con código: ' + code + '?')) {
+            alert('Categoría eliminada: ' + code);
+            // Aquí iría la lógica para eliminar la categoría del sistema
+        }
+    }
+</script>
+
+</body>
+</html>
+
+{% endblock %}

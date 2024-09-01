@@ -1,0 +1,33 @@
+{% extends 'rol/encabezado.html' %}
+
+{% block content%}
+<h1>Gestión de Roles</h1>
+<form action="/asignar-rol" method="post">
+    <label for="usuario">Seleccionar Usuario:</label>
+    <select id="usuario" name="usuario">
+        <option value="1">Usuario 1</option>
+        <option value="2">Usuario 2</option>
+        <option value="3">Usuario 3</option>
+    </select>
+    <br><br>
+    
+    <label for="categoria">Seleccionar Categoria:</label>
+    <select id="categoria" name="categoria">
+        {% for i in categorias %}
+        <option value="{{i.id}}"> {{ i.descripcion_corta }} </option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    <label for="rol">Asignar Rol:</label>
+    <select id="rol" name="rol">
+        {% for i in roles %}
+        <option value="{{i.id}}"> {{ i.nombre }} </option>
+        {% endfor %}
+    </select>
+    <br><br>
+    
+    <button type="submit">Asignar Rol</button>
+</form>
+
+{% endblock %}
