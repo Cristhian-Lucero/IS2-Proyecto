@@ -11,29 +11,49 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
         }
         .container {
-            width: 800px;
-            margin: 0 auto;
-        }
-        .publication {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 800px;
+            max-width: 90%;
+            margin-top: 50px;
+        }
+        h2 {
+            text-align: center;
             margin-bottom: 20px;
         }
-        .publication h3 {
+        .publication {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        h3 {
             margin-top: 0;
+            font-size: 18px;
+        }
+        p {
+            font-size: 14px;
+            color: #555;
         }
         .buttons {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
+            margin-top: 10px;
         }
         .buttons a {
-            padding: 10px;
-            border-radius: 5px;
             text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            margin-left: 10px;
             color: #fff;
         }
         .buttons .edit {
@@ -46,4 +66,17 @@
 </head>
 <body>
     <div class="container">
-        <h2>
+        <h2>Mis Publicaciones</h2>
+        {% for publicacion in publicaciones %}
+            <div class="publication">
+                <h3>{{ publicacion.encabezado }}</h3>
+                <p>{{ publicacion.cuerpo|truncatewords:20 }}</p>
+                <div class="buttons">
+                    <a href="{% url 'modificar_publicacion' publicacion.pk %}" class="edit">Modificar</a>
+                    <a href="{% url 'eliminar_publicacion' publicacion.pk %}" class="delete" onclick="return confirm('¿Estás seguro de que deseas eliminar esta publicación?')">Eliminar</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
