@@ -24,7 +24,7 @@ def base2(request):
 def exit(request):
     logout(request)
     return redirect('inicio')
-
+@login_required
 def rol(request):
     return render(request, "rol/gestionRol.html")
 
