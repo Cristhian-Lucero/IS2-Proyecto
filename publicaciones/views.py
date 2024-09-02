@@ -6,7 +6,7 @@ from .forms import PublicacionForm
 @login_required
 def crear_publicacion(request):
     if request.method == 'POST':
-        form = PublicacionForm(request.POST, request.FILES)
+        form = PublicacionForm(request.POST, request.FILES) 
         if form.is_valid():
             publicacion = form.save(commit=False)
             publicacion.usuario = request.user
@@ -34,6 +34,19 @@ def eliminar_publicacion(request, pk):
     publicacion = get_object_or_404(Publicacion, pk=pk, usuario=request.user)
     publicacion.delete()
     return redirect('mis_publicaciones')
+
+@login_required
+def previsualizacion(request):
+    title = request.GET.get('title', '')
+    body = request.GET.get('body', '')
+    image = request.GET.get('image', '')
+    
+    context = {
+        'title': title,
+        'body': body,
+        'image': image,
+    }
+    return render(request, 'previsualizacion.html', context)
 
 @login_required
 def previsualizacion(request, pk):

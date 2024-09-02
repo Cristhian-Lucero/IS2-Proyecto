@@ -102,7 +102,11 @@
         }
 
         function openPreviewWindow(title, body, image) {
-            const previewWindow = window.open('{% url "previsualizacion" publicacion.id %}', '_blank', 'width=' + screen.width + ',height=' + screen.height + ',fullscreen=yes');
+            const previewWindow = window.open(
+                `/previsualizacion/?title=${title}&body=${body}&image=${image}`, 
+                '_blank', 
+                'width=' + screen.width + ',height=' + screen.height + ',fullscreen=yes'
+            );
             if (window.focus) previewWindow.focus();
         }
     </script>
