@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=#kx0pp3o()eyu0t)oshc!@xqu7j%tnh)1l*4ubzq)yx8#noq^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',  # Necesario para allauth
     'rest_framework',
+    'docs',
 
     'login',
 
@@ -97,16 +98,28 @@ WSGI_APPLICATION = 'IS2_Proyecto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {                             #por mientras
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'd35bgm5ehmhbnb',
+#         'USER': 'u6rv5n7l9b1nip',
+#         'PASSWORD': 'pff86a592bf3aa2c72d818cf4bf01933fe1c2689caee342232dde18e969436bf1',
+#         'HOST': 'ceqbglof0h8enj.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
+#         'PORT': '5432',
+#     },
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd35bgm5ehmhbnb',
-        'USER': 'u6rv5n7l9b1nip',
-        'PASSWORD': 'pff86a592bf3aa2c72d818cf4bf01933fe1c2689caee342232dde18e969436bf1',
-        'HOST': 'ceqbglof0h8enj.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
-        'PORT': '5432',
-    }
+        'NAME': 'IS2_Proyecto',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': '0.tcp.sa.ngrok.io',
+        'PORT': '15168',
+    },
 }
+
 
 
 # Password validation
