@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Publicacion
@@ -16,7 +15,7 @@ def crear_publicacion(request):
             return redirect('mis_publicaciones')
     else:
         form = PublicacionForm()
-    return render(request, 'publicaciones/crear_publicacion.html', {'form': form})
+    return render(request, 'crear_publicacion.html', {'form': form})
 
 @login_required
 def modificar_publicacion(request, pk):
@@ -28,7 +27,7 @@ def modificar_publicacion(request, pk):
             return redirect('mis_publicaciones')
     else:
         form = PublicacionForm(instance=publicacion)
-    return render(request, 'publicaciones/crear_publicacion.html', {'form': form, 'modificar': True})
+    return render(request, 'crear_publicacion.html', {'form': form, 'modificar': True})
 
 @login_required
 def eliminar_publicacion(request, pk):
@@ -38,19 +37,14 @@ def eliminar_publicacion(request, pk):
 
 @login_required
 def previsualizacion(request, pk):
-    publicacion = get_object_or_404(Publicacion, pk=pk, usuario=request.user)
-    return render(request, 'publicaciones/previsualizacion.html', {'publicacion': publicacion})
+    publicacion = get_object_or_404(Publicacion, id=pk, usuario=request.user)
+    return render(request, 'previsualizacion.html', {'publicacion': publicacion})
 
 @login_required
 def mis_publicaciones(request):
     publicaciones = Publicacion.objects.filter(usuario=request.user)
-    return render(request, 'publicaciones/mis_publicaciones.html', {'publicaciones': publicaciones})
+    return render(request, 'mis_publicaciones.html', {'publicaciones': publicaciones})
 
-
-# Create your views here.
-from django.shortcuts import render, redirect
-from .forms import PublicacionForm
-from django.contrib.auth.decorators import login_required
 
 @login_required
 def crear_publicacion(request):
@@ -63,9 +57,11 @@ def crear_publicacion(request):
             return redirect('mis_publicaciones')
     else:
         form = PublicacionForm()
-    return render(request, 'publicaciones/crear_publicacion.html', {'form': form})
+    return render(request, 'crear_publicacion.html', {
+        'form': form
+        })
 
 @login_required
 def mis_publicaciones(request):
     publicaciones = Publicacion.objects.filter(usuario=request.user)
-    return render(request, 'publicaciones/mis_publicaciones.html', {'publicaciones': publicaciones})
+    return render(request, 'mis_publicaciones.html', {'publicaciones': publicaciones})

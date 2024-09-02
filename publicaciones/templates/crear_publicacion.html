@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Artículo</title>
+    <title>Crear Publicación</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tiny.cloud/1/e9vgjen8lq07idu3qta9fdhs3guomds7c0xfdt74fbmvbnmb/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <style>
@@ -102,21 +102,21 @@
         }
 
         function openPreviewWindow(title, body, image) {
-            const previewWindow = window.open('{% url "previsualizacion" publicacion.pk %}', '_blank', 'width=' + screen.width + ',height=' + screen.height + ',fullscreen=yes');
+            const previewWindow = window.open('{% url "previsualizacion" publicacion.id %}', '_blank', 'width=' + screen.width + ',height=' + screen.height + ',fullscreen=yes');
             if (window.focus) previewWindow.focus();
         }
     </script>
 </head>
 <body>
     <div class="container">
-        <h2>Crear artículo</h2>
+        <h2>Crear Publicación</h2>
         <form id="articleForm" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}  <!-- Genera el formulario con los campos del modelo Publicacion -->
 
             <div class="buttons">
                 <button type="button" class="preview" onclick="previewContent()">Previsualizar</button>
-                <button type="submit" class="submit">Guardar Artículo</button>
+                <button type="submit" class="submit">Guardar Publicación</button>
             </div>
         </form>
     </div>
