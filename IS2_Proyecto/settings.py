@@ -187,6 +187,7 @@ LOGOUT_REDIRECT_URL = 'inicio'
 #configuracion adicionales de django-Allauth
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # EMAIL_BACKEND = 'mi config'
 
