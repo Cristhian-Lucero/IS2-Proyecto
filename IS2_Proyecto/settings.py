@@ -35,11 +35,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'publicaciones',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login',
     'publicacion',
-    'publicaciones',
+    'publicaciones2',
     "crispy_forms", #crispy forms
     'crispy_bootstrap4',
 ]
@@ -139,6 +134,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Media files (Images, uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

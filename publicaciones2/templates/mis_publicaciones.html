@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Publicaciones</title>
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        a {
+            margin-right: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            display: block;
+            width: 200px;
+            text-align: center;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Mis Publicaciones</h2>
+        <ul>
+            {% for publicacion in publicaciones %}
+            <li>
+                <h3>{{ publicacion.encabezado }}</h3>
+                <a href="{% url 'previsualizacion' publicacion.pk %}">Ver</a> |
+                <a href="{% url 'modificar_publicacion' publicacion.pk %}">Modificar</a> |
+                <a href="{% url 'eliminar_publicacion' publicacion.pk %}">Eliminar</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'crear_publicacion' %}" class="button">Crear Nueva Publicación</a>
+    </div>
+</body>
+</html>
