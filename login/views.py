@@ -29,7 +29,7 @@ def gestionarRol(request):
     })
 
 def agregarRol(request):
-    x = list(Rol.objects.all())
+    x = list((Rol.objects.all()).order_by('id'))
     y = list(Permiso.objects.all())
     if request.method == 'GET':
         return render(request, 'rol/crudRol.html', {
