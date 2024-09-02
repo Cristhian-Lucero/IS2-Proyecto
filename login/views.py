@@ -5,6 +5,11 @@ from .forms import *
 
 from django.contrib.auth.decorators import login_required #para redirigir a login obligandolo a logearse
 from django.contrib.auth import logout
+
+from rest_framework import generics                        #documentacion prueba
+from .models import *                                      #
+from .serializers import *                                 #
+
 # Create your views here.
 
 def inicio(request):
@@ -99,3 +104,40 @@ def editarCategoria(request, categoria_id):
         'form': form,
         'categoria': categoria
     })
+
+# Vista para listar todas las categorías
+# Permiso Views
+class PermisoListCreate(generics.ListCreateAPIView):
+    queryset = Permiso.objects.all()
+    serializer_class = PermisoSerializer
+
+class PermisoRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Permiso.objects.all()
+    serializer_class = PermisoSerializer
+
+# Rol Views
+class RolListCreate(generics.ListCreateAPIView):
+    queryset = Rol.objects.all()
+    serializer_class = RolSerializer
+
+class RolRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Rol.objects.all()
+    serializer_class = RolSerializer
+
+# Categoria Views
+class CategoriaListCreate(generics.ListCreateAPIView):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+
+class CategoriaRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+
+# Usuario Views
+class UsuarioListCreate(generics.ListCreateAPIView):
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+
+class UsuarioRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer

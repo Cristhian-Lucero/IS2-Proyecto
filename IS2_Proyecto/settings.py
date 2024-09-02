@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=#kx0pp3o()eyu0t)oshc!@xqu7j%tnh)1l*4ubzq)yx8#noq^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',  # Necesario para allauth
+    'rest_framework',
 
     'login',
 
@@ -49,6 +50,8 @@ INSTALLED_APPS = [
 
     "crispy_forms", #crispy forms
     'crispy_bootstrap4',
+
+    'drf_yasg', #documentacion
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
