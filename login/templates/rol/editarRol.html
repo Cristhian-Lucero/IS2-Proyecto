@@ -1,6 +1,5 @@
-{% extends 'rol/encabezado.html' %}
-
-{% block content%}
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,51 +56,13 @@
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>Gestión de Roles</h1>
-
-    <!-- Formulario para añadir un nuevo rol -->
-    <form method="POST"> 
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Crear Categoría</button>
-    </form>
-    
-
-    <!-- Tabla de roles existentes -->
-    <h2>Roles Existentes</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Rol</th>
-                <th>Descripción</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            {% for i in roles %}
-
-            <tr>
-                <td> {{ i.nombre }} </td>
-                <td> {{ i.descripcion }} </td>
-                <td>
-                   <button class="btn-edit" onclick="window.location.href='{% url 'editar_rol' i.id %}'">Editar</button>
-                    
-                    <form action="{% url 'eliminar_rol' i.id %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn-delete">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-
-            {% endfor %}
-            
-        </tbody>
-    </table>
-</div>
-
+    <div class="container">
+        <h1>Editar Rol</h1>
+        <form action="{% url 'editar_rol' rol.id %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </div>
 </body>
-
-{% endblock %}
+</html>
