@@ -35,6 +35,12 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'publicaciones',
+     'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,7 +49,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login',
     'publicacion',
+    "crispy_forms", #crispy forms
+    'crispy_bootstrap4',
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -61,7 +72,7 @@ ROOT_URLCONF = 'IS2_Proyecto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
