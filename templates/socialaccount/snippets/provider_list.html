@@ -1,13 +1,16 @@
-{% load i18n %}
-{% load socialaccount %}
+{% load allauth socialaccount %}
 {% get_providers as socialaccount_providers %}
 {% if socialaccount_providers %}
-    <div class="social-login-buttons">
         {% for provider in socialaccount_providers %}
-            <a class="btn btn-primary" href="{% provider_login_url provider.id %}">
-                {% trans provider.name %}
-            </a>
+            {% if provider.id == "openid" %}
+                {% for brand in provider.get_brands %}
+                    {% provider_login_url provider openid=brand.openid_url process=process as href %}
+                    {% element provider name=brand.name provider_id=provider.id href=href %}
+                    {% endelement %}
+                {% endfor %}
+            {% endif %}
+            {% provider_login_url provider process=process scope=scope auth_params=auth_params as href %}
+            {% element provider name=provider.name provider_id=provider.id href=href %}
+            {% endelement %}
         {% endfor %}
-    </div>
 {% endif %}
-
