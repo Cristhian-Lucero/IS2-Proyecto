@@ -25,7 +25,3 @@ urlpatterns = [
     path('publicaciones/', include('publicaciones.urls')),  # Incluye las URLs de publicaciones
     path('accounts/', include('allauth.urls')),
 ]
-
-
-
-
