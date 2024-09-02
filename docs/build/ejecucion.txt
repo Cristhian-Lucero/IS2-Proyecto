@@ -1,0 +1,8 @@
+sphinx-quickstart docs
+
+sphinx-apidoc -o docs/source/ .
+
+sphinx-build -b html source build\
+
+./make.bat html
+
