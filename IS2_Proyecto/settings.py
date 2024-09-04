@@ -102,11 +102,11 @@ WSGI_APPLICATION = 'IS2_Proyecto.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'IS2_Proyecto',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '0.tcp.sa.ngrok.io',
-        'PORT': '15168',
+        'NAME': 'd35bgm5ehmhbnb',
+        'USER': 'u6rv5n7l9b1nip',
+        'PASSWORD': 'pff86a592bf3aa2c72d818cf4bf01933fe1c2689caee342232dde18e969436bf1',
+        'HOST': 'ceqbglof0h8enj.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
     },
 }
 
