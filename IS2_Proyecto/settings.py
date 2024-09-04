@@ -98,8 +98,18 @@ WSGI_APPLICATION = 'IS2_Proyecto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+DATABASES = {                           #produccion
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'is2_proyecto',
+        'USER': 'postgres',
+        'PASSWORD': 'zoevQiTbJFKFFzvncJmjQyuyCgRSOmWIe',
+        'HOST': '24.144.64.29',
+        'PORT': '5432',
+    },
+}
 
-DATABASES = {
+'''DATABASES = {                           #heroku
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'd35bgm5ehmhbnb',
@@ -108,7 +118,7 @@ DATABASES = {
         'HOST': 'ceqbglof0h8enj.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
         'PORT': '5432',
     },
-}
+}'''
 
 
 
@@ -197,6 +207,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_TMP = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
+#si se quiere usar imagen, igual, en vez de static se usa media,
 os.makedirs(STATIC_TMP, exist_ok=True)
 os.makedirs(STATIC_ROOT, exist_ok=True)
 
