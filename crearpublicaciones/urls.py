@@ -8,3 +8,4 @@ urlpatterns = [
     path('modificar/<int:pk>/', views.modificar_publicacion, name='modificar_publicacion'),
     path('eliminar/<int:pk>/', views.eliminar_publicacion, name='eliminar_publicacion'),
 ]
+
