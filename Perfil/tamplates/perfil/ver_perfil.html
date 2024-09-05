@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de {{ usuario.user.username }}</title>
+</head>
+<body>
+    <h1>Perfil de {{ usuario.user.username }}</h1>
+
+    <p><strong>Email:</strong> {{ usuario.user.email }}</p>
+    <p><strong>Descripción:</strong> {{ usuario.descripcion }}</p>
+    <p><strong>Estado del Usuario:</strong> {{ usuario.estadoUsuario }}</p>
+
+    {% if usuario.logo %}
+        <p><strong>Logo:</strong></p>
+        <img src="{{ usuario.logo.url }}" alt="Logo de {{ usuario.user.username }}" width="200px">
+    {% else %}
+        <p><strong>Logo:</strong> No has subido un logo aún.</p>
+    {% endif %}
+
+    <a href="{% url 'editar_perfil' %}">Editar perfil</a>
+</body>
+</html>
