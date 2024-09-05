@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Publicación</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Crear Publicación</h1>
+
+        <form action="{% url 'guardar_publicacion' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Encabezado de la publicación -->
+            <label for="titulo">Encabezado de la publicación (obligatorio):</label>
+            <input type="text" id="titulo" name="titulo" required>
+
+            <!-- Imagen (obligatoria) -->
+            <label for="imagen1">Cargar imagen (arriba a la derecha) (obligatorio):</label>
+            <input type="file" id="imagen1" name="imagen1" accept="image/*" required>
+
+            <!-- Texto corto -->
+            <label for="texto_corto">Texto a la izquierda de la imagen (obligatorio):</label>
+            <textarea id="texto_corto" name="texto_corto" rows="5" required></textarea>
+
+            <!-- Texto largo -->
+            <label for="texto_largo">Texto largo (abajo) (obligatorio):</label>
+            <textarea id="texto_largo" name="texto_largo" rows="10" required></textarea>
+
+            <!-- Imagen (opcional) -->
+            <label for="imagen2">Cargar imagen (abajo) (opcional):</label>
+            <input type="file" id="imagen2" name="imagen2" accept="image/*">
+
+            <!-- Botones -->
+            <div class="buttons">
+                <button type="submit" formaction="{% url 'previsualizar_publicacion' %}">Previsualizar</button>
+                <button type="submit">Guardar como borrador</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

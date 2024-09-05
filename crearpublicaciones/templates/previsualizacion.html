@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previsualización</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        .content {
+            display: flex;
+            justify-content: space-between;
+        }
+        .text {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .image {
+            flex: 1;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .large-text {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Previsualización</h1>
+
+        <div class="content">
+            <div class="text">
+                <h2>{{ titulo }}</h2>
+                <p>{{ texto_corto }}</p>
+            </div>
+            <div class="image">
+                <img src="{{ imagen1.url }}" alt="Imagen">
+            </div>
+        </div>
+
+        <div class="large-text">
+            <p>{{ texto_largo }}</p>
+        </div>
+
+        {% if imagen2 %}
+        <div class="image">
+            <img src="{{ imagen2.url }}" alt="Imagen">
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
