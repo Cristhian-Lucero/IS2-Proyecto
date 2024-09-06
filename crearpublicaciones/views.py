@@ -13,11 +13,12 @@ def crear_publicacion(request):
     if request.method == 'POST':
         form = PublicacionForm(request.POST, request.FILES)
         if form.is_valid():
-            publicacion = form.save()  # Guardamos la publicación
-            return redirect('previsualizar_publicacion', id=publicacion.id)  # Redirigir con el ID de la publicación
+            publicacion = form.save()  # Guarda la publicación
+            # Redirige automáticamente a la página de Mis Publicaciones
+            return redirect('mis_publicaciones')
     else:
         form = PublicacionForm()
-
+    
     return render(request, 'crearpublicacion.html', {'form': form})
 
 

@@ -51,10 +51,20 @@
             border-radius: 5px;
             cursor: pointer;
             text-align: center;
-            width: 45%;
+            width: 100%;
         }
         .btn:hover {
             background-color: #357abd;
+        }
+        /* Mensaje de confirmación de borrador */
+        #message {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -63,7 +73,7 @@
     <div class="form-container">
         <h1>Crear Publicación</h1>
         <!-- Formulario para crear una nueva publicación -->
-        <form action="{% url 'crear_publicacion' %}" method="POST" enctype="multipart/form-data">
+        <form id="publicacionForm" action="{% url 'crear_publicacion' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
             <!-- Campo para el título -->
@@ -84,18 +94,32 @@
 
             <!-- Campo para la segunda imagen (opcional) -->
             <label for="imagen2">Imagen 2 (Opcional)</label>
-            <input type="file" id="imagen2" name="imagen2">
+            <input type="file" id="imagen2">
 
-            <!-- Botones de Previsualizar y Guardar -->
+            <!-- Botón para guardar la publicación -->
             <div class="buttons">
-                <!-- Botón para previsualizar (después de guardar) -->
-                <a href="{% url 'previsualizar_publicacion' publicacion.id %}" class="btn">Previsualizar</a>
-
-                <!-- Botón para guardar la publicación -->
                 <button type="submit" class="btn">Guardar Publicación</button>
             </div>
         </form>
+
+        <!-- Mensaje que aparece después de guardar -->
+        <div id="message">La publicación ha sido enviada a borrador.</div>
     </div>
+
+    <script>
+        document.getElementById('publicacionForm').onsubmit = function(event) {
+            event.preventDefault();  // Evita el envío inmediato del formulario
+
+            // Simula el guardado y muestra el mensaje
+            var message = document.getElementById('message');
+            message.style.display = 'block';
+
+            // Redirige a Mis Publicaciones después de 2 segundos
+            setTimeout(function() {
+                window.location.href = "{% url 'mis_publicaciones' %}";
+            }, 2000);
+        };
+    </script>
 
 </body>
 </html>
