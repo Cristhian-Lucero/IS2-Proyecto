@@ -1,56 +1,75 @@
+<!-- misPublicaciones.html -->
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Publicaciones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h1 {
-            text-align: center;
+            color: #4a90e2;
+            margin-top: 20px;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .publicacion {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            width: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-        li {
-            margin-bottom: 20px;
-        }
-        .buttons {
-            margin-top: 10px;
-        }
-        button {
-            padding: 5px 10px;
+        .btn {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
             margin-right: 10px;
-            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #357abd;
+        }
+        .btn-danger {
+            background-color: #d9534f;
+        }
+        .btn-danger:hover {
+            background-color: #c9302c;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Mis Publicaciones</h1>
 
-        <ul>
-            {% for publicacion in publicaciones %}
-            <li>
-                <h3>{{ publicacion.titulo }}</h3>
-                <div class="buttons">
-                    <button onclick="location.href='{% url 'previsualizar_publicacion' publicacion.id %}'">Previsualizar</button>
-                    <button onclick="location.href='{% url 'modificar_publicacion' publicacion.id %}'">Modificar</button>
-                    <form action="{% url 'eliminar_publicacion' publicacion.id %}" method="POST" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit">Eliminar</button>
-                    </form>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+    <h1>Mis Publicaciones</h1>
+
+    <!-- Bucle para mostrar las publicaciones -->
+    {% for publicacion in publicaciones %}
+        <div class="publicacion">
+            <h2>{{ publicacion.titulo }}</h2>
+
+            <!-- Botón para previsualizar la publicación -->
+            <a href="{% url 'previsualizar_publicacion' publicacion.id %}" class="btn">Previsualizar</a>
+
+            <!-- Botón para modificar la publicación -->
+            <a href="{% url 'modificar_publicacion' publicacion.id %}" class="btn">Modificar</a>
+
+            <!-- Botón para eliminar la publicación -->
+            <form action="{% url 'eliminar_publicacion' publicacion.id %}" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>No tienes publicaciones aún.</p>
+    {% endfor %}
+
 </body>
 </html>

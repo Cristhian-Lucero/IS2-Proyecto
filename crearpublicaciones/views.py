@@ -1,18 +1,25 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.shortcuts import render
+from .forms import PublicacionForm
 from .models import Publicacion
 
 # Create your views here.
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Publicacion
+from .forms import PublicacionForm
 
 def crear_publicacion(request):
     if request.method == 'POST':
         form = PublicacionForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('mis_publicaciones')
+            publicacion = form.save()  # Guardamos la publicación
+            return redirect('previsualizar_publicacion', id=publicacion.id)  # Redirigir con el ID de la publicación
     else:
         form = PublicacionForm()
+
     return render(request, 'crearpublicacion.html', {'form': form})
+
 
 
 def previsualizar_publicacion(request, pk):
@@ -26,8 +33,9 @@ def mis_publicaciones(request):
     return render(request, 'misPublicaciones.html', {'publicaciones': publicaciones})
 
 
-def modificar_publicacion(request, pk):
-    publicacion = Publicacion.objects.get(id=pk)
+def modificar_publicacion(request, id):
+    publicacion = get_object_or_404(Publicacion, id=id)
+    
     if request.method == 'POST':
         form = PublicacionForm(request.POST, request.FILES, instance=publicacion)
         if form.is_valid():
@@ -35,12 +43,15 @@ def modificar_publicacion(request, pk):
             return redirect('mis_publicaciones')
     else:
         form = PublicacionForm(instance=publicacion)
-    return render(request, 'crearPublicacion.html', {'form': form})
+    
+    return render(request, 'modificarpublicacion.html', {'form': form})
 
 
-def eliminar_publicacion(request, pk):
-    publicacion = Publicacion.objects.get(id=pk)
-    publicacion.delete()
-    return redirect('mis_publicaciones')
-
-def arrastrar_soltarpagina(draganddrop.html')
+def eliminar_publicacion(request, id):
+    publicacion = get_object_or_404(Publicacion, id=id)
+    
+    if request.method == 'POST':
+        publicacion.delete()
+        return redirect('mis_publicaciones')
+    
+    return render(request, 'eliminarpublicacion.html', {'publicacion': publicacion})

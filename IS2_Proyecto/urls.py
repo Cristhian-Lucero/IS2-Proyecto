@@ -26,6 +26,7 @@ urlpatterns = [
     path('accounts/',include('django.contrib.auth.urls')),
     path('publicacion/', include('publicacion.urls')),  # Incluye las URLs de publicaciones
     path('accounts/', include('allauth.urls')),
+    path('publicaciones/', include('crearpublicaciones.urls')),
 ]
 
 # Agregar configuración para servir archivos media en desarrollo
