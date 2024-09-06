@@ -1,5 +1,3 @@
-<!-- misPublicaciones.html -->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,65 +9,91 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f0f2f5;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        h1 {
-            color: #4a90e2;
-            margin-top: 20px;
-        }
-        .publicacion {
-            background-color: white;
-            border-radius: 10px;
+            margin: 0;
             padding: 20px;
-            margin: 10px;
-            width: 50%;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-        .btn {
+        h2 {
+            text-align: center;
+            color: #4a90e2;
+            font-size: 2em;
+        }
+        .publicacion-list {
+            list-style: none;
+            padding: 0;
+        }
+        .publicacion-list li {
+            background-color: #f9f9f9;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .publicacion-list h3 {
+            margin: 0 0 10px;
+            color: #333;
+            font-size: 1.5em;
+        }
+        .publicacion-list p {
+            margin: 0 0 15px;
+            color: #666;
+        }
+        .publicacion-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .publicacion-actions a {
+            padding: 10px 15px;
             background-color: #4a90e2;
             color: white;
-            padding: 10px 20px;
             text-decoration: none;
             border-radius: 5px;
-            margin-right: 10px;
+            font-size: 1em;
         }
-        .btn:hover {
+        .publicacion-actions a:hover {
             background-color: #357abd;
         }
-        .btn-danger {
-            background-color: #d9534f;
-        }
-        .btn-danger:hover {
-            background-color: #c9302c;
+        /* Estilo para el mensaje cuando no hay publicaciones */
+        .no-publicaciones {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Mis Publicaciones</h1>
+    <div class="container">
+        <h2>Mis Publicaciones</h2>
+        
+        {% if publicaciones %}
+            <ul class="publicacion-list">
+                {% for publicacion in publicaciones %}
+                    <li>
+                        <h3>{{ publicacion.titulo }}</h3>
+                        <p>{{ publicacion.texto_corto }}</p>
 
-    <!-- Bucle para mostrar las publicaciones -->
-    {% for publicacion in publicaciones %}
-        <div class="publicacion">
-            <h2>{{ publicacion.titulo }}</h2>
-
-            <!-- Botón para previsualizar la publicación -->
-            <a href="{% url 'previsualizar_publicacion' publicacion.id %}" class="btn">Previsualizar</a>
-
-            <!-- Botón para modificar la publicación -->
-            <a href="{% url 'modificar_publicacion' publicacion.id %}" class="btn">Modificar</a>
-
-            <!-- Botón para eliminar la publicación -->
-            <form action="{% url 'eliminar_publicacion' publicacion.id %}" method="POST" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Eliminar</button>
-            </form>
-        </div>
-    {% empty %}
-        <p>No tienes publicaciones aún.</p>
-    {% endfor %}
+                        <!-- Opcional: Enlaces para previsualizar, modificar o eliminar la publicación -->
+                        <div class="publicacion-actions">
+                            <a href="{% url 'previsualizar_publicacion' publicacion.id %}">Previsualizar</a>
+                            <a href="{% url 'modificar_publicacion' publicacion.id %}">Modificar</a>
+                            <a href="{% url 'eliminar_publicacion' publicacion.id %}">Eliminar</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-publicaciones">No tienes publicaciones aún.</p>
+        {% endif %}
+    </div>
 
 </body>
 </html>

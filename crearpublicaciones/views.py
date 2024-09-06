@@ -30,7 +30,7 @@ def previsualizar_publicacion(request, pk):
 
 
 def mis_publicaciones(request):
-    publicaciones = Publicacion.objects.all()  # Solo las publicaciones del usuario
+    publicaciones = Publicacion.objects.filter(user=request.user)  
     return render(request, 'misPublicaciones.html', {'publicaciones': publicaciones})
 
 
