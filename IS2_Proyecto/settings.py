@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login',
     'publicacion',
-    'publicaciones2',
     'crearpublicaciones',
     "crispy_forms", #crispy forms
     'crispy_bootstrap4',

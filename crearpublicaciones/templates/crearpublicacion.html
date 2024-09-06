@@ -4,70 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Publicación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
+            background-color: #f7f7f7;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         h1 {
+            font-size: 2.5em;
             text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+        .form-container {
+            background-color: white;
+            padding: 40px;
+            width: 500px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
         }
         label {
+            font-size: 1em;
+            margin-top: 10px;
             display: block;
-            margin: 10px 0 5px;
+            color: #666;
         }
-        input[type="text"],
-        textarea {
+        input[type="text"], textarea, input[type="file"] {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            background-color: #fafafa;
+            color: #333;
+            outline: none;
+            transition: border-color 0.3s;
         }
-        input[type="file"] {
-            margin-bottom: 20px;
+        input[type="text"]:focus, textarea:focus, input[type="file"]:focus {
+            border-color: #007bff;
+        }
+        textarea {
+            height: 100px;
+            resize: none;
+        }
+        .btn-primary {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            background-color: #007bff;
+            font-size: 1em;
+            padding: 0.75em 1.5em;
+            border: none;
+            border-radius: 25px;
+            margin: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            width: 45%;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
         }
         .buttons {
             display: flex;
             justify-content: space-between;
-        }
-        button {
-            padding: 10px 20px;
-            cursor: pointer;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="form-container">
         <h1>Crear Publicación</h1>
-
         <form action="{% url 'guardar_publicacion' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <!-- Encabezado de la publicación -->
-            <label for="titulo">Encabezado de la publicación (obligatorio):</label>
-            <input type="text" id="titulo" name="titulo" required>
+            <!-- Campo para el título -->
+            <label for="titulo">Encabezado</label>
+            <input type="text" id="titulo" name="titulo" placeholder="Escribe el título de la publicación" required>
 
-            <!-- Imagen (obligatoria) -->
-            <label for="imagen1">Cargar imagen (arriba a la derecha) (obligatorio):</label>
+            <!-- Campo para Texto 1 -->
+            <label for="texto_corto">Texto 1</label>
+            <textarea id="texto_corto" name="texto_corto" placeholder="Escribe el texto aquí" required></textarea>
+
+            <!-- Campo para Texto 2 -->
+            <label for="texto_largo">Texto 2</label>
+            <textarea id="texto_largo" name="texto_largo" placeholder="Escribe el segundo texto aquí" required></textarea>
+
+            <!-- Campo para Imagen 1 -->
+            <label for="imagen1">Imagen 1</label>
             <input type="file" id="imagen1" name="imagen1" accept="image/*" required>
 
-            <!-- Texto corto -->
-            <label for="texto_corto">Texto a la izquierda de la imagen (obligatorio):</label>
-            <textarea id="texto_corto" name="texto_corto" rows="5" required></textarea>
-
-            <!-- Texto largo -->
-            <label for="texto_largo">Texto largo (abajo) (obligatorio):</label>
-            <textarea id="texto_largo" name="texto_largo" rows="10" required></textarea>
-
-            <!-- Imagen (opcional) -->
-            <label for="imagen2">Cargar imagen (abajo) (opcional):</label>
+            <!-- Campo para Imagen 2 (opcional) -->
+            <label for="imagen2">Imagen 2 (opcional)</label>
             <input type="file" id="imagen2" name="imagen2" accept="image/*">
 
-            <!-- Botones -->
+            <!-- Botones de Previsualizar y Guardar -->
             <div class="buttons">
-                <button type="submit" formaction="{% url 'previsualizar_publicacion' %}">Previsualizar</button>
-                <button type="submit">Guardar como borrador</button>
+                <button type="submit" formaction="{% url 'previsualizar_publicacion' %}" class="btn-primary">Previsualizar</button>
+                <button type="submit" class="btn-primary">Guardar</button>
             </div>
         </form>
     </div>
