@@ -87,15 +87,15 @@ WSGI_APPLICATION = 'IS2_Proyecto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
+DATABASES = {                           #produccion
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd35bgm5ehmhbnb',
-        'USER': 'u6rv5n7l9b1nip',
-        'PASSWORD': 'pff86a592bf3aa2c72d818cf4bf01933fe1c2689caee342232dde18e969436bf1',
-        'HOST': 'ceqbglof0h8enj.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
+        'NAME': 'is2_proyecto',
+        'USER': 'postgres',
+        'PASSWORD': 'zoevQiTbJFKFFzvncJmjQyuyCgRSOmWIe',
+        'HOST': '24.144.64.29',
         'PORT': '5432',
-    }
+    },
 }
 
 

@@ -1,13 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.shortcuts import render
 from .forms import PublicacionForm
 from .models import Publicacion
 
-# Create your views here.
-
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Publicacion
-from .forms import PublicacionForm
+# Vistas para la aplicación
 
 def crear_publicacion(request):
     if request.method == 'POST':
@@ -22,18 +17,13 @@ def crear_publicacion(request):
     
     return render(request, 'crearpublicacion.html', {'form': form})
 
-
-
 def previsualizar_publicacion(request, pk):
     publicacion = get_object_or_404(Publicacion, id=pk)
     return render(request, 'previsualizacion.html', {'publicacion': publicacion, 'user': publicacion.user})
 
-
-
 def mis_publicaciones(request):
     publicaciones = Publicacion.objects.filter(user=request.user)  
     return render(request, 'misPublicaciones.html', {'publicaciones': publicaciones})
-
 
 def modificar_publicacion(request, id):
     publicacion = get_object_or_404(Publicacion, id=id)
@@ -48,7 +38,6 @@ def modificar_publicacion(request, id):
     
     return render(request, 'modificarpublicacion.html', {'form': form})
 
-
 def eliminar_publicacion(request, id):
     publicacion = get_object_or_404(Publicacion, id=id)
     
@@ -57,3 +46,9 @@ def eliminar_publicacion(request, id):
         return redirect('mis_publicaciones')
     
     return render(request, 'eliminarpublicacion.html', {'publicacion': publicacion})
+
+def seleccionar_plantilla(request):
+    return render(request, 'seleccionar_plantilla.html')
+
+def personalizable(request):
+    return render(request, 'personalizable.html')

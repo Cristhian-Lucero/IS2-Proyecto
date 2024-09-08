@@ -129,4 +129,7 @@ def editarCategoria(request, categoria_id):
         'categoria': categoria
     })
 
+@login_required
+def seleccionar_plantilla(request):
+    return render(request, 'ruta/a/tu/template_seleccionar_plantilla.html')
    

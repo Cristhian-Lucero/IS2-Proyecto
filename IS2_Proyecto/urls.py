@@ -27,6 +27,8 @@ urlpatterns = [
     path('publicacion/', include('publicacion.urls')),  # Incluye las URLs de publicaciones
     path('accounts/', include('allauth.urls')),
     path('publicaciones/', include('crearpublicaciones.urls')),
+    path('crearpublicaciones/', include(('crearpublicaciones.urls', 'crearpublicaciones'), namespace='crearpublicaciones')),
+    
 ]
 
 # Agregar configuración para servir archivos media en desarrollo
