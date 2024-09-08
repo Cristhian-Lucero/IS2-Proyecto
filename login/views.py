@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
+from Perfil.models import Usuario
 
 from django.contrib.auth.decorators import login_required #para redirigir a login obligandolo a logearse
 from django.contrib.auth import logout
@@ -21,9 +22,11 @@ def rol(request):
 def gestionarRol(request):
     x = list(Categoria.objects.all())
     y = list(Rol.objects.all())
+    z = list(Usuario.objects.all())
     return render(request, 'rol/gestionRol.html', {
         'categorias': x,
-        'roles': y
+        'roles': y,
+        'usuarios': z
     })
 
 def agregarRol(request):

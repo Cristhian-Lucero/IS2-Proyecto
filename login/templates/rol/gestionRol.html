@@ -5,9 +5,10 @@
 <form action="/asignar-rol" method="post">
     <label for="usuario">Seleccionar Usuario:</label>
     <select id="usuario" name="usuario">
-        <option value="1">Usuario 1</option>
-        <option value="2">Usuario 2</option>
-        <option value="3">Usuario 3</option>
+        {% for i in usuarios %}
+        <option value="{{i.user.id}}"> {{ i.user.username }} </option>
+        {% endfor %}
+
     </select>
     <br><br>
     
