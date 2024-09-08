@@ -1,21 +1,23 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from .forms import PublicacionForm
-from .models import Publicacion
+from django.shortcuts import render, redirect
+from .forms import PublicacionForm  # Asegúrate de tener este formulario
+from .models import Publicacion  # Asegúrate de que tienes el modelo Publicacion
+from django.contrib.auth.decorators import login_required
 
-# Vistas para la aplicación
-
+@login_required
 def crear_publicacion(request):
     if request.method == 'POST':
         form = PublicacionForm(request.POST, request.FILES)
         if form.is_valid():
-            publicacion = form.save(commit=False)  # No guardes aún en la base de datos
-            publicacion.user = request.user  # Asigna el usuario autenticado
-            publicacion.save()  # Guarda la publicación con el usuario asignado
+            nueva_publicacion = form.save(commit=False)
+            nueva_publicacion.autor = request.user
+            nueva_publicacion.save()
             return redirect('mis_publicaciones')
     else:
         form = PublicacionForm()
-    
+
+    # Apunta a 'crearpublicaciones/crearpublicaciones.html'
     return render(request, 'crearpublicacion.html', {'form': form})
+
 
 def previsualizar_publicacion(request, pk):
     publicacion = get_object_or_404(Publicacion, id=pk)

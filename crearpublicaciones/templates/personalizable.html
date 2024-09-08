@@ -11,7 +11,7 @@
             background-color: #f0f2f5;
             margin: 0;
             padding: 20px;
-            color: black; /* Asegura que el texto sea negro en todos estos elementos */
+            color: black;
         }
         .container {
             display: flex;
@@ -32,7 +32,7 @@
         .block {
             padding: 10px;
             background-color: #4a90e2;
-            color: white; /* Color del texto en los bloques para contraste */
+            color: white;
             margin-bottom: 10px;
             text-align: center;
             cursor: grab;
@@ -75,6 +75,20 @@
         input[type="file"] {
             display: none;
         }
+        .save-button {
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .save-button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -82,12 +96,11 @@
 <div class="container">
     <div class="sidebar">
         <h2>Elementos</h2>
-        <!-- Bloques arrastrables -->
         <div class="block" draggable="true" data-type="heading">Encabezado</div>
         <div class="block" draggable="true" data-type="text">Texto</div>
         <div class="block" draggable="true" data-type="quote">Cita</div>
         <div class="block" draggable="true" data-type="image">Imagen</div>
-        <input type="file" id="file-input" accept="image/*">
+        <button id="saveButton" class="save-button">Guardar</button> 
     </div>
 
     <div class="editor">
@@ -102,7 +115,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const blocks = document.querySelectorAll('.block');
         const dropzone = document.getElementById('dropzone');
-        const fileInput = document.getElementById('file-input');
+        const saveButton = document.getElementById('saveButton');
 
         blocks.forEach(block => {
             block.addEventListener('dragstart', function (e) {
@@ -122,7 +135,7 @@
             if (type === 'image') {
                 element = document.createElement('img');
                 element.alt = 'Imagen personalizada';
-                element.style.width = '100%'; // Asumiendo que queremos que la imagen se ajuste al contenedor
+                element.style.width = '100%'; 
                 showImageUploadDialog(element);
             } else {
                 element = createElement(type);
@@ -142,7 +155,7 @@
                 case 'heading':
                     element = document.createElement('h3');
                     element.textContent = 'Nuevo Encabezado';
-		    element.style.color = 'black';
+                    element.style.color = 'black';
                     element.contentEditable = 'true';
                     break;
                 case 'text':
