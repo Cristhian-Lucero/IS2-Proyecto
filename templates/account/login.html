@@ -9,11 +9,6 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-center">{% trans "Iniciar Sesión" %}</h1>
-                    {% if form.non_field_errors %}
-                        <div class="alert alert-danger">
-                            {{ form.non_field_errors }}
-                        </div>
-                    {% endif %}
                     <form method="post" action="{% url 'account_login' %}">
                         {% csrf_token %}
                         {{ form|crispy }}
