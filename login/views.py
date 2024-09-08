@@ -131,5 +131,5 @@ def editarCategoria(request, categoria_id):
 
 @login_required
 def seleccionar_plantilla(request):
-    return render(request, 'ruta/a/tu/template_seleccionar_plantilla.html')
+    return render(request, 'crearpublicaciones/templates/seleccionar_plantilla.html')
    
