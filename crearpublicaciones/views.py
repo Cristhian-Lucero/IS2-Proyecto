@@ -13,8 +13,9 @@ def crear_publicacion(request):
     if request.method == 'POST':
         form = PublicacionForm(request.POST, request.FILES)
         if form.is_valid():
-            publicacion = form.save()  # Guarda la publicación
-            # Redirige automáticamente a la página de Mis Publicaciones
+            publicacion = form.save(commit=False)  # No guardes aún en la base de datos
+            publicacion.user = request.user  # Asigna el usuario autenticado
+            publicacion.save()  # Guarda la publicación con el usuario asignado
             return redirect('mis_publicaciones')
     else:
         form = PublicacionForm()

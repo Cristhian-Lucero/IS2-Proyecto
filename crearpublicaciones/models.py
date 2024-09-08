@@ -11,11 +11,8 @@ class Publicacion(models.Model):
     imagen1 = models.ImageField(upload_to='imagenes/', null=False, blank=False)
     imagen2 = models.ImageField(upload_to='imagenes/', null=True, blank=True)  # Opcional
     fecha_creacion = models.DateTimeField(auto_now_add=True)
-    
-    # Relación con el usuario
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Este es el campo faltante
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
 
     def __str__(self):
         return self.titulo
-
 
