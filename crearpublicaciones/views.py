@@ -46,8 +46,8 @@ def modificar_publicacion(request, pk):
 
     return render(request, 'modificarpublicacion.html', {'form': form})
 
-def eliminar_publicacion(request, pk):
-    publicacion = get_object_or_404(Publicacion, pk=pk)
+def eliminar_publicacion(request, id):
+    publicacion = get_object_or_404(Publicacion, id=id)
     if request.method == 'POST':
         publicacion.delete()
         return redirect('mis_publicaciones')
