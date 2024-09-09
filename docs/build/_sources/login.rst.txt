@@ -44,14 +44,6 @@ login.models module
    :undoc-members:
    :show-inheritance:
 
-login.serializers module
-------------------------
-
-.. automodule:: login.serializers
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 login.tests module
 ------------------
 

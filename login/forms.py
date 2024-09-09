@@ -1,7 +1,21 @@
+"""
+Formularios para gestionar categorías y roles en la aplicación login.
+
+Incluye formularios personalizados para la creación y edición de Categoría y Rol,
+con validación y selección de permisos.
+"""
+
+
 from django import forms
 from .models import *
 
 class CreateNewCategoria(forms.Form):
+    """
+    Formulario para crear una nueva categoría.
+
+    Este formulario incluye los campos para la descripción corta, descripción larga y estado de la categoría.
+    """
+
     box_descripcion_corta = forms.CharField(label="Descripcion Corta", max_length=100)
     box_descripcion_larga = forms.CharField(label="Descripcion Larga", widget=forms.Textarea)
     
@@ -13,12 +27,23 @@ class CreateNewCategoria(forms.Form):
     box_estado = forms.ChoiceField(label="Estado", choices=ESTADO_CHOICES)
 
 class CreateNewRol(forms.Form):
+    """
+    Formulario para crear un nuevo rol.
+
+    Este formulario incluye los campos para el nombre, descripción y selección de permisos asociados al rol.
+    """
     box_nombre= forms.CharField(label="Nombre", max_length=100)
     box_descripcion = forms.CharField(
         label="Descripcion", 
         widget=forms.Textarea (attrs={'rows': 5, 'cols': 50, 'style': 'width:100%;'}))
 
     def __init__(self, *args, **kwargs):
+        """
+        Inicializa el formulario de creación de roles.
+
+        Configura los permisos disponibles como opciones para seleccionar.
+        """
+
         super(CreateNewRol, self).__init__(*args, **kwargs)
         permisos_choices = [(permiso.id, permiso.nombre) for permiso in Permiso.objects.all()]
         self.fields['permisos'] = forms.MultipleChoiceField(

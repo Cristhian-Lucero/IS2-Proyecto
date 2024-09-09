@@ -1,11 +1,12 @@
 """
-ASGI config for IS2_Proyecto project.
+Configuración ASGI para el proyecto IS2_Proyecto.
 
-It exposes the ASGI callable as a module-level variable named ``application``.
+Expone el callable ASGI como una variable a nivel de módulo llamada ``application``.
 
-For more information on this file, see
+Para más información sobre este archivo, consulta:
 https://docs.djangoproject.com/en/5.1/howto/deployment/asgi/
 """
+
 
 import os
 

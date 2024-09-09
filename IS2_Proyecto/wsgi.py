@@ -1,11 +1,14 @@
 """
-WSGI config for IS2_Proyecto project.
+Configuración WSGI para el proyecto IS2_Proyecto.
 
-It exposes the WSGI callable as a module-level variable named ``application``.
+Expone el callable WSGI como una variable a nivel de módulo llamada ``application``.
 
-For more information on this file, see
+Este archivo se usa para desplegar la aplicación en servidores WSGI.
+
+Para más información, consulta:
 https://docs.djangoproject.com/en/5.1/howto/deployment/wsgi/
 """
+
 
 import os
 import sys

@@ -1,3 +1,9 @@
+"""
+Configuración de URLs para la aplicación login.
+
+Define las rutas para la gestión de roles y categorías, así como otras funcionalidades relacionadas con la autenticación.
+"""
+
 from django.urls import path
 from .views import *
 
