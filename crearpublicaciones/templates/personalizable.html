@@ -100,6 +100,7 @@
         <div class="block" draggable="true" data-type="text">Texto</div>
         <div class="block" draggable="true" data-type="quote">Cita</div>
         <div class="block" draggable="true" data-type="image">Imagen</div>
+        <input type="file" id="fileInput" accept="image/*">
         <button id="saveButton" class="save-button">Guardar</button> 
     </div>
 
@@ -116,6 +117,7 @@
         const blocks = document.querySelectorAll('.block');
         const dropzone = document.getElementById('dropzone');
         const saveButton = document.getElementById('saveButton');
+        const fileInput = document.getElementById('fileInput');
 
         blocks.forEach(block => {
             block.addEventListener('dragstart', function (e) {
@@ -135,7 +137,7 @@
             if (type === 'image') {
                 element = document.createElement('img');
                 element.alt = 'Imagen personalizada';
-                element.style.width = '100%'; 
+                element.style.width = '100%';
                 showImageUploadDialog(element);
             } else {
                 element = createElement(type);
@@ -178,21 +180,27 @@
         }
 
         function showImageUploadDialog(imgElement) {
-            if (confirm("¿Quieres subir una imagen desde tu PC?")) {
-                fileInput.onchange = function(event) {
-                    const file = event.target.files[0];
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        imgElement.src = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
+            fileInput.onchange = function(event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imgElement.src = e.target.result;
                 };
-                fileInput.click();
-            } else {
-                const url = prompt('Por favor, ingresa el URL de la imagen:', 'https://via.placeholder.com/150');
-                if (url) imgElement.src = url;
-            }
+                reader.readAsDataURL(file);
+            };
+            fileInput.click();
         }
+
+        // Funcionalidad del botón Guardar
+        saveButton.addEventListener('click', function () {
+            alert("Publicación guardada con éxito!");
+            
+            // Redirige a la página de "Mis Publicaciones" después de 2 segundos
+            setTimeout(function () {
+                window.location.href = "crearpublicaciones/templates/misPublicaciones"; 
+            }, 2000);
+        });
+
     });
 </script>
 

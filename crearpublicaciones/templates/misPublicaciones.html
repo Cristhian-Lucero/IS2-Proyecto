@@ -44,6 +44,11 @@
         .publicacion-list p {
             margin: 0 0 15px;
             color: #666;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* número de líneas visibles */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .publicacion-actions {
             display: flex;
@@ -79,7 +84,8 @@
                 {% for publicacion in publicaciones %}
                     <li>
                         <h3>{{ publicacion.titulo }}</h3>
-                        <p>{{ publicacion.texto_corto }}</p>
+                        <!-- Truncamos el texto corto para evitar desbordamientos -->
+                        <p>{{ publicacion.texto_corto|truncatechars:100 }}</p>
 
                         <!-- Opcional: Enlaces para previsualizar, modificar o eliminar la publicación -->
                         <div class="publicacion-actions">
