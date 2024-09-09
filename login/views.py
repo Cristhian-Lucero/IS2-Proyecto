@@ -20,13 +20,51 @@ def rol(request):
     return render(request, "rol/gestionRol.html")
 
 def gestionarRol(request):
-    x = list(Categoria.objects.all())
-    y = list(Rol.objects.all())
-    z = list(Usuario.objects.all())
+    if request.method == 'POST':
+        # Obtener los valores seleccionados
+        usuario_id = request.POST.get('usuario')
+        categoria_id = request.POST.get('categoria')
+        rol_id = request.POST.get('rol')
+        
+        try:
+            print(f'categoria id: {categoria_id}')
+            print(f'rol id: {rol_id}')
+            # Buscar la relación en UsuarioRolCategoria
+            usuario_instancia = Usuario.objects.get(user_id=usuario_id)
+            print(f'usuario id: {usuario_instancia}')
+            usuario_rol_categoria = UsuarioRolCategoria.objects.get(usuario_id=usuario_instancia, categoria_id=categoria_id)
+
+            # Actualizar el rol
+            rol_instancia = Rol.objects.get(id=rol_id)
+            usuario_rol_categoria.rol = rol_instancia
+            usuario_rol_categoria.save()
+
+            # Redirigir a una página de éxito o recargar la página
+            return redirect('gestionrol')  # Asegúrate de tener esta URL configurada
+
+        except UsuarioRolCategoria.DoesNotExist:
+            usuarios = Usuario.objects.all()
+            categorias = Categoria.objects.all()
+            roles = Rol.objects.all()
+            # Si no existe la relación, puedes manejar el error (opcional)
+            print('error capo')
+            print(f'usuario id: {usuario_id}')
+            print(f'categoria id: {categoria_id}')
+            print(f'rol id: {rol_id}')
+            return render(request, 'rol/gestionRol.html', {
+                'usuarios': usuarios,
+                'categorias': categorias,
+                'roles': roles,
+            })
+    # En caso de GET, renderiza el formulario
+    usuarios = Usuario.objects.all()
+    categorias = Categoria.objects.all()
+    roles = Rol.objects.all()
+
     return render(request, 'rol/gestionRol.html', {
-        'categorias': x,
-        'roles': y,
-        'usuarios': z
+        'usuarios': usuarios,
+        'categorias': categorias,
+        'roles': roles,
     })
 
 def agregarRol(request):
@@ -77,7 +115,6 @@ def editarRol(request, rol_id):
         'rol': rol,
         'form': form
     })
-
 
 def gestionCategoria(request):
     if request.method == 'GET':

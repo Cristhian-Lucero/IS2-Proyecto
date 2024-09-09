@@ -2,7 +2,8 @@
 
 {% block content%}
 <h1>Gestión de Roles</h1>
-<form action="/asignar-rol" method="post">
+<form action="{% url 'gestionrol' %}" method="post">
+    {% csrf_token %}
     <label for="usuario">Seleccionar Usuario:</label>
     <select id="usuario" name="usuario">
         {% for i in usuarios %}
