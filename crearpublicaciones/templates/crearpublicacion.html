@@ -111,8 +111,8 @@
         <!-- Mensaje que aparece después de guardar -->
         <div id="message">La publicación ha sido enviada a borrador.</div>
     </div>
-
-    //ver como solucionar esto
+    #ver como solucionar 
+    <!--
     <script>
         document.getElementById('publicacionForm').onsubmit = function(event) {
             event.preventDefault();  // Evita el envío inmediato del formulario
@@ -126,7 +126,36 @@
                 window.location.href = "{% url 'mis_publicaciones' %}";
             }, 2000);
         };
-    </script>
-
+    </script>--> 
+    <script>
+        document.getElementById('publicacionForm').onsubmit = function(event) {
+            event.preventDefault();  // Evita el envío inmediato del formulario
+    
+            var form = document.getElementById('publicacionForm');
+            var formData = new FormData(form);  // Crea un objeto FormData para enviar los datos
+    
+            // Simula el guardado y muestra el mensaje
+            var message = document.getElementById('message');
+            message.style.display = 'block';
+    
+            // Realiza el POST manualmente
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Redirige a Mis Publicaciones después de que se haga el POST correctamente
+                    setTimeout(function() {
+                        window.location.href = "{% url 'mis_publicaciones' %}";
+                    }, 2000);
+                } else {
+                    // Maneja errores
+                    console.error("Error al guardar la publicación");
+                }
+            })
+            .catch(error => console.error("Error de red", error));
+        };
+    </script>    
 </body>
 </html>

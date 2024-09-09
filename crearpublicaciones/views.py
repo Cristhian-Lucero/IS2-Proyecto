@@ -33,14 +33,15 @@ def mis_publicaciones(request):
 
     return render(request, 'misPublicaciones.html', {'publicaciones': publicaciones})
 
-def modificar_publicacion(request, pk):
-    publicacion = get_object_or_404(Publicacion, pk=pk)
-    
+@login_required
+def modificar_publicacion(request, publicacion_id):
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+
     if request.method == 'POST':
-        form = PublicacionForm(request.POST, instance=publicacion)
+        form = PublicacionForm(request.POST, request.FILES, instance=publicacion)
         if form.is_valid():
             form.save()
-            return redirect('mis_publicaciones')
+            return redirect('mis_publicaciones')  # Redirige a la lista de publicaciones después de guardar
     else:
         form = PublicacionForm(instance=publicacion)
 
@@ -75,6 +76,6 @@ def personalizable(request):
         time.sleep(1)
 
         # Redirige a "Mis Publicaciones"
-        return redirect('mis_publicaciones')
+        return redirect('misPublicaciones')
     
     return render(request, 'personalizable.html')

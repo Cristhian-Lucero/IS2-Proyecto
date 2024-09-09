@@ -3,102 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Previsualización</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>Editor Personalizado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
             margin: 0;
             padding: 20px;
-            background-color: #f9f9f9;
+            color: black;
         }
         .container {
-            width: 80%;
-            margin: 0 auto;
-            max-width: 1200px;
-        }
-        header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #333;
-            margin-bottom: 20px;
+            height: 100vh;
         }
-        header h2, header p {
-            margin: 0;
-            font-weight: bold;
+        .sidebar {
+            width: 20%;
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
+        .sidebar h2 {
+            text-align: center;
+            font-size: 1.5em;
         }
-        .text {
-            width: 55%;
-        }
-        .text h1 {
-            font-size: 2.5em;
+        .block {
+            padding: 10px;
+            background-color: #4a90e2;
+            color: white;
             margin-bottom: 10px;
+            text-align: center;
+            cursor: grab;
+            border-radius: 5px;
         }
-        .text p {
-            margin-bottom: 20px;
-            line-height: 1.6;
+        .block:hover {
+            background-color: #357abd;
         }
-        .image {
-            width: 40%;
+        .editor {
+            width: 75%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            min-height: 100vh;
         }
-        .image img {
-            width: 100%;
+        .editor h2 {
+            text-align: center;
+            font-size: 1.5em;
+            color: #4a90e2;
+        }
+        .dropzone {
+            min-height: 500px;
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            background-color: #f9f9f9;
             border-radius: 10px;
         }
-        .bottom-text {
-            margin-top: 20px;
-            width: 100%;
+        .dropzone .block {
+            margin-bottom: 15px;
+            padding: 20px;
+            background-color: #eee;
+            text-align: left;
         }
-        .bottom-image {
-            margin-top: 40px;
-            width: 100%;
+        .dropzone .block img {
+            width: 100px;
+            height: auto;
         }
-        .bottom-image img {
+        input[type="file"] {
+            display: none;
+        }
+        .save-button {
+            display: block;
             width: 100%;
-            border-radius: 10px;
+            padding: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .save-button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <!-- Nombre del usuario que crea la publicación -->
-            <h2>{{ user.username }}</h2>
-            <!-- Fecha actual corregida -->
-            <p>{% now "j de F de Y" %}</p>
-        </header>
 
-        <div class="content">
-            <!-- Texto 1 a la izquierda -->
-            <div class="text">
-                <h1>{{ publicacion.titulo }}</h1>
-                <p>{{ publicacion.texto_corto|truncatechars:150 }}</p>
-            </div>
-            <!-- Imagen 1 a la derecha -->
-            <div class="image">
-                <img src="{{ publicacion.imagen1.url }}" alt="Imagen principal">
-            </div>
-        </div>
-
-        <!-- Texto 2 en la parte inferior -->
-        <div class="bottom-text">
-            <p>{{ publicacion.texto_largo }}</p>
-        </div>
-
-        <!-- Imagen 2 debajo del texto largo -->
-        {% if publicacion.imagen2 %}
-        <div class="bottom-image">
-            <img src="{{ publicacion.imagen2.url }}" alt="Imagen adicional">
-        </div>
-        {% endif %}
+<div class="container">
+    <div class="sidebar">
+        <h2>Elementos</h2>
+        <div class="block" draggable="true" data-type="heading">Encabezado</div>
+        <div class="block" draggable="true" data-type="text">Texto</div>
+        <div class="block" draggable="true" data-type="quote">Cita</div>
+        <div class="block" draggable="true" data-type="image">Imagen</div>
+        <input type="file" id="fileInput" accept="image/*">
+        <button id="saveButton" class="save-button">Guardar</button> 
     </div>
+
+    <div class="editor">
+        <h2>Área de Personalización</h2>
+        <div id="dropzone" class="dropzone">
+            Arrastra y suelta bloques aquí
+        </div>
+    </div>
+</div>
+
+<script>
+    let headingCount = 0;
+    let textCount = 0;
+    let imageCount = 0;
+    let quoteCount = 0;
+
+    const blocks = document.querySelectorAll('.block');
+    const dropzone = document.getElementById('dropzone');
+    const saveButton = document.getElementById('saveButton');
+    const fileInput = document.getElementById('fileInput');
+
+    blocks.forEach(block => {
+        block.addEventListener('dragstart', function (e) {
+            e.dataTransfer.setData('type', this.getAttribute('data-type'));
+        });
+    });
+
+    dropzone.addEventListener('dragover', function (e) {
+        e.preventDefault();
+    });
+
+    dropzone.addEventListener('drop', function (e) {
+        e.preventDefault();
+        const type = e.dataTransfer.getData('type');
+        let element = null;
+
+        if (type === 'image' && imageCount < 2) {
+            element = document.createElement('img');
+            element.alt = 'Imagen personalizada';
+            element.style.width = '100%';
+            showImageUploadDialog(element);
+            imageCount++;
+        } else if (type === 'heading' && headingCount < 1) {
+            element = createElement(type);
+            headingCount++;
+        } else if (type === 'text' && textCount < 2) {
+            element = createElement(type);
+            textCount++;
+        } else if (type === 'quote' && quoteCount < 1) {
+            element = createElement(type);
+            quoteCount++;
+        } else {
+            alert("No puedes agregar más elementos de este tipo.");
+        }
+
+        if (element) {
+            const blockDiv = document.createElement('div');
+            blockDiv.className = 'block';
+            blockDiv.appendChild(element);
+            dropzone.appendChild(blockDiv);
+        }
+    });
+
+    function createElement(type) {
+        let element = null;
+        switch (type) {
+            case 'heading':
+                element = document.createElement('h3');
+                element.textContent = 'Nuevo Encabezado';
+                element.style.color = 'black';
+                element.contentEditable = 'true';
+                break;
+            case 'text':
+                element = document.createElement('p');
+                element.textContent = 'Este es un bloque de texto.';
+                element.style.color = 'black';
+                element.contentEditable = 'true';
+                break;
+            case 'quote':
+                element = document.createElement('blockquote');
+                element.textContent = 'Este es un bloque de cita.';
+                element.style.fontStyle = 'italic';
+                element.style.borderLeft = '5px solid #4a90e2';
+                element.style.paddingLeft = '10px';
+                element.style.color = 'black';
+                element.contentEditable = 'true';
+                break;
+        }
+        return element;
+    }
+
+    function showImageUploadDialog(imgElement) {
+        fileInput.onchange = function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imgElement.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+        fileInput.click();
+    }
+
+    saveButton.addEventListener('click', function () {
+        alert("Publicación guardada con éxito");
+        setTimeout(function () {
+            window.location.href = "{% url 'previsualizar_publicacion' %}";
+        }, 2000);
+    });
+</script>
+
 </body>
 </html>
