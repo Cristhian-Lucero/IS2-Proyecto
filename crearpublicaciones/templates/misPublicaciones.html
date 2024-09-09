@@ -54,16 +54,27 @@
             display: flex;
             gap: 10px;
         }
-        .publicacion-actions a {
+        .publicacion-actions a, .publicacion-actions button {
             padding: 10px 15px;
             background-color: #4a90e2;
             color: white;
             text-decoration: none;
             border-radius: 5px;
             font-size: 1em;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            width: 120px; /* Fuerza el mismo ancho para todos los botones */
         }
-        .publicacion-actions a:hover {
+        .publicacion-actions a:hover, .publicacion-actions button:hover {
             background-color: #357abd;
+        }
+        .publicacion-actions button {
+            background-color: #4a90e2;
+        }
+        .publicacion-actions form {
+            display: inline;
         }
         /* Estilo para el mensaje cuando no hay publicaciones */
         .no-publicaciones {
@@ -91,7 +102,10 @@
                         <div class="publicacion-actions">
                             <a href="{% url 'previsualizar_publicacion' publicacion.id %}">Previsualizar</a>
                             <a href="{% url 'modificar_publicacion' publicacion.id %}">Modificar</a>
-                            <a href="{% url 'eliminar_publicacion' publicacion.id %}">Eliminar</a>
+                            <form action="{% url 'eliminar_publicacion' publicacion.id %}" method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn">Eliminar</button>
+                            </form>
                         </div>
                     </li>
                 {% endfor %}

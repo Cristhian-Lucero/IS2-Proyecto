@@ -72,15 +72,15 @@
         <header>
             <!-- Nombre del usuario que crea la publicación -->
             <h2>{{ user.username }}</h2>
-            <!-- Fecha actual -->
-            <p>{% now "j \\d\\e F" %}</p>
+            <!-- Fecha actual corregida -->
+            <p>{% now "j de F de Y" %}</p>
         </header>
 
         <div class="content">
             <!-- Texto 1 a la izquierda -->
             <div class="text">
                 <h1>{{ publicacion.titulo }}</h1>
-                <p>{{ publicacion.texto_corto }}</p>
+                <p>{{ publicacion.texto_corto|truncatechars:150 }}</p>
             </div>
             <!-- Imagen 1 a la derecha -->
             <div class="image">
