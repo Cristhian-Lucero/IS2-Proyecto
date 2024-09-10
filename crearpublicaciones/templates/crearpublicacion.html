@@ -13,9 +13,9 @@
             padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Cambié de 'center' a 'flex-start' */
+            align-items: flex-start;
             height: 100vh;
-            overflow-y: auto; /* Asegura que el contenido se desplace si es necesario */
+            overflow-y: auto;
         }
         .form-container {
             background-color: white;
@@ -23,8 +23,8 @@
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 600px;
-            max-width: 100%; /* Para que no exceda el ancho de la pantalla */
-            margin-top: 20px; /* Espacio en la parte superior */
+            max-width: 100%;
+            margin-top: 20px;
         }
         h1 {
             text-align: center;
@@ -62,7 +62,6 @@
         .btn:hover {
             background-color: #357abd;
         }
-        /* Mensaje de confirmación de borrador */
         #message {
             display: none;
             background-color: #4CAF50;
@@ -78,66 +77,42 @@
 
     <div class="form-container">
         <h1>Crear Publicación</h1>
-        <!-- Formulario para crear una nueva publicación -->
         <form id="publicacionForm" action="{% url 'crear_publicacion' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-
-            <!-- Campo para el título -->
             <label for="titulo">Encabezado</label>
             <input type="text" id="titulo" name="titulo" placeholder="Escribe el título de la publicación" required>
 
-            <!-- Campo para el texto corto -->
             <label for="texto_corto">Texto 1</label>
             <textarea id="texto_corto" name="texto_corto" rows="4" placeholder="Escribe el texto corto de la publicación" required></textarea>
 
-            <!-- Campo para el texto largo -->
             <label for="texto_largo">Texto 2</label>
             <textarea id="texto_largo" name="texto_largo" rows="6" placeholder="Escribe el texto largo de la publicación" required></textarea>
 
-            <!-- Campo para la primera imagen -->
             <label for="imagen1">Imagen 1</label>
             <input type="file" id="imagen1" name="imagen1" required>
 
-            <!-- Campo para la segunda imagen (opcional) -->
             <label for="imagen2">Imagen 2 (Opcional)</label>
-            <input type="file" id="imagen2">
+            <input type="file" id="imagen2" name="imagen2">
 
-            <!-- Botón para guardar la publicación -->
             <div class="buttons">
                 <button type="submit" class="btn">Guardar Publicación</button>
             </div>
-        </form>a
+        </form>
 
-        <!-- Mensaje que aparece después de guardar -->
         <div id="message">La publicación ha sido enviada a borrador.</div>
     </div>
-    #ver como solucionar 
-    <!--
+
     <script>
         document.getElementById('publicacionForm').onsubmit = function(event) {
             event.preventDefault();  // Evita el envío inmediato del formulario
 
-            // Simula el guardado y muestra el mensaje
-            var message = document.getElementById('message');
-            message.style.display = 'block';
-
-            // Redirige a Mis Publicaciones después de 2 segundos
-            setTimeout(function() {
-                window.location.href = "{% url 'mis_publicaciones' %}";
-            }, 2000);
-        };
-    </script>--> 
-    <script>
-        document.getElementById('publicacionForm').onsubmit = function(event) {
-            event.preventDefault();  // Evita el envío inmediato del formulario
-    
             var form = document.getElementById('publicacionForm');
             var formData = new FormData(form);  // Crea un objeto FormData para enviar los datos
-    
+
             // Simula el guardado y muestra el mensaje
             var message = document.getElementById('message');
             message.style.display = 'block';
-    
+
             // Realiza el POST manualmente
             fetch(form.action, {
                 method: 'POST',
@@ -156,6 +131,7 @@
             })
             .catch(error => console.error("Error de red", error));
         };
-    </script>    
+    </script>
+    
 </body>
 </html>

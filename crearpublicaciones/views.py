@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .forms import PublicacionForm  
 from .models import Publicacion  
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 
 @login_required
@@ -60,7 +60,6 @@ def seleccionar_plantilla(request):
 @login_required
 def personalizable(request):
     if request.method == 'POST':
-        # Obtén los datos del formulario o del editor personalizable
         titulo = request.POST.get('titulo', 'Título por defecto')
         texto_corto = request.POST.get('texto_corto', 'Texto corto por defecto')
         
@@ -68,11 +67,11 @@ def personalizable(request):
         publicacion = Publicacion(
             titulo=titulo,
             texto_corto=texto_corto,
-            user=request.user,  # Asigna el usuario autenticado
+            user=request.user,  
         )
         publicacion.save()
 
-        # Espera 2 segundos antes de redirigir (esto simula el comportamiento que quieres)
+        # Espera 1 seg antes de redirigir 
         time.sleep(1)
 
         # Redirige a "Mis Publicaciones"
