@@ -11,6 +11,11 @@
             background-color: #f0f2f5;
             margin: 0;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            overflow-y: auto;
         }
         .container {
             max-width: 1000px;
@@ -45,7 +50,7 @@
             margin: 0 0 15px;
             color: #666;
             display: -webkit-box;
-            -webkit-line-clamp: 2; /* número de líneas visibles */
+            -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -65,40 +70,39 @@
             cursor: pointer;
             text-align: center;
             display: inline-block;
-            width: 120px; /* Fuerza el mismo ancho para todos los botones */
+            width: 120px;
         }
         .publicacion-actions a:hover, .publicacion-actions button:hover {
             background-color: #357abd;
         }
-        .publicacion-actions button {
-            background-color: #4a90e2;
-        }
-        .publicacion-actions form {
-            display: inline;
-        }
-        /* Estilo para el mensaje cuando no hay publicaciones */
-        .no-publicaciones {
+        .no-publicaciones, .back-to-home {
             text-align: center;
             color: #666;
             font-size: 1.2em;
             padding: 20px;
         }
+        .back-to-home a {
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+        }
+        .back-to-home a:hover {
+            background-color: #357abd;
+        }
     </style>
 </head>
 <body>
-
     <div class="container">
         <h2>Mis Publicaciones</h2>
-        
         {% if publicaciones %}
             <ul class="publicacion-list">
                 {% for publicacion in publicaciones %}
                     <li>
                         <h3>{{ publicacion.titulo }}</h3>
-                        <!-- Truncamos el texto corto para evitar desbordamientos -->
                         <p>{{ publicacion.texto_corto|truncatechars:100 }}</p>
-
-                        <!-- Opcional: Enlaces para previsualizar, modificar o eliminar la publicación -->
                         <div class="publicacion-actions">
                             <a href="{% url 'previsualizar_publicacion' publicacion.id %}">Previsualizar</a>
                             <a href="{% url 'modificar_publicacion' publicacion.id %}">Modificar</a>
@@ -110,6 +114,9 @@
         {% else %}
             <p class="no-publicaciones">No tienes publicaciones aún.</p>
         {% endif %}
+        <div class="back-to-home">
+            <a href="{% url 'inicio' %}">Inicio</a>
+        </div>
     </div>
-</body> 
+</body>
 </html>
