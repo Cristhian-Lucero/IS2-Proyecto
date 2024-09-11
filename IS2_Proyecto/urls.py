@@ -40,8 +40,6 @@ urlpatterns = [
     path('perfil/', include('Perfil.urls')),
     path('publicacion/', include('publicacion.urls')),
     path('admin/', admin.site.urls),
-    path('accounts/',include('django.contrib.auth.urls')),
-    path('publicacion/', include('publicacion.urls')),  # Incluye las URLs de publicaciones
     path('accounts/', include('allauth.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), #documentacion
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),          #

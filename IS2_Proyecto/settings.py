@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=#kx0pp3o()eyu0t)oshc!@xqu7j%tnh)1l*4ubzq)yx8#noq^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -49,11 +49,6 @@ INSTALLED_APPS = [
 
     'login',
     'Perfil',
-
-    'allauth',               # Base de django-allauth
-    'allauth.account',        # Gestión de cuentas de usuario
-    'allauth.socialaccount',  # Gestión de cuentas sociales'
-    'allauth.socialaccount.providers.google',  # Proveedor de Google SSO
 
     "crispy_forms", #crispy forms
     'crispy_bootstrap4',
