@@ -8,6 +8,7 @@ urlpatterns = [
     path('rol/', rol, name='rol' ),
 
     path('home/', home, name='home'),
+    path('home/lista_categoria', listadoCategorias, name='lista_categoria'),
 
     path('gestionrol/', gestionarRol, name='gestionrol'),
     

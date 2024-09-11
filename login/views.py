@@ -12,12 +12,18 @@ def home(request):
         'categorias': list(Categoria.objects.all())
     })
 
+def listadoCategorias(request):
+    return render(request, "rol/listadoCategoria.html", {
+        'categorias': list(Categoria.objects.all())
+    })
+
 def inicio(request):
     return render(request, "login/inicio.html")
 
 def exit(request):
     logout(request)
     return redirect('inicio')
+
 @login_required
 def rol(request):
     return render(request, "rol/gestionRol.html")

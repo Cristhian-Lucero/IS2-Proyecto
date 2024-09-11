@@ -20,6 +20,7 @@
         }
 
         a {
+            font-family: "Open Sans";
             color: #A0C1F9; /* Cambia #FF0000 por el color que prefieras */
             text-decoration: none; /* Opcional, para quitar el subrayado */
             transition: filter 0.3s ease; /* Suaviza la transición del brillo */
@@ -264,7 +265,7 @@
                     </ul>
                 </li>
                 <li class="dropdown"> <!-- CATEGORIAS -->
-                    <a href="#">CATEGORIAS</a>
+                    <a href="lista_categoria">CATEGORIAS</a>
                     <!-- Menú desplegable -->
                     <ul class="dropdown-menu">
                         {% for i in categorias %}
@@ -278,7 +279,7 @@
                         <li><a href="#">PERSONAL</a></li>
                         <li><a href="#">SEGURIDAD</a></li>
                         <li><a href="#">NOTIFICACION</a></li>
-                        <li><a href="#">CERRAR SESION</a></li> 
+                        <li><a href="{% url 'exit' %}">CERRAR SESION</a></li> 
                     </ul>
                 </li>
             </ul>

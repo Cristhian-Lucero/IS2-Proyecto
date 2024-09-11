@@ -1,0 +1,58 @@
+{% extends 'rol/encabezado.html' %}
+
+{% block content%}
+<head>
+    <title>Lista de Categorias</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+
+        h1 {
+            text-align: center; 
+            margin-bottom: 5%; 
+            font-family: 'Yanone Kaffeesatz';
+            font-size: 40px;
+        }
+
+        .article-container {
+            display: flex;
+            align-items: flex-start;
+            background-color: #171717;
+            padding: 20px;
+            border-radius: 20px;
+            margin-left: 15%;
+            margin-right: 15%;
+            margin-bottom: 2%;
+
+        }
+
+        .article-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>CATEGORIAS</h1>
+    {% for i in categorias %}
+
+        <div class="article-container" style="text-align: justify;">
+            <div class="article-content">
+                <h2 class="article-title"><a style="text-transform: uppercase;" href="#">{{ i.descripcion_corta }}</a></h2>
+                <div class="description">
+                    {{ i.descripcion_larga }}
+                </div>
+                <a class="read-more" href="#">VER PUBLICACIONES</a>
+            </div>
+        </div>
+
+    {% endfor %}
+
+{% endblock %}
