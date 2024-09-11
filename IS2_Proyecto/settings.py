@@ -32,6 +32,11 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    #'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,9 +59,10 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
 
     'drf_yasg', #documentacion
+    'publicacion',
+    'crearpublicaciones',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 
 SITE_ID = 1
 
@@ -68,9 +74,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     'allauth.account.middleware.AccountMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
 
@@ -87,7 +93,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                
             ],
         },
     },
@@ -109,17 +114,6 @@ DATABASES = {                           #produccion
         'PORT': '5432',
     },
 }
-
-'''DATABASES = {                           #heroku
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd35bgm5ehmhbnb',
-        'USER': 'u6rv5n7l9b1nip',
-        'PASSWORD': 'pff86a592bf3aa2c72d818cf4bf01933fe1c2689caee342232dde18e969436bf1',
-        'HOST': 'ceqbglof0h8enj.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
-        'PORT': '5432',
-    },
-}'''
 
 
 
@@ -157,40 +151,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+STATIC_URL = 'static/'
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
+# Media files (Images, uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Provider de Google
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'OAUTH_PKCE_ENABLED': True,
-        'APP': {
-            'client_id': '1005079594001-9c3iqiin6vvg62bh33mejemkrhc19h07.apps.googleusercontent.com',
-            'secret': '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',
-            'key': ''
-        }
-    }
-}
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-)
-
 # redireccion para login y logout
 LOGIN_REDIRECT_URL = 'inicio'
 LOGOUT_REDIRECT_URL = 'inicio'
@@ -221,4 +191,4 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-DEBUG = True
+

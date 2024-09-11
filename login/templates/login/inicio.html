@@ -47,7 +47,7 @@
             padding: 0.75em 1.5em;
             border: none;
             border-radius: 5px;
-            margin: 10px;
+            margin: 10px; /* Añadí un margen para separar los botones */
             cursor: pointer;
             text-decoration: none;
         }
@@ -60,6 +60,13 @@
         }
         a:hover {
             text-decoration: underline;
+        }
+        /* Aseguramos que los botones estén alineados y separados */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;  /* Permite que los botones salten a la siguiente línea si es necesario */
+            justify-content: center;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -78,7 +85,16 @@
             <a href="{% url 'account_login' %}" class="btn-primary">Login</a>
             
         {% endif %}
-
+        <h3>Inicio</h3>
+        
+        <!-- Contenedor de botones -->
+        <div class="button-container">
+            <a href="{% url 'base' %}" class="btn-primary">Base</a>
+            <a href="{% url 'rol' %}" class="btn-primary">Rol</a>
+            <a href="{% url 'base2' %}" class="btn-primary">Base2</a>
+            <a href="{% url 'seleccionar_plantilla' %}" class="btn btn-primary">Crear Publicación</a>
+            <a href="{% url 'mis_publicaciones' %}" class="btn-primary">Mis Publicaciones</a>
+        </div>
     </div>
 </body>
 </html>

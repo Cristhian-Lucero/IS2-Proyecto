@@ -176,4 +176,7 @@ def editarCategoria(request, categoria_id):
         'categoria': categoria
     })
 
+@login_required
+def seleccionar_plantilla(request):
+    return render(request, 'crearpublicaciones/templates/seleccionar_plantilla.html')
    
