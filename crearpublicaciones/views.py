@@ -3,7 +3,7 @@ from .forms import PublicacionForm
 from .models import Publicacion  
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
-
+import time
 
 @login_required
 def crear_publicacion(request):
