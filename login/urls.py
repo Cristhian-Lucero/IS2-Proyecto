@@ -7,6 +7,8 @@ urlpatterns = [
     path('logout/',exit,name='exit'),
     path('rol/', rol, name='rol' ),
 
+    path('home/', home, name='home'),
+
     path('gestionrol/', gestionarRol, name='gestionrol'),
     
     path('adicionrol/', agregarRol, name='adicionrol'),

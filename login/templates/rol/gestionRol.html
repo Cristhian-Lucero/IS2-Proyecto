@@ -1,18 +1,32 @@
 {% extends 'rol/encabezado.html' %}
 
 {% block content%}
+<head>
+    <title>Asignacion de Rol</title>
+    <style>
+        h1{
+            text-align: center;
+            margin-bottom: 2%;
+        }
+        form{
+            margin-left: 5%;
+        }
+        button{
+            margin-bottom: 12%;
+        }
+    </style>
+</head>
+
 <h1>Gestión de Roles</h1>
 <form action="{% url 'gestionrol' %}" method="post">
     {% csrf_token %}
     <label for="usuario">Seleccionar Usuario:</label>
     <select id="usuario" name="usuario">
         {% for i in usuarios %}
-        <option value="{{i.user.id}}"> {{ i.user.username }} </option>
+        <option value="{{ i.user.id }}"> {{ i.user.username }} </option>
         {% endfor %}
-
     </select>
     <br><br>
-    
     <label for="categoria">Seleccionar Categoria:</label>
     <select id="categoria" name="categoria">
         {% for i in categorias %}

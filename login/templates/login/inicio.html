@@ -5,17 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <style>
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+   <style>
         body {
-            background-color: #f0f2f5; /* Fondo suave y neutro */
+            background-color: #202124;
             font-family: 'Poppins', sans-serif;
-            color: #333;
+            color: #FFFFFF;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+        }
+        .logo h1 {
+            font-family: 'Yanone Kaffeesatz','Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 50px;
+            color: #fff;
         }
         h3 {
             font-size: 2.5em;
@@ -24,11 +32,10 @@
             margin-bottom: 20px;
         }
         #formulario {
-            background-color: white;
-            border-radius: 10px;
+            background-color: #171717;
+            border-radius: 38px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            border: 2px solid #e1e1e1;
             padding: 2em;
             width: 400px;
         }
@@ -58,18 +65,19 @@
 </head>
 <body>
     <div id="formulario">
+        <div class="logo">
+            <h1>Journal X</h1>
+        </div>
         {% if request.user.is_authenticated %}
             <hr>
             <h4>{{ user.username | upper }}, Bienvenido</h4>
             <a href="{% url 'exit' %}" class="btn-primary">Cerrar Sesión</a>
         {% else %}
-            <h1>No estás autenticado</h1>
+            <h1>Debes Iniciar Sesión</h1>
             <br>
             <a href="{% url 'account_login' %}" class="btn-primary">Login</a>
             
         {% endif %}
-        <h3>Inicio</h3>
-        <a href="{% url 'rol' %}" class="btn-primary">Rol</a>
 
     </div>
 </body>

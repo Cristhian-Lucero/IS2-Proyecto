@@ -7,7 +7,7 @@
     <title>Gestión de Roles</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Open Sans", sans-serif, Arial, sans-serif;
             margin: 20px;
         }
         h1 {
@@ -21,16 +21,21 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            border-radius: 15px; /* Bordes redondeados externos */
+            overflow: hidden;
         }
         table, th, td {
-            border: 1px solid #ccc;
+            border: 1px solid #606368;
         }
         th, td {
             padding: 10px;
             text-align: left;
         }
         th {
-            background-color: #f4f4f4;
+            background-color: #171717;
+        }
+        table {
+            border: 1px solid #606368; /* Borde externo de la tabla */
         }
         .form-group {
             margin-bottom: 15px;
@@ -38,21 +43,6 @@
         label {
             display: block;
             margin-bottom: 5px;
-        }
-        input[type="text"], select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #218838;
         }
     </style>
 </head>
@@ -87,12 +77,13 @@
                 <td> {{ i.nombre }} </td>
                 <td> {{ i.descripcion }} </td>
                 <td>
-                   <button class="btn-edit" onclick="window.location.href='{% url 'editar_rol' i.id %}'">Editar</button>
+                    <button class="btn-edit" onclick="window.location.href='{% url 'editar_rol' i.id %}'">Editar</button>
                     
                     <form action="{% url 'eliminar_rol' i.id %}" method="post" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn-delete">Eliminar</button>
                     </form>
+
                 </td>
             </tr>
 

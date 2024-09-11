@@ -1,0 +1,176 @@
+{% extends 'rol/encabezado.html' %}
+
+{% block content%}
+<head>
+    <title>Pagina de Inicio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+
+        .welcome {
+            font-size: 18px;
+            text-align: justify;
+            margin-left: 10%;
+            margin-bottom: 20px;
+        }
+
+        .article-container {
+            display: flex;
+            align-items: flex-start;
+            background-color: #171717;
+            padding: 20px;
+            border-radius: 20px;
+            margin-left: 15%;
+            margin-right: 15%;
+            margin-bottom: 2%;
+
+        }
+
+        .article-container img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            padding: 10;
+            margin: 20px;
+        }
+
+        .article-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="welcome">Te damos la bienvenida Crishtian</div>
+
+    <!-- Artículo 1 -->
+    <div class="article-container" style="text-align: justify;">
+        <img src="https://via.placeholder.com/80" alt="Perfil">
+        <div class="article-content">
+            <h2 class="article-title">EL ENIGMA DE LA MATERIA OSCURA</h2>
+            <div class="category"> <a href="#">ASTRONOMIA</a> </div>
+            <div class="description">
+                El universo visible que nos rodea, compuesto de estrellas, planetas, galaxias y todo lo que podemos observar con telescopios, representa solo una fracción del total de la masa que existe. Estudios astrofísicos sugieren que más del 85% del universo está compuesto por una misteriosa sustancia conocida como materia oscura...
+            </div>
+            <a class="read-more" href="#">LEER MÁS</a>
+        </div>
+    </div>
+
+    <!-- Artículo 2 -->
+    <div class="article-container">
+        <img src="https://via.placeholder.com/80" alt="Perfil">
+        <div class="article-content">
+            <h2 class="article-title">LA REVOLUCIÓN EN LA EDICIÓN GENÉTICA</h2>
+            <div class="category"> <a href="#">BIOLOGIA</a> </div>
+            <div class="description">
+                En los últimos años, una de las tecnologías más innovadoras y transformadoras en el campo de la biotecnología ha sido CRISPR-CAS9, una herramienta que permite la edición precisa del ADN en organismos vivos...
+            </div>
+            <a class="read-more" href="#">LEER MÁS</a>
+        </div>
+    </div>
+
+    <div class="article-container">
+        <img src="https://via.placeholder.com/80" alt="Perfil">
+        <div class="article-content">
+            <h2 class="article-title">EL IMPACTO DE LA INTELIGENCIA ARTIFICIAL EN LA MEDICINA</h2>
+            <div class="category"> <a href="#">TECNOLOGÍA</a> </div>
+            <div class="description">
+                La inteligencia artificial (IA) ha comenzado a revolucionar la medicina moderna, desde el diagnóstico de enfermedades hasta la personalización de tratamientos, ofreciendo una precisión sin precedentes en el cuidado de los pacientes...
+            </div>
+            <a class="read-more" href="#">LEER MÁS</a>
+        </div>
+    </div>
+    
+    <div class="article-container">
+        <img src="https://via.placeholder.com/80" alt="Perfil">
+        <div class="article-content">
+            <h2 class="article-title">LA REVOLUCIÓN DE LA ENERGÍA RENOVABLE</h2>
+            <div class="category"> <a href="#">CIENCIA</a> </div>
+            <div class="description">
+                A medida que el mundo enfrenta los desafíos del cambio climático, las energías renovables como la solar y la eólica se presentan como soluciones clave para reducir las emisiones de carbono y crear un futuro sostenible...
+            </div>
+            <a class="read-more" href="#">LEER MÁS</a>
+        </div>
+    </div>
+    
+    <div class="article-container">
+        <img src="https://via.placeholder.com/80" alt="Perfil">
+        <div class="article-content">
+            <h2 class="article-title">DESCUBRIMIENTOS SOBRE EL UNIVERSO EXPANDIÉNDOSE</h2>
+            <div class="category"> <a href="#">ASTRONOMÍA</a> </div>
+            <div class="description">
+                Investigaciones recientes han confirmado que el universo se está expandiendo a un ritmo más acelerado de lo que se pensaba, planteando nuevas preguntas sobre la materia oscura y la energía oscura...
+            </div>
+            <a class="read-more" href="#">LEER MÁS</a>
+        </div>
+    </div>
+    
+    <div class="article-container">
+        <img src="https://via.placeholder.com/80" alt="Perfil">
+        <div class="article-content">
+            <h2 class="article-title">LA INNOVACIÓN EN EL TRANSPORTE ELÉCTRICO</h2>
+            <div class="category"> <a href="#">TECNOLOGÍA</a> </div>
+            <div class="description">
+                Con el auge de los autos eléctricos y las nuevas tecnologías de baterías, el transporte eléctrico está cada vez más cerca de convertirse en la norma, ofreciendo una alternativa más limpia y eficiente a los combustibles fósiles...
+            </div>
+            <a class="read-more" href="#">LEER MÁS</a>
+        </div>
+    </div>
+    
+    <div class="article-container">
+        <img src="https://via.placeholder.com/80" alt="Perfil">
+        <div class="article-content">
+            <h2 class="article-title">LA PSICOLOGÍA DETRÁS DE LOS HÁBITOS SALUDABLES</h2>
+            <div class="category"> <a href="#">SALUD</a> </div>
+            <div class="description">
+                Adoptar hábitos saludables no solo depende de la fuerza de voluntad. La psicología juega un papel clave, desde la motivación hasta el refuerzo positivo, para mantener rutinas que promuevan una vida más sana...
+            </div>
+            <a class="read-more" href="#">LEER MÁS</a>
+        </div>
+    </div>
+    
+    <div class="article-container">
+        <img src="https://via.placeholder.com/80" alt="Perfil">
+        <div class="article-content">
+            <h2 class="article-title">LA ECONOMÍA GLOBAL Y LOS NUEVOS DESAFÍOS</h2>
+            <div class="category"> <a href="#">ECONOMÍA</a> </div>
+            <div class="description">
+                Los cambios en la economía global debido a la pandemia y las tensiones comerciales han forzado a los países a adaptarse a una nueva realidad, buscando soluciones innovadoras para evitar recesiones prolongadas...
+            </div>
+            <a class="read-more" href="#">LEER MÁS</a>
+        </div>
+    </div>
+    
+    <div class="article-container">
+        <img src="https://via.placeholder.com/80" alt="Perfil">
+        <div class="article-content">
+            <h2 class="article-title">EXPLORANDO EL FUTURO DE LA REALIDAD VIRTUAL</h2>
+            <div class="category"> <a href="#">INNOVACIÓN</a> </div>
+            <div class="description">
+                La realidad virtual sigue avanzando, prometiendo cambiar no solo la industria del entretenimiento, sino también la forma en que aprendemos, trabajamos y nos comunicamos en el futuro...
+            </div>
+            <a class="read-more" href="#">LEER MÁS</a>
+        </div>
+    </div>
+    
+    <!-- Artículo 3 -->
+    <div class="article-container">
+        <img src="https://via.placeholder.com/80" alt="Perfil">
+        <div class="article-content">
+            <h2 class="article-title">TÍTULO</h2>
+            <div class="category"> <a href="#">CATEGORIA</a> </div>
+            <div class="description">
+                Este es un texto de ejemplo que describe el contenido de esta sección. Puedes agregar la descripción que desees aquí...
+            </div>
+            <a class="read-more" href="#">LEER MÁS</a>
+        </div>
+    </div>
+
+{% endblock %}

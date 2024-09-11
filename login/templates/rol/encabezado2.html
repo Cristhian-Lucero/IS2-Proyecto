@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encabezado con Links</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos básicos para el encabezado */
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #F8F7F6;
+        }
+
+        header {
+            background-color: #313840;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            margin: 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            background-color: #454f5a;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #c9cbce;
+;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: auto;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .btn-edit {
+            background-color: #007bff;
+        }
+        .btn-edit:hover {
+            background-color: #0056b3;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+        }
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        footer {
+            background-color: #313840;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/" style="color: white; text-decoration: none;">Journal X</a>
+        </div>
+        <nav>
+            <a href="/inicio">Inicio</a>
+            <a href="/gestionrol">Asignar Rol</a>
+            <a href="/adicionrol">Gestión Rol</a>
+            <a href="/gestioncategoria">Gestión Categoría</a>
+        </nav>
+    </header>
+
+    <!-- Resto del contenido de la página -->
+    <div class="content">
+        {% block content %}
+        <!-- El contenido específico de cada página se insertará aquí -->
+        {% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Journal X. Todos los derechos reservados.</p>
+        <p><a href="/contacto">Contacto</a> | <a href="/privacidad">Política de Privacidad</a></p>
+    </footer>
+</body>
+</html>

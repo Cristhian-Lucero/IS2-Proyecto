@@ -3,128 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encabezado con Links</title>
+    <link rel="shortcut icon" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Yanone+Kaffeesatz:wght@200..700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos básicos para el encabezado */
-        
+        /* Reseteo básico de márgenes y padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            color: #A0C1F9; /* Cambia #FF0000 por el color que prefieras */
+            text-decoration: none; /* Opcional, para quitar el subrayado */
+            transition: filter 0.3s ease; /* Suaviza la transición del brillo */
+        }
+
+        a:hover {
+            filter: brightness(120%); /* Incrementa el brillo en un 20% al pasar el cursor */
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
-            margin: 20px;
-            padding: 0;
-            background-color: #F8F7F6;
+            background-color: #202124;
+            color: #fff;
         }
 
+        /* Estilo del encabezado */
         header {
-            background-color: #4a90e2;
-            color: white;
-            padding: 15px 20px;
-            text-align: center;
-            border-radius: 10px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-            margin: 20px;
-        }
-
-        nav {
             display: flex;
-            justify-content: center;
-            margin-top: 10px;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #202124;
         }
 
-        nav a {
-            color: white;
+        /* Estilo del logo */
+        .logo h1 {
+            font-family: 'Yanone Kaffeesatz','Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 35px;
+            color: #fff;
+        }
+
+        /* Estilo del menú de navegación */
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 60px;
+        }
+
+        nav ul li {
+            position: relative; /* Necesario para posicionar el menú desplegable */
+        }
+
+        nav ul li a {
             text-decoration: none;
-            margin: 0 15px;
-            padding: 8px 15px;
-            border-radius: 5px;
-            background-color: #357abd;
-            transition: background-color 0.3s ease;
-        }
-
-        nav a:hover {
-            background-color: #2a5d9f;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-right: auto;
+            color: #fff;
+            font-weight: 700;
             font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            transition: color 0.3s ease;
         }
-        
+
+        nav ul li a:hover {
+            color: #999;
+        }
+
+        .dropdown-menu {
+            display: none; /* Oculta el menú por defecto */
+            position: absolute;
+            top: 100%; /* Hace que el menú aparezca justo debajo del elemento padre */
+            left: -30px;
+            background-color: #171717;
+            list-style: none;
+            padding: 10px 0;
+            border-radius: 10px;
+            z-index: 1000; /* Para asegurarnos de que quede encima */
+        }
+
+        .dropdown-menu li {
+            width: 150px;
+            text-align: left;
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 400;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #444;
+        }
+
+        /* Mostrar el menú desplegable al pasar el ratón sobre el elemento */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        /* Pie de página */
+        footer {
+            background-color: #171717;
+            padding: 40px 0;
+            color: #fff;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .footer-left h3 {
+            font-family: 'Yanone Kaffeesatz', 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: #fff;
+        }
+
+        .footer-left h3 span {
+            font-weight: 400;
+            color: #fff;
+        }
+
+        .footer-left p {
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            margin-top: 10px;
+            color: #bbb;
+        }
+
+        /* Estilos del menú de navegación en el footer */
+        .footer-center ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-center ul li {
+            margin: 10px 0;
+        }
+
+        .footer-center ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .footer-center ul li a:hover {
+            color: #999;
+        }
+
+        /* Redes sociales */
+        .footer-right h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .footer-right ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-right ul li a img {
+            width: 24px;
+            height: 24px;
+            filter: invert(100%);
+            transition: filter 0.3s ease;
+        }
+
+        .footer-right ul li a img:hover {
+            filter: invert(70%);
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .footer-right ul {
+                justify-content: center;
+            }
+        }
+
+        textarea {
+            background-color: #202124;
+            color: #FFFFFF;
+            border: 1px solid #606368;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 10px;
+            width: 100%; /* Ajustar al tamaño del contenedor */
+            height: 150px; /* Altura del textarea */
+        }
+        input[type="text"], select {
+            
+            padding: 8px;
+            box-sizing: border-box;
+            background-color: #202124;
+            color: #FFFFFF;
+            border: 1px solid #606368;
+            border-radius: 10px;
+        }
         button {
+            margin: 5px;
             padding: 10px 15px;
-            background-color: #28a745;
+            background-color: #4C994B;
+            border-radius: 10px;
             color: white;
             border: none;
             cursor: pointer;
-            border-radius: 5px;
+            transition: color 0.3s ease;
         }
         button:hover {
-            background-color: #218838;
+            filter: brightness(1.2)
         }
         .btn-edit {
-            background-color: #007bff;
-        }
-        .btn-edit:hover {
-            background-color: #0056b3;
+            background-color: #4571E4;
         }
         .btn-delete {
-            background-color: #dc3545;
-        }
-        .btn-delete:hover {
-            background-color: #c82333;
+            background-color: #D24330;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 15px;
-        }
-
-        footer {
-            background-color: #4a90e2;
-            color: white;
-            padding: 10px 20px;
-            text-align: center;
-            border-radius: 10px;
-            margin: 20px;
-            box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        footer a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">
-            <a href="/" style="color: white; text-decoration: none;">Journal X</a>
+            <h1>Journal X</h1>
         </div>
         <nav>
-            <a href="/inicio">Inicio</a>
-            <a href="/gestionrol">Asignar Rol</a>
-            <a href="/adicionrol">Gestión Rol</a>
-            <a href="/gestioncategoria">Gestión Categoría</a>
+            <ul>
+                <li><a href="/home">INICIO</a></li>
+                <li class="dropdown"> <!-- MI ROL -->
+                    <a href="#">MI ROL</a>
+                    <!-- Menú desplegable -->
+                    <ul class="dropdown-menu">
+                        <li><a href="/gestionrol">ASIGNAR ROL</a></li>
+                        <li><a href="/adicionrol">GESTIONAR ROL</a></li>
+                        <li><a href="/gestioncategoria">GESTIONAR CATEGORIA</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown"> <!-- CATEGORIAS -->
+                    <a href="#">CATEGORIAS</a>
+                    <!-- Menú desplegable -->
+                    <ul class="dropdown-menu">
+                        {% for i in categorias %}
+                        <li><a style="text-transform: uppercase;" href="#">{{ i.descripcion_corta }}</a></li>
+                        {% endfor %}
+                    </ul>
+                <li class="dropdown"> <!-- MI CUENTA -->
+                    <a href="#">MI CUENTA</a>
+                    <!-- Menú desplegable -->
+                    <ul class="dropdown-menu">
+                        <li><a href="#">PERSONAL</a></li>
+                        <li><a href="#">SEGURIDAD</a></li>
+                        <li><a href="#">NOTIFICACION</a></li>
+                        <li><a href="#">CERRAR SESION</a></li> 
+                    </ul>
+                </li>
+            </ul>
         </nav>
     </header>
 
-    <!-- Resto del contenido de la página -->
-    <div class="content">
-        {% block content %}
-        <!-- El contenido específico de cada página se insertará aquí -->
-        {% endblock %}
-    </div>
+    {% block content %}
+    <!-- El contenido específico de cada página se insertará aquí -->
+    {% endblock %}
 
     <footer>
-        <p>&copy; 2024 Journal X. Todos los derechos reservados.</p>
-        <p><a href="/contacto">Contacto</a> | <a href="/privacidad">Política de Privacidad</a></p>
-    </footer>
+        <div class="footer-container">
+            <div class="footer-left">
+                <h3>Journal X</h3>
+                <p>&copy; 2024 Journal X. Todos los derechos reservados.</p>
+            </div>
+    
+            <div class="footer-center">
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Categorías</a></li>
+                    <li><a href="#">Sobre Nosotros</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-right">
+                <h4>Síguenos</h4>
+                <ul class="social-icons">
+                    <li><a href="#"><img src="icon-facebook.png" alt="Facebook"></a></li>
+                    <li><a href="#"><img src="icon-twitter.png" alt="Twitter"></a></li>
+                    <li><a href="#"><img src="icon-instagram.png" alt="Instagram"></a></li>
+                    <li><a href="#"><img src="icon-linkedin.png" alt="LinkedIn"></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>    
 </body>
 </html>

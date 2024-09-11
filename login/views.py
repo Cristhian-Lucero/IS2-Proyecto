@@ -7,10 +7,13 @@ from Perfil.models import Usuario
 from django.contrib.auth.decorators import login_required #para redirigir a login obligandolo a logearse
 from django.contrib.auth import logout
 # Create your views here.
+def home(request):
+    return render(request, "rol/home.html", {
+        'categorias': list(Categoria.objects.all())
+    })
 
 def inicio(request):
     return render(request, "login/inicio.html")
-
 
 def exit(request):
     logout(request)
@@ -47,7 +50,6 @@ def gestionarRol(request):
             categorias = Categoria.objects.all()
             roles = Rol.objects.all()
             # Si no existe la relación, puedes manejar el error (opcional)
-            print('error capo')
             print(f'usuario id: {usuario_id}')
             print(f'categoria id: {categoria_id}')
             print(f'rol id: {rol_id}')
@@ -72,6 +74,7 @@ def agregarRol(request):
     y = list(Permiso.objects.all())
     if request.method == 'GET':
         return render(request, 'rol/crudRol.html', {
+            'categorias': list(Categoria.objects.all()),
             'roles': x,
             'permisos': y,
             'form': CreateNewRol()
@@ -112,6 +115,7 @@ def editarRol(request, rol_id):
     
 
     return render(request, 'rol/editarRol.html', {
+        'categorias': list(Categoria.objects.all()),
         'rol': rol,
         'form': form
     })
@@ -137,6 +141,7 @@ def gestionCategoria(request):
         })
 
 def eliminarCategoria(request, categoria_id):
+
     categoria = get_object_or_404(Categoria, id=categoria_id)
     categoria.delete()
     return redirect('gestioncategoria')
@@ -160,6 +165,7 @@ def editarCategoria(request, categoria_id):
         })
 
     return render(request, 'rol/editarCategoria.html', {
+        'categorias': list(Categoria.objects.all()),
         'form': form,
         'categoria': categoria
     })
