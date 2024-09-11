@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .forms import PublicacionForm  
 from .models import Publicacion  
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
-
+from django.shortcuts import get_object_or_404, redirect
+import time
 
 @login_required
 def crear_publicacion(request):
@@ -33,14 +33,15 @@ def mis_publicaciones(request):
 
     return render(request, 'misPublicaciones.html', {'publicaciones': publicaciones})
 
-def modificar_publicacion(request, pk):
-    publicacion = get_object_or_404(Publicacion, pk=pk)
-    
+@login_required
+def modificar_publicacion(request, publicacion_id):
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+
     if request.method == 'POST':
-        form = PublicacionForm(request.POST, instance=publicacion)
+        form = PublicacionForm(request.POST, request.FILES, instance=publicacion)
         if form.is_valid():
             form.save()
-            return redirect('mis_publicaciones')
+            return redirect('mis_publicaciones')  # Redirige a la lista de publicaciones después de guardar
     else:
         form = PublicacionForm(instance=publicacion)
 
@@ -59,7 +60,6 @@ def seleccionar_plantilla(request):
 @login_required
 def personalizable(request):
     if request.method == 'POST':
-        # Obtén los datos del formulario o del editor personalizable
         titulo = request.POST.get('titulo', 'Título por defecto')
         texto_corto = request.POST.get('texto_corto', 'Texto corto por defecto')
         
@@ -67,14 +67,14 @@ def personalizable(request):
         publicacion = Publicacion(
             titulo=titulo,
             texto_corto=texto_corto,
-            user=request.user,  # Asigna el usuario autenticado
+            user=request.user,  
         )
         publicacion.save()
 
-        # Espera 2 segundos antes de redirigir (esto simula el comportamiento que quieres)
+        # Espera 1 seg antes de redirigir 
         time.sleep(1)
 
         # Redirige a "Mis Publicaciones"
-        return redirect('mis_publicaciones')
+        return redirect('misPublicaciones')
     
     return render(request, 'personalizable.html')

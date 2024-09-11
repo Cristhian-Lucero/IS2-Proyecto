@@ -67,6 +67,7 @@
             padding: 20px;
             background-color: #eee;
             text-align: left;
+            position: relative;
         }
         .dropzone .block img {
             width: 100px;
@@ -88,6 +89,16 @@
         }
         .save-button:hover {
             background-color: #45a049;
+        }
+        .delete-button {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -119,6 +130,11 @@
         const saveButton = document.getElementById('saveButton');
         const fileInput = document.getElementById('fileInput');
 
+        let headingCount = 0;
+        let textCount = 0;
+        let quoteCount = 0;
+        let imageCount = 0;
+
         blocks.forEach(block => {
             block.addEventListener('dragstart', function (e) {
                 e.dataTransfer.setData('type', this.getAttribute('data-type'));
@@ -134,19 +150,44 @@
             const type = e.dataTransfer.getData('type');
             let element = null;
 
-            if (type === 'image') {
+            if (type === 'image' && imageCount < 2) {
                 element = document.createElement('img');
                 element.alt = 'Imagen personalizada';
                 element.style.width = '100%';
                 showImageUploadDialog(element);
-            } else {
+                imageCount++;
+            } else if (type === 'heading' && headingCount < 1) {
                 element = createElement(type);
+                headingCount++;
+            } else if (type === 'text' && textCount < 2) {
+                element = createElement(type);
+                textCount++;
+            } else if (type === 'quote' && quoteCount < 1) {
+                element = createElement(type);
+                quoteCount++;
+            } else {
+                alert('Has alcanzado el límite de elementos permitidos.');
+                return;
             }
 
             if (element) {
                 const blockDiv = document.createElement('div');
                 blockDiv.className = 'block';
                 blockDiv.appendChild(element);
+
+                // Crear el botón de eliminar
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'delete-button';
+                deleteButton.textContent = 'Eliminar';
+                deleteButton.addEventListener('click', function () {
+                    blockDiv.remove();
+                    if (type === 'heading') headingCount--;
+                    if (type === 'text') textCount--;
+                    if (type === 'quote') quoteCount--;
+                    if (type === 'image') imageCount--;
+                });
+
+                blockDiv.appendChild(deleteButton);
                 dropzone.appendChild(blockDiv);
             }
         });
@@ -197,7 +238,7 @@
             
             // Redirige a la página de "Mis Publicaciones" después de 2 segundos
             setTimeout(function () {
-                window.location.href = "crearpublicaciones/templates/misPublicaciones"; 
+                window.location.href = "{% url 'mis_publicaciones' %}"; 
             }, 2000);
         });
 
