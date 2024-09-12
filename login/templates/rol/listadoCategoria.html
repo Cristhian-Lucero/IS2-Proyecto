@@ -42,17 +42,17 @@
 
     <h1>CATEGORIAS</h1>
     {% for i in categorias %}
-
-        <div class="article-container" style="text-align: justify;">
-            <div class="article-content">
-                <h2 class="article-title"><a style="text-transform: uppercase;" href="#">{{ i.descripcion_corta }}</a></h2>
-                <div class="description">
-                    {{ i.descripcion_larga }}
+        {% if i.estado == 'Activo' %}
+            <div class="article-container" style="text-align: justify;">
+                <div class="article-content">
+                    <h2 class="article-title"><a style="text-transform: uppercase;" href="#">{{ i.descripcion_corta }}</a></h2>
+                    <div class="description">
+                        {{ i.descripcion_larga }}
+                    </div>
+                    <a class="read-more" href="#">VER PUBLICACIONES</a>
                 </div>
-                <a class="read-more" href="#">VER PUBLICACIONES</a>
             </div>
-        </div>
-
+        {% endif %}
     {% endfor %}
 
 {% endblock %}
