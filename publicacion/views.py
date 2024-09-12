@@ -6,9 +6,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 
-def home(request):
-    return render(request, 'homepage/home.html')
-
 from django.shortcuts import render
 
 def crear_publicacion(request):

@@ -75,9 +75,16 @@
         <div class="logo">
             <h1>Journal X</h1>
         </div>
+        {% csrf_token %}
         {% if request.user.is_authenticated %}
             <hr>
             <h4>{{ user.username | upper }}, Bienvenido</h4>
+            <div id="redirect-block">
+                <!-- Bloque que hará la redirección a una vista de Django -->
+                <script type="text/javascript">
+                    window.location.href = "{% url 'home' %}";  <!-- Redirige a una vista de Django -->
+                </script>
+            </div>            
             <a href="{% url 'exit' %}" class="btn-primary">Cerrar Sesión</a>
         {% else %}
             <h1>Debes Iniciar Sesión</h1>
@@ -85,14 +92,6 @@
             <a href="{% url 'account_login' %}" class="btn-primary">Login</a>
             
         {% endif %}
-        <h3>Inicio</h3>
-        
-        <!-- Contenedor de botones -->
-        <div class="button-container">
-            <a href="{% url 'rol' %}" class="btn-primary">Rol</a>
-            <a href="{% url 'seleccionar_plantilla' %}" class="btn btn-primary">Crear Publicación</a>
-            <a href="{% url 'mis_publicaciones' %}" class="btn-primary">Mis Publicaciones</a>
-        </div>
     </div>
 </body>
 </html>

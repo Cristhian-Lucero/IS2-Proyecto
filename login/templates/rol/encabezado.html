@@ -299,11 +299,11 @@
                             <a style="text-transform: uppercase;" href="#">{{ i.descripcion_corta }}</a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">REVISIONES</a></li>
-                                <li><a href="#">NUEVA PUBLICACION</a></li>
+                                <li><a href="{% url 'seleccionar_plantilla' %}">NUEVA PUBLICACION</a></li>
                             </ul>
                         </li>
                         {% endfor %}
-                        <li><a href="#">MIS PUBLICACIONES</a></li>
+                        <li><a href="{% url 'mis_publicaciones' %}">MIS PUBLICACIONES</a></li>
                         <li><a href="#">REPORTES</a></li>
                     </ul>
                 </li>
