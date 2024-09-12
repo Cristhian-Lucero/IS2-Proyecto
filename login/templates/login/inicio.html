@@ -9,7 +9,61 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200..700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-   <style>
+    <style>
+        /* Animación de entrada */
+        .combine-effect {
+                display: inline-block;
+                font-size: 40px;
+                font-weight: bold;
+                font-family: Arial, sans-serif;
+        }
+
+        .combine-effect span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: combineFade 0.7s ease forwards;
+        }
+
+        @keyframes combineFade {
+                0% {
+                    opacity: 0;
+                    transform: translateX(-20px); /* Empieza ligeramente desplazado hacia abajo */
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0); /* Termina en su posición original */
+                }
+            }
+            
+            /* Añadimos un retraso en la animación a cada letra */
+            .combine-effect span:nth-child(1) {
+                animation-delay: 0s;
+            }
+            .combine-effect span:nth-child(2) {
+                animation-delay: 0.02s;
+            }
+            .combine-effect span:nth-child(3) {
+                animation-delay: 0.1s;
+            }
+            .combine-effect span:nth-child(4) {
+                animation-delay: 0.15s;
+            }
+            .combine-effect span:nth-child(5) {
+                animation-delay: 0.2s;
+            }
+            .combine-effect span:nth-child(6) {
+                animation-delay: 0.25s;
+            }
+            .combine-effect span:nth-child(7) {
+                animation-delay: 0.3s;
+            }
+            .combine-effect span:nth-child(8) {
+                animation-delay: 0.35s;
+            }
+            .combine-effect span:nth-child(9) {
+                animation-delay: 0.38s;
+            }
         body {
             background-color: #202124;
             font-family: 'Poppins', sans-serif;
@@ -75,31 +129,39 @@
 <body>
     <div id="formulario">
         <div class="logo">
-            <h1>Journal X</h1>
+            <h1 class="combine-effect">
+                <span>J</span><span>o</span><span>u</span><span>r</span><span>n</span><span>a</span><span>l</span><span>&nbsp;</span><span>X</span>
+            </h1>
         </div>
-        {% csrf_token %}
-        {% if request.user.is_authenticated %}
-            <hr>
-            <h4>{{ user.username | upper }}, Bienvenido</h4>
-            <div id="redirect-block">
-                <!-- Bloque que hará la redirección a una vista de Django -->
-                <script type="text/javascript">
-                    window.location.href = "{% url 'home' %}";  <!-- Redirige a una vista de Django -->
-                </script>
-            </div>            
-            <a href="{% url 'exit' %}" class="btn-primary">Cerrar Sesión</a>
-        {% else %}
-            <h1>Bienvenido a nuestro sitio web</h1>
-            <div id="redirect-block">
-                <!-- Bloque que hará la redirección a una vista de Django -->
-                <script type="text/javascript">
-                    window.location.href = "{% url 'account_login' %}";  <!-- Redirige a una vista de Django -->
-                </script>
-            </div>   
-            <br>
-            <a href="{% url 'account_login' %}" class="btn-primary">Login</a>
-            
-        {% endif %}
+            {% csrf_token %}
+            {% if request.user.is_authenticated %}
+                <hr>
+                <h4>{{ user.username | upper }}, Bienvenido</h4>
+                <div id="redirect-block">
+    
+                    <script type="text/javascript">
+                        setTimeout(function() {
+                            window.location.href = "{% url 'home' %}";
+                        }, 450);
+                    </script>
+                    
+                </div>            
+                <a href="{% url 'exit' %}" class="btn-primary">Cerrar Sesión</a>
+            {% else %}
+                <h1>Bienvenido a nuestro sitio web</h1>
+                
+                <div id="redirect-block">
+                    <script type="text/javascript">
+                        setTimeout(function() {
+                            window.location.href = "{% url 'account_login' %}";  
+                        }, 450);
+                    </script>
+                </div>   
+                
+                <br>
+                <a href="{% url 'account_login' %}" class="btn-primary">Login</a>
+                
+            {% endif %}
     </div>
 </body>
 </html>
