@@ -1,24 +1,37 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'rol/encabezado.html' %}
+
+{% block content%}
 <head>
-    <meta charset="UTF-8">
     <title>Elegir Plantilla</title>
-    <link rel="stylesheet" href="path_to_your_stylesheet.css"> <!-- Si tienes un archivo CSS externo -->
     <style>
-        body { font-family: Arial, sans-serif; }
-        .btn { padding: 10px 20px; text-decoration: none; color: white; background-color: #007BFF; border: none; border-radius: 5px; }
-        .btn:hover { background-color: #0056b3; }
-        .btn-secondary { background-color: #6c757d; }
-        .btn-secondary:hover { background-color: #545b62; }
+        h1 {
+            text-align: center; 
+            margin-bottom: 5%; 
+            font-family: 'Yanone Kaffeesatz';
+            font-size: 40px;
+        }
+        .btn { 
+            margin: 5px;
+            padding: 10px 15px;
+            background-color: #4C994B;
+            border-radius: 10px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .btn:hover { 
+            filter: brightness(1.2)
+        }
     </style>
 </head>
 <body>
+    <h1>Elegir Plantilla</h1>
     <div style="text-align: center; margin-top: 50px;">
-        <h2>Elegir Plantilla</h2>
         <div style="margin-top: 20px;">
             <a href="{% url 'crear_publicacion' %}" class="btn btn-primary" style="margin-right: 10px;">Blog</a>
             <!--<a href="{% url 'personalizable' %}" class="btn btn-secondary">Personalizable</a>-->
         </div>
     </div>
-</body>
-</html>
+
+{% endblock %}

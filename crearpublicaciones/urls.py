@@ -1,6 +1,5 @@
 from django.urls import path
-from .views import crear_publicacion, previsualizar_publicacion, mis_publicaciones, modificar_publicacion, eliminar_publicacion, seleccionar_plantilla, personalizable
-
+from .views import *
 
 urlpatterns = [
     path('crear/', crear_publicacion, name='crear_publicacion'),
