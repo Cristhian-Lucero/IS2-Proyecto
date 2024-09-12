@@ -4,9 +4,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Yanone+Kaffeesatz:wght@200..700&display=swap" rel="stylesheet">
     <title>{% block title %}Mi Sitio{% endblock title %}</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body{
+            font-family: 'Yanone Kaffeesatz','Montserrat', sans-serif;
+            text-align: center;
+            background-color: #202124;
+            color: #FFFFFF;
+        }
+        h1 {
+            font-family: 'Yanone Kaffeesatz','Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 35px;
+            color: #fff;
+        }
+        main {
+            text-align: center;
+            margin: 0 auto; 
+        }
+        a {
+            font-family: "Open Sans";
+            color: #A0C1F9; /* Cambia #FF0000 por el color que prefieras */
+            text-decoration: none; /* Opcional, para quitar el subrayado */
+            transition: filter 0.3s ease; /* Suaviza la transición del brillo */
+        }
+        div.container.d-flex.flex-column.min-vh-100 {
+            width: 400px;
+            margin: 0 auto; 
+            display: flex;
+            align-items: flex-start;
+            background-color: #171717;
+            padding: 5px;
+            border-radius: 20px;
+            margin-left: 15%;
+            margin-right: 15%;
+            margin-bottom: 2%;
+            margin-top: 2%;
+        }
+        input {
+            
+            padding: 8px;
+            box-sizing: border-box;
+            background-color: #202124;
+            color: #FFFFFF;
+            border: 1px solid #606368;
+            border-radius: 10px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 15px;
+            background-color: #4C994B;
+            border-radius: 10px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        button:hover {
+            filter: brightness(1.2)
+        }
+    </style>
     {% block extra_head %}
     {% endblock extra_head %}
 </head>
@@ -18,12 +81,7 @@
             {% endblock content %}
         </main>
 
-        <footer class="mt-auto text-center py-3">
-            <div class="container">
-                <br>
-                <span class="text-muted">© 2024 IS2-Proyecto. Todos los derechos reservados.</span>
-            </div>
-        </footer>
+        
     </div>
 
     {% block extra_scripts %}
