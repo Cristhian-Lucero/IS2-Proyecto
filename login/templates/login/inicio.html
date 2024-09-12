@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'css/favicon.ico' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@200..700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,7 +89,13 @@
             </div>            
             <a href="{% url 'exit' %}" class="btn-primary">Cerrar Sesión</a>
         {% else %}
-            <h1>Debes Iniciar Sesión</h1>
+            <h1>Bienvenido a nuestro sitio web</h1>
+            <div id="redirect-block">
+                <!-- Bloque que hará la redirección a una vista de Django -->
+                <script type="text/javascript">
+                    window.location.href = "{% url 'account_login' %}";  <!-- Redirige a una vista de Django -->
+                </script>
+            </div>   
             <br>
             <a href="{% url 'account_login' %}" class="btn-primary">Login</a>
             
