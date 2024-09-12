@@ -7,18 +7,22 @@ from Perfil.models import Usuario
 from django.contrib.auth.decorators import login_required #para redirigir a login obligandolo a logearse
 from django.contrib.auth import logout
 # Create your views here.
+@login_required
 def home(request):
     return render(request, "rol/home.html", {
         'categorias': list(Categoria.objects.all())
     })
 
+@login_required
 def listadoCategorias(request):
     return render(request, "rol/listadoCategoria.html", {
         'categorias': list(Categoria.objects.all())
     })
 
+
 def inicio(request):
     return render(request, "login/inicio.html")
+
 
 def exit(request):
     logout(request)
@@ -28,6 +32,7 @@ def exit(request):
 def rol(request):
     return render(request, "rol/gestionRol.html")
 
+@login_required
 def gestionarRol(request):
     if request.method == 'POST':
         # Obtener los valores seleccionados
@@ -75,6 +80,7 @@ def gestionarRol(request):
         'roles': roles,
     })
 
+@login_required
 def agregarRol(request):
     x = list((Rol.objects.all()).order_by('id'))
     y = list(Permiso.objects.all())
@@ -92,11 +98,15 @@ def agregarRol(request):
         nuevo_rol.save()
         return redirect('adicionrol')
 
+@login_required
 def eliminarRol(request, rol_id):
-    rol_seleccionado = get_object_or_404(Rol, id=rol_id)
-    rol_seleccionado.delete()
+    #Para que no se eliminen los 5 primeros roles, que son los fundamentales para el funcionamiento de la pagina
+    if rol_id > 5: 
+        rol_seleccionado = get_object_or_404(Rol, id=rol_id)
+        rol_seleccionado.delete()
     return redirect('adicionrol')
 
+@login_required
 def editarRol(request, rol_id):
     rol = get_object_or_404(Rol, id=rol_id)
 
@@ -126,6 +136,7 @@ def editarRol(request, rol_id):
         'form': form
     })
 
+@login_required
 def gestionCategoria(request):
     if request.method == 'GET':
         #Si se entra desde el metodo GET 'visita la pagina'
@@ -146,12 +157,14 @@ def gestionCategoria(request):
             'form': CreateNewCategoria() 
         })
 
+@login_required
 def eliminarCategoria(request, categoria_id):
 
     categoria = get_object_or_404(Categoria, id=categoria_id)
     categoria.delete()
     return redirect('gestioncategoria')
 
+@login_required
 def editarCategoria(request, categoria_id):
     categoria = get_object_or_404(Categoria, id=categoria_id)
     

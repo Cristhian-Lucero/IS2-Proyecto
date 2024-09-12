@@ -53,6 +53,8 @@
             color: #fff;
         }
 
+        /* -------------------------------------------item encabezado------------------------------------------- */
+        
         /* Estilo del menú de navegación */
         nav ul {
             list-style: none;
@@ -76,6 +78,8 @@
         nav ul li a:hover {
             color: #999;
         }
+
+        /* -------------------------------------------Menu Desplegable------------------------------------------- */
 
         .dropdown-menu {
             display: none; /* Oculta el menú por defecto */
@@ -111,7 +115,32 @@
             display: block;
         }
 
-        /* Pie de página */
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        /* Mostrar el submenú (hijo) cuando el ratón pasa sobre el padre */
+        .dropdown-submenu:hover .dropdown-menu {
+            display: block;
+            visibility: visible;
+            position: absolute;
+            left: 100%; /* Mostrar a la derecha del menú padre */
+            top: 0;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            display: none; /* Ocultar el submenú por defecto */
+            visibility: hidden; 
+            position: absolute;
+            top: 0; /* Alineamos el submenú con el padre */
+            left: 100%; /* Hacemos que el submenú aparezca a la derecha del menú padre */
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            min-width: 160px;
+            z-index: 1;
+            }
+
+        /* -------------------------------------------Pie de página------------------------------------------- */
+        
         footer {
             margin-top: 5%;
             background-color: #171717;
@@ -256,15 +285,29 @@
         <nav>
             <ul>
                 <li><a href="/home">INICIO</a></li>
-                <li class="dropdown"> <!-- MI ROL -->
-                    <a href="#">MI ROL</a>
+
+                <li class="dropdown"> <!-- ACCIONES -->
+                    <a href="#">ACCIONES</a>
                     <!-- Menú desplegable -->
                     <ul class="dropdown-menu">
                         <li><a href="/gestionrol">ASIGNAR ROL</a></li>
                         <li><a href="/adicionrol">GESTIONAR ROL</a></li>
                         <li><a href="/gestioncategoria">GESTIONAR CATEGORIA</a></li>
+                        {% for i in categorias %}
+
+                        <li class="dropdown-submenu">
+                            <a style="text-transform: uppercase;" href="#">{{ i.descripcion_corta }}</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">REVISIONES</a></li>
+                                <li><a href="#">NUEVA PUBLICACION</a></li>
+                            </ul>
+                        </li>
+                        {% endfor %}
+                        <li><a href="#">MIS PUBLICACIONES</a></li>
+                        <li><a href="#">REPORTES</a></li>
                     </ul>
                 </li>
+
                 <li class="dropdown"> <!-- CATEGORIAS -->
                     <a href="lista_categoria">CATEGORIAS</a>
                     <!-- Menú desplegable -->
@@ -273,6 +316,8 @@
                         <li><a style="text-transform: uppercase;" href="#">{{ i.descripcion_corta }}</a></li>
                         {% endfor %}
                     </ul>
+                </li>
+
                 <li class="dropdown"> <!-- MI CUENTA -->
                     <a href="#">MI CUENTA</a>
                     <!-- Menú desplegable -->
@@ -283,6 +328,7 @@
                         <li><a href="{% url 'exit' %}">CERRAR SESION</a></li> 
                     </ul>
                 </li>
+
             </ul>
         </nav>
     </header>
