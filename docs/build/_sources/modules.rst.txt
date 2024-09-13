@@ -7,3 +7,4 @@ IS2-Proyecto
    IS2_Proyecto
    login
    manage
+   publicacion

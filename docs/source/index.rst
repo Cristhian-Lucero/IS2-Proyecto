@@ -1,5 +1,5 @@
 .. IS2_Proyecto documentation master file, created by
-   sphinx-quickstart on Mon Sep  2 04:19:58 2024.
+   sphinx-quickstart on Sun Sep  8 19:19:26 2024.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
