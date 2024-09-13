@@ -61,6 +61,25 @@
 </dd></dl>
 
 </section>
+<section id="module-login.migrations.0002_usuariorolcategoria_delete_usuario">
+<span id="login-migrations-0002-usuariorolcategoria-delete-usuario-module"></span><h2>login.migrations.0002_usuariorolcategoria_delete_usuario module<a class="headerlink" href="#module-login.migrations.0002_usuariorolcategoria_delete_usuario" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="login.migrations.0002_usuariorolcategoria_delete_usuario.Migration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">login.migrations.0002_usuariorolcategoria_delete_usuario.</span></span><span class="sig-name descname"><span class="pre">Migration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.migrations.0002_usuariorolcategoria_delete_usuario.Migration" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Migration</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.migrations.0002_usuariorolcategoria_delete_usuario.Migration.dependencies">
+<span class="sig-name descname"><span class="pre">dependencies</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('Perfil',</span> <span class="pre">'0001_initial'),</span> <span class="pre">('login',</span> <span class="pre">'0001_initial')]</span></em><a class="headerlink" href="#login.migrations.0002_usuariorolcategoria_delete_usuario.Migration.dependencies" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.migrations.0002_usuariorolcategoria_delete_usuario.Migration.operations">
+<span class="sig-name descname"><span class="pre">operations</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;CreateModel</span>&#160; <span class="pre">name='UsuarioRolCategoria',</span> <span class="pre">fields=[('id',</span> <span class="pre">&lt;django.db.models.fields.BigAutoField&gt;),</span> <span class="pre">('categoria',</span> <span class="pre">&lt;django.db.models.fields.related.ForeignKey&gt;),</span> <span class="pre">('rol',</span> <span class="pre">&lt;django.db.models.fields.related.ForeignKey&gt;),</span> <span class="pre">('usuario',</span> <span class="pre">&lt;django.db.models.fields.related.ForeignKey&gt;)],</span> <span class="pre">options={'verbose_name':</span> <span class="pre">'Usuario</span> <span class="pre">Rol</span> <span class="pre">Categoria',</span> <span class="pre">'verbose_name_plural':</span> <span class="pre">'Usuarios</span> <span class="pre">Roles</span> <span class="pre">Categorías',</span> <span class="pre">'unique_together':</span> <span class="pre">{('usuario',</span> <span class="pre">'rol',</span> <span class="pre">'categoria')}}&gt;,</span> <span class="pre">&lt;DeleteModel</span>&#160; <span class="pre">name='Usuario'&gt;]</span></em><a class="headerlink" href="#login.migrations.0002_usuariorolcategoria_delete_usuario.Migration.operations" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-login.migrations">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-login.migrations" title="Link to this heading">¶</a></h2>
 </section>

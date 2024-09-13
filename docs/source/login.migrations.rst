@@ -12,6 +12,14 @@ login.migrations.0001\_initial module
    :undoc-members:
    :show-inheritance:
 
+login.migrations.0002\_usuariorolcategoria\_delete\_usuario module
+------------------------------------------------------------------
+
+.. automodule:: login.migrations.0002_usuariorolcategoria_delete_usuario
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

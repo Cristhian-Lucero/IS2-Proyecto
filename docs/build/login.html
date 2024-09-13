@@ -49,6 +49,14 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="login.migrations.html#module-login.migrations.0002_usuariorolcategoria_delete_usuario">login.migrations.0002_usuariorolcategoria_delete_usuario module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="login.migrations.html#login.migrations.0002_usuariorolcategoria_delete_usuario.Migration"><code class="docutils literal notranslate"><span class="pre">Migration</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="login.migrations.html#login.migrations.0002_usuariorolcategoria_delete_usuario.Migration.dependencies"><code class="docutils literal notranslate"><span class="pre">Migration.dependencies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="login.migrations.html#login.migrations.0002_usuariorolcategoria_delete_usuario.Migration.operations"><code class="docutils literal notranslate"><span class="pre">Migration.operations</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="login.migrations.html#module-login.migrations">Module contents</a></li>
 </ul>
 </li>
@@ -84,6 +92,12 @@ para que puedan ser gestionados a través de la interfaz de administrador.</p>
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'login'</span></em><a class="headerlink" href="#login.apps.LoginConfig.name" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="login.apps.LoginConfig.ready">
+<span class="sig-name descname"><span class="pre">ready</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#login.apps.LoginConfig.ready" title="Link to this definition">¶</a></dt>
+<dd><p>Override this method in subclasses to run code when Django starts.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -97,7 +111,12 @@ con validación y selección de permisos.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">login.forms.</span></span><span class="sig-name descname"><span class="pre">CreateNewCategoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.forms.CreateNewCategoria" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
 <p>Formulario para crear una nueva categoría.</p>
-<p>Este formulario incluye los campos para la descripción corta, descripción larga y estado de la categoría.</p>
+<dl class="simple">
+<dt>Campos:</dt><dd><p>box_descripcion_corta (CharField): Campo para ingresar la descripción corta de la categoría. Máximo 100 caracteres.
+box_descripcion_larga (CharField): Campo de texto para ingresar una descripción detallada de la categoría.
+box_estado (ChoiceField): Campo para seleccionar el estado de la categoría (“Activo” o “Inactivo”).</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="login.forms.CreateNewCategoria.ESTADO_CHOICES">
 <span class="sig-name descname"><span class="pre">ESTADO_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('Activo',</span> <span class="pre">'Activo'),</span> <span class="pre">('Inactivo',</span> <span class="pre">'Inactivo')]</span></em><a class="headerlink" href="#login.forms.CreateNewCategoria.ESTADO_CHOICES" title="Link to this definition">¶</a></dt>
@@ -126,7 +145,12 @@ con validación y selección de permisos.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">login.forms.</span></span><span class="sig-name descname"><span class="pre">CreateNewRol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.forms.CreateNewRol" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
 <p>Formulario para crear un nuevo rol.</p>
-<p>Este formulario incluye los campos para el nombre, descripción y selección de permisos asociados al rol.</p>
+<dl class="simple">
+<dt>Campos:</dt><dd><p>box_nombre (CharField): Campo para ingresar el nombre del rol. Máximo 100 caracteres.
+box_descripcion (CharField): Campo de texto para ingresar una descripción detallada del rol.
+permisos (MultipleChoiceField): Campo para seleccionar múltiples permisos asociados al rol.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="login.forms.CreateNewRol.base_fields">
 <span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'box_descripcion':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'box_nombre':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#login.forms.CreateNewRol.base_fields" title="Link to this definition">¶</a></dt>
@@ -148,12 +172,26 @@ con validación y selección de permisos.</p>
 </section>
 <section id="module-login.models">
 <span id="login-models-module"></span><h2>login.models module<a class="headerlink" href="#module-login.models" title="Link to this heading">¶</a></h2>
+<p>Modelos de la aplicación login.</p>
+<p>Contiene los modelos:
+- Permiso: Define permisos específicos.
+- Rol: Relaciona roles con permisos.
+- Categoria: Define las categorías para gestionar publicaciones u otros elementos.
+- UsuarioRolCategoria: Relaciona usuarios, roles y categorías.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="login.models.Categoria">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">login.models.</span></span><span class="sig-name descname"><span class="pre">Categoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.models.Categoria" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
-<p>Modelo que representa una categoría para gestionar publicaciones o elementos.</p>
-<p>Una categoría tiene una descripción corta, descripción larga y un estado (activo o inactivo).</p>
+<p>Modelo que representa una categoría para gestionar publicaciones u otros elementos.</p>
+<p>Las categorías se utilizan para organizar y clasificar elementos dentro del sistema.</p>
+<dl class="simple">
+<dt>Atributos:</dt><dd><p>descripcion_corta (CharField): Descripción breve de la categoría. Máximo 100 caracteres.
+descripcion_larga (TextField): Descripción detallada de la categoría.
+estado (CharField): Estado actual de la categoría (e.g., “Activo”, “Inactivo”). Máximo 50 caracteres.</p>
+</dd>
+<dt>Métodos:</dt><dd><p>__str__(): Retorna la descripción corta como representación en cadena del objeto.</p>
+</dd>
+</dl>
 <dl class="py exception">
 <dt class="sig sig-object py" id="login.models.Categoria.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#login.models.Categoria.DoesNotExist" title="Link to this definition">¶</a></dt>
@@ -199,6 +237,21 @@ object the first time, the query is executed.</p>
 <span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#login.models.Categoria.objects" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.models.Categoria.usuariorolcategoria_set">
+<span class="sig-name descname"><span class="pre">usuariorolcategoria_set</span></span><a class="headerlink" href="#login.models.Categoria.usuariorolcategoria_set" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -206,7 +259,14 @@ object the first time, the query is executed.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">login.models.</span></span><span class="sig-name descname"><span class="pre">Permiso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.models.Permiso" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
 <p>Modelo que representa un permiso en el sistema.</p>
-<p>Un permiso tiene un nombre y una descripción.</p>
+<p>Un permiso define una acción específica o acceso que puede ser otorgado a los roles de usuario.</p>
+<dl class="simple">
+<dt>Atributos:</dt><dd><p>nombre (CharField): Nombre único que identifica el permiso. Máximo 100 caracteres.
+descripcion (TextField): Descripción detallada del permiso y su funcionalidad.</p>
+</dd>
+<dt>Métodos:</dt><dd><p>__str__(): Retorna el nombre del permiso como representación en cadena del objeto.</p>
+</dd>
+</dl>
 <dl class="py exception">
 <dt class="sig sig-object py" id="login.models.Permiso.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#login.models.Permiso.DoesNotExist" title="Link to this definition">¶</a></dt>
@@ -267,8 +327,16 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dt class="sig sig-object py" id="login.models.Rol">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">login.models.</span></span><span class="sig-name descname"><span class="pre">Rol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.models.Rol" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
-<p>Modelo que representa un rol de usuario.</p>
-<p>Un rol está compuesto por un nombre, una descripción y está relacionado con varios permisos.</p>
+<p>Modelo que representa un rol de usuario en el sistema.</p>
+<p>Un rol es una colección de permisos que define lo que un usuario puede hacer dentro del sistema.</p>
+<dl class="simple">
+<dt>Atributos:</dt><dd><p>nombre (CharField): Nombre único que identifica el rol. Máximo 25 caracteres.
+descripcion (TextField): Descripción detallada del rol y sus responsabilidades.
+permisos (ManyToManyField): Relación con Permiso, indicando los permisos asociados al rol.</p>
+</dd>
+<dt>Métodos:</dt><dd><p>__str__(): Retorna el nombre del rol como representación en cadena del objeto.</p>
+</dd>
+</dl>
 <dl class="py exception">
 <dt class="sig sig-object py" id="login.models.Rol.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#login.models.Rol.DoesNotExist" title="Link to this definition">¶</a></dt>
@@ -323,45 +391,139 @@ instances.</p>
 class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.models.Rol.usuariorolcategoria_set">
+<span class="sig-name descname"><span class="pre">usuariorolcategoria_set</span></span><a class="headerlink" href="#login.models.Rol.usuariorolcategoria_set" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="login.models.Usuario">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">login.models.</span></span><span class="sig-name descname"><span class="pre">Usuario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.models.Usuario" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="login.models.UsuarioRolCategoria">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">login.models.</span></span><span class="sig-name descname"><span class="pre">UsuarioRolCategoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.models.UsuarioRolCategoria" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
-<p>Modelo que representa un usuario en el sistema.</p>
-<p>Un usuario tiene un nombre que se guarda en este modelo.</p>
+<p>Modelo que representa la relación entre un Usuario, un Rol y una Categoría.</p>
+<p>Este modelo vincula un usuario específico con un rol determinado dentro de una categoría específica.
+Se asegura que la combinación de usuario, rol y categoría sea única, evitando duplicados.</p>
+<dl class="simple">
+<dt>Atributos:</dt><dd><p>usuario (ForeignKey): Referencia al modelo Usuario. Indica el usuario asociado.
+rol (ForeignKey): Referencia al modelo Rol. Indica el rol del usuario en la categoría.
+Por defecto, se asigna el rol con nombre “Suscriptor”.
+categoria (ForeignKey): Referencia al modelo Categoria. Indica la categoría asociada.</p>
+</dd>
+<dt>Meta:</dt><dd><p>unique_together = (“usuario”, “rol”, “categoria”): Garantiza la unicidad de la combinación.
+verbose_name = “Usuario Rol Categoria”
+verbose_name_plural = “Usuarios Roles Categorías”</p>
+</dd>
+<dt>Métodos:</dt><dd><p>__str__(): Retorna una representación en cadena del objeto en el formato “usuario - rol - categoría”.</p>
+</dd>
+</dl>
 <dl class="py exception">
-<dt class="sig sig-object py" id="login.models.Usuario.DoesNotExist">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#login.models.Usuario.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="login.models.UsuarioRolCategoria.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#login.models.UsuarioRolCategoria.DoesNotExist" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
 </dd></dl>
 
 <dl class="py exception">
-<dt class="sig sig-object py" id="login.models.Usuario.MultipleObjectsReturned">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#login.models.Usuario.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="login.models.UsuarioRolCategoria.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#login.models.UsuarioRolCategoria.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="login.models.Usuario.Nombre">
-<span class="sig-name descname"><span class="pre">Nombre</span></span><a class="headerlink" href="#login.models.Usuario.Nombre" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
+<dt class="sig sig-object py" id="login.models.UsuarioRolCategoria.categoria">
+<span class="sig-name descname"><span class="pre">categoria</span></span><a class="headerlink" href="#login.models.UsuarioRolCategoria.categoria" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="login.models.Usuario.id">
-<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#login.models.Usuario.id" title="Link to this definition">¶</a></dt>
-<dd><p>A wrapper for a deferred-loading field. When the value is read from this
-object the first time, the query is executed.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="login.models.Usuario.objects">
-<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#login.models.Usuario.objects" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="login.models.UsuarioRolCategoria.categoria_id">
+<span class="sig-name descname"><span class="pre">categoria_id</span></span><a class="headerlink" href="#login.models.UsuarioRolCategoria.categoria_id" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.models.UsuarioRolCategoria.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#login.models.UsuarioRolCategoria.id" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.models.UsuarioRolCategoria.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#login.models.UsuarioRolCategoria.objects" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.models.UsuarioRolCategoria.rol">
+<span class="sig-name descname"><span class="pre">rol</span></span><a class="headerlink" href="#login.models.UsuarioRolCategoria.rol" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.models.UsuarioRolCategoria.rol_id">
+<span class="sig-name descname"><span class="pre">rol_id</span></span><a class="headerlink" href="#login.models.UsuarioRolCategoria.rol_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.models.UsuarioRolCategoria.usuario">
+<span class="sig-name descname"><span class="pre">usuario</span></span><a class="headerlink" href="#login.models.UsuarioRolCategoria.usuario" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.models.UsuarioRolCategoria.usuario_id">
+<span class="sig-name descname"><span class="pre">usuario_id</span></span><a class="headerlink" href="#login.models.UsuarioRolCategoria.usuario_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-login.signals">
+<span id="login-signals-module"></span><h2>login.signals module<a class="headerlink" href="#module-login.signals" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="login.signals.asignar_rol_suscriptor">
+<span class="sig-prename descclassname"><span class="pre">login.signals.</span></span><span class="sig-name descname"><span class="pre">asignar_rol_suscriptor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.signals.asignar_rol_suscriptor" title="Link to this definition">¶</a></dt>
+<dd><p>Asigna el rol “Suscriptor” (con id=5) a todas las categorías cuando se crea un nuevo usuario.</p>
+<dl class="simple">
+<dt>Argumentos:</dt><dd><p>sender (Model class): El modelo que envió la señal, en este caso, “Usuario”.
+instance (Usuario): La instancia del modelo “Usuario” que se acaba de crear.
+created (bool): Valor booleano que indica si la instancia fue creada (True) o actualizada (False).
+<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: Parámetros adicionales.</p>
+</dd>
+<dt>Retorna:</dt><dd><p>None: La función no retorna un valor, pero crea registros en la tabla “UsuarioRolCategoria”.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -374,6 +536,11 @@ object the first time, the query is executed.</p>
 <span id="login-urls-module"></span><h2>login.urls module<a class="headerlink" href="#module-login.urls" title="Link to this heading">¶</a></h2>
 <p>Configuración de URLs para la aplicación login.</p>
 <p>Define las rutas para la gestión de roles y categorías, así como otras funcionalidades relacionadas con la autenticación.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="login.urls.usuario_tiene_permiso">
+<span class="sig-prename descclassname"><span class="pre">login.urls.</span></span><span class="sig-name descname"><span class="pre">usuario_tiene_permiso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usuario</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permiso_nombre</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.urls.usuario_tiene_permiso" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </section>
 <section id="module-login.views">
 <span id="login-views-module"></span><h2>login.views module<a class="headerlink" href="#module-login.views" title="Link to this heading">¶</a></h2>
@@ -383,11 +550,15 @@ con la autenticación y administración de usuarios.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="login.views.agregarRol">
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">agregarRol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.agregarRol" title="Link to this definition">¶</a></dt>
-<dd><p>Renderiza la página para agregar un rol y maneja la solicitud POST para guardar el nuevo rol.</p>
+<dd><p>Permite agregar un nuevo rol al sistema.</p>
+<p>Maneja solicitudes GET para mostrar el formulario y POST para crear el rol.</p>
 <dl class="simple">
-<dt>Argumentos:</dt><dd><p>request (HttpRequest): El objeto de la solicitud HTTP.</p>
+<dt>Contexto:</dt><dd><p>categorias (QuerySet): Lista de todas las categorías.
+roles (QuerySet): Lista de todos los roles existentes.
+permisos (QuerySet): Lista de todos los permisos disponibles.
+form (Form): Instancia del formulario para crear un nuevo rol.</p>
 </dd>
-<dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla «rol/crudRol.html» o maneja la solicitud POST para guardar un nuevo rol.</p>
+<dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla «rol/crudRol.html» o redirige a “adicionrol” después de crear el rol.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -395,10 +566,10 @@ con la autenticación y administración de usuarios.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="login.views.editarCategoria">
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">editarCategoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoria_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.editarCategoria" title="Link to this definition">¶</a></dt>
-<dd><p>Renderiza la página para editar una categoría y maneja la solicitud POST para actualizar los detalles de la categoría.</p>
+<dd><p>Permite editar una categoría existente.</p>
+<p>Maneja solicitudes GET para mostrar el formulario prellenado y POST para actualizar la categoría.</p>
 <dl class="simple">
-<dt>Argumentos:</dt><dd><p>request (HttpRequest): El objeto de la solicitud HTTP.
-categoria_id (int): El ID de la categoría a editar.</p>
+<dt>Argumentos:</dt><dd><p>categoria_id (int): El ID de la categoría a editar.</p>
 </dd>
 <dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla “rol/gestionCategoria.html” o actualiza la categoría y redirige a “gestioncategoria”.</p>
 </dd>
@@ -410,8 +581,7 @@ categoria_id (int): El ID de la categoría a editar.</p>
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">editarRol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rol_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.editarRol" title="Link to this definition">¶</a></dt>
 <dd><p>Renderiza la página para editar un rol y maneja la solicitud POST para actualizar los detalles del rol.</p>
 <dl class="simple">
-<dt>Argumentos:</dt><dd><p>request (HttpRequest): El objeto de la solicitud HTTP.
-rol_id (int): El ID del rol a editar.</p>
+<dt>Argumentos:</dt><dd><p>rol_id (int): El ID del rol a editar.</p>
 </dd>
 <dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla “rol/editarRol.html” o actualiza el rol y redirige a “adicionrol”.</p>
 </dd>
@@ -421,10 +591,9 @@ rol_id (int): El ID del rol a editar.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="login.views.eliminarCategoria">
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">eliminarCategoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoria_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.eliminarCategoria" title="Link to this definition">¶</a></dt>
-<dd><p>Elimina una categoría específica identificada por su ID y redirige a la página de gestión de categorías.</p>
+<dd><p>Elimina una categoría específica identificada por su ID.</p>
 <dl class="simple">
-<dt>Argumentos:</dt><dd><p>request (HttpRequest): El objeto de la solicitud HTTP.
-categoria_id (int): El ID de la categoría a eliminar.</p>
+<dt>Argumentos:</dt><dd><p>categoria_id (int): El ID de la categoría a eliminar.</p>
 </dd>
 <dt>Retorna:</dt><dd><p>HttpResponse: Redirige a la vista “gestioncategoria” después de eliminar la categoría.</p>
 </dd>
@@ -434,10 +603,11 @@ categoria_id (int): El ID de la categoría a eliminar.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="login.views.eliminarRol">
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">eliminarRol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rol_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.eliminarRol" title="Link to this definition">¶</a></dt>
-<dd><p>Elimina un rol específico basado en su ID y redirige a la página de adición de roles.</p>
+<dd><p>Elimina un rol específico basado en su ID y redirige a la página de adición de roles.
+Nota:
+No se eliminan los roles con ID menores o iguales a 5, ya que son fundamentales para el funcionamiento de la página.</p>
 <dl class="simple">
-<dt>Argumentos:</dt><dd><p>request (HttpRequest): El objeto de la solicitud HTTP.
-rol_id (int): El ID del rol a eliminar.</p>
+<dt>Argumentos:</dt><dd><p>rol_id (int): El ID del rol a eliminar.</p>
 </dd>
 <dt>Retorna:</dt><dd><p>HttpResponse: Redirige a “adicionrol” después de eliminar el rol.</p>
 </dd>
@@ -449,8 +619,6 @@ rol_id (int): El ID del rol a eliminar.</p>
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">exit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.exit" title="Link to this definition">¶</a></dt>
 <dd><p>Cierra la sesión del usuario y redirige a la página de inicio.</p>
 <dl class="simple">
-<dt>Argumentos:</dt><dd><p>request (HttpRequest): El objeto de la solicitud HTTP.</p>
-</dd>
 <dt>Retorna:</dt><dd><p>HttpResponse: Redirige a la vista «inicio» después de cerrar sesión.</p>
 </dd>
 </dl>
@@ -459,10 +627,9 @@ rol_id (int): El ID del rol a eliminar.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="login.views.gestionCategoria">
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">gestionCategoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.gestionCategoria" title="Link to this definition">¶</a></dt>
-<dd><p>Renderiza la página de gestión de categorías y maneja las solicitudes POST para agregar una nueva categoría.</p>
+<dd><p>Gestiona la creación y visualización de categorías.</p>
+<p>Maneja solicitudes GET para mostrar el formulario y POST para crear una nueva categoría.</p>
 <dl class="simple">
-<dt>Argumentos:</dt><dd><p>request (HttpRequest): El objeto de la solicitud HTTP.</p>
-</dd>
 <dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla “rol/gestionCategoria.html” con la lista de categorías o crea una nueva categoría.</p>
 </dd>
 </dl>
@@ -471,11 +638,23 @@ rol_id (int): El ID del rol a eliminar.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="login.views.gestionarRol">
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">gestionarRol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.gestionarRol" title="Link to this definition">¶</a></dt>
-<dd><p>Renderiza la página de gestión de roles con la lista de categorías y roles.</p>
+<dd><p>Renderiza la página de gestión de roles con la lista de categorías y roles.
+Maneja solicitudes POST para actualizar el rol de un usuario en una categoría.</p>
 <dl class="simple">
-<dt>Argumentos:</dt><dd><p>request (HttpRequest): El objeto de la solicitud HTTP.</p>
+<dt>Retorna:</dt><dd><p>HttpResponseRedirect: Redirige a “gestionrol” después de procesar la solicitud.
+HttpResponse: Renderiza la plantilla “rol/gestionRol.html” en caso de GET o error.</p>
 </dd>
-<dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla «rol/gestionRol.html» con categorías y roles.</p>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="login.views.home">
+<span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.home" title="Link to this definition">¶</a></dt>
+<dd><p>Renderiza la página principal para usuarios autenticados.</p>
+<dl class="simple">
+<dt>Argumentos:</dt><dd><p>categorias (QuerySet): Lista de todas las categorías disponibles.</p>
+</dd>
+<dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla «rol/home.html» con el contexto proporcionado.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -485,9 +664,19 @@ rol_id (int): El ID del rol a eliminar.</p>
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">inicio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.inicio" title="Link to this definition">¶</a></dt>
 <dd><p>Renderiza la página de inicio de sesión.</p>
 <dl class="simple">
-<dt>Argumentos:</dt><dd><p>request (HttpRequest): El objeto de la solicitud HTTP.</p>
-</dd>
 <dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla «login/inicio.html».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="login.views.listadoCategorias">
+<span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">listadoCategorias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.listadoCategorias" title="Link to this definition">¶</a></dt>
+<dd><p>Muestra un listado de todas las categorías.</p>
+<dl class="simple">
+<dt>Argumentos:</dt><dd><p>categorias (QuerySet): Lista de todas las categorías disponibles.</p>
+</dd>
+<dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla «rol/listadoCategoria.html» con el contexto proporcionado.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -497,9 +686,17 @@ rol_id (int): El ID del rol a eliminar.</p>
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">rol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.rol" title="Link to this definition">¶</a></dt>
 <dd><p>Renderiza la página de gestión de roles. Requiere que el usuario haya iniciado sesión.</p>
 <dl class="simple">
-<dt>Argumentos:</dt><dd><p>request (HttpRequest): El objeto de la solicitud HTTP.</p>
-</dd>
 <dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla «rol/gestionRol.html».</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="login.views.seleccionar_plantilla">
+<span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">seleccionar_plantilla</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.seleccionar_plantilla" title="Link to this definition">¶</a></dt>
+<dd><p>Renderiza la página para seleccionar una plantilla de publicación.</p>
+<dl class="simple">
+<dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla “crearpublicaciones/templates/seleccionar_plantilla.html”.</p>
 </dd>
 </dl>
 </dd></dl>

@@ -1,17 +1,10 @@
-.. IS2_Proyecto documentation master file, created by
-   sphinx-quickstart on Sun Sep  8 19:19:26 2024.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+IS2_Proyecto
+============
 
-IS2_Proyecto documentation
-==========================
-
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
-
+Bienvenido a la documentación de **IS2_Proyecto**.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contenido:
 
+   modules

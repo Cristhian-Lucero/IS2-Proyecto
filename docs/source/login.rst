@@ -44,6 +44,14 @@ login.models module
    :undoc-members:
    :show-inheritance:
 
+login.signals module
+--------------------
+
+.. automodule:: login.signals
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 login.tests module
 ------------------
 

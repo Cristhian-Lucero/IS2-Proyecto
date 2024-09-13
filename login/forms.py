@@ -13,7 +13,10 @@ class CreateNewCategoria(forms.Form):
     """
     Formulario para crear una nueva categoría.
 
-    Este formulario incluye los campos para la descripción corta, descripción larga y estado de la categoría.
+    Campos:
+        box_descripcion_corta (CharField): Campo para ingresar la descripción corta de la categoría. Máximo 100 caracteres.
+        box_descripcion_larga (CharField): Campo de texto para ingresar una descripción detallada de la categoría.
+        box_estado (ChoiceField): Campo para seleccionar el estado de la categoría ('Activo' o 'Inactivo').
     """
 
     box_descripcion_corta = forms.CharField(label="Descripcion Corta", max_length=100)
@@ -30,8 +33,12 @@ class CreateNewRol(forms.Form):
     """
     Formulario para crear un nuevo rol.
 
-    Este formulario incluye los campos para el nombre, descripción y selección de permisos asociados al rol.
+    Campos:
+        box_nombre (CharField): Campo para ingresar el nombre del rol. Máximo 100 caracteres.
+        box_descripcion (CharField): Campo de texto para ingresar una descripción detallada del rol.
+        permisos (MultipleChoiceField): Campo para seleccionar múltiples permisos asociados al rol.
     """
+    
     box_nombre= forms.CharField(label="Nombre", max_length=100)
     box_descripcion = forms.CharField(
         label="Descripcion", 
@@ -41,7 +48,8 @@ class CreateNewRol(forms.Form):
         """
         Inicializa el formulario de creación de roles.
 
-        Configura los permisos disponibles como opciones para seleccionar.
+        Configura el campo 'permisos' con las opciones disponibles en el modelo Permiso,
+        permitiendo al usuario seleccionar múltiples permisos para el rol.
         """
 
         super(CreateNewRol, self).__init__(*args, **kwargs)

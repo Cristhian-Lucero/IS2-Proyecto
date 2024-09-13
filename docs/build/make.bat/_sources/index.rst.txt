@@ -1,0 +1,16 @@
+IS2_Proyecto
+============
+
+Bienvenido a la documentación de **IS2_Proyecto**.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contenido:
+
+   IS2_Proyecto
+   login
+   login.migrations
+   manage
+   publicacion
+   publicacion.migrations
+   modulesa

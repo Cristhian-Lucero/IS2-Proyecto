@@ -1,7 +1,25 @@
+"""
+Modelo de la aplicación para gestionar las publicaciones de los usuarios.
+
+"""
+
 from django.db import models  # Asegúrate de que esta línea esté presente
 from django.contrib.auth.models import User  # Si usas la clase User para relaciones
 
 class Publicacion(models.Model):
+    """
+    Modelo que representa una publicación en el sistema.
+
+    Atributos:
+        titulo (CharField): El título de la publicación (máximo 200 caracteres).
+        texto_corto (TextField): Resumen breve o descripción corta de la publicación.
+        texto_largo (TextField): Contenido más extenso de la publicación (opcional).
+        imagen1, imagen2 (ImageField): Imágenes opcionales que el usuario puede subir.
+        cita (TextField): Cita opcional relacionada con la publicación.
+        user (ForeignKey): Relación con el modelo User, indicando el autor.
+        fecha_creacion (DateTimeField): Fecha y hora de creación de la publicación.
+    """
+    
     titulo = models.CharField(max_length=200)
     texto_corto = models.TextField()
     texto_largo = models.TextField(null=True, blank=True)  

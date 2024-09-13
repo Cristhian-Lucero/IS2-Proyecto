@@ -53,10 +53,21 @@
 </section>
 <section id="module-publicacion.apps">
 <span id="publicacion-apps-module"></span><h2>publicacion.apps module<a class="headerlink" href="#module-publicacion.apps" title="Link to this heading">¶</a></h2>
+<p>Configuración de la aplicación “publicacion”.</p>
+<p>Este módulo define la configuración de la aplicación “publicacion” y puede ser utilizado para inicializar
+la configuración específica de la aplicación o registrar señales cuando la aplicación esté lista.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="publicacion.apps.PublicacionConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">publicacion.apps.</span></span><span class="sig-name descname"><span class="pre">PublicacionConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#publicacion.apps.PublicacionConfig" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
+<p>Configuración de la aplicación “publicacion”.</p>
+<p>Esta clase configura la aplicación “publicacion” y puede ser utilizada para inicializar
+la configuración de la aplicación o registrar señales cuando la aplicación está lista.</p>
+<dl class="simple">
+<dt>Atributos:</dt><dd><p>default_auto_field (str): Especifica el tipo de campo automático por defecto para los modelos.
+name (str): Nombre de la aplicación.</p>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="publicacion.apps.PublicacionConfig.default_auto_field">
 <span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django.db.models.BigAutoField'</span></em><a class="headerlink" href="#publicacion.apps.PublicacionConfig.default_auto_field" title="Link to this definition">¶</a></dt>
@@ -78,13 +89,42 @@
 </section>
 <section id="module-publicacion.urls">
 <span id="publicacion-urls-module"></span><h2>publicacion.urls module<a class="headerlink" href="#module-publicacion.urls" title="Link to this heading">¶</a></h2>
+<p>Definición de URLs para la aplicación “publicacion”.</p>
+<p>Este módulo establece los patrones de URL para las vistas relacionadas con la creación y gestión
+de publicaciones por parte del usuario. Incluye rutas para crear nuevas publicaciones y
+ver las publicaciones propias del usuario.</p>
 </section>
 <section id="module-publicacion.views">
 <span id="publicacion-views-module"></span><h2>publicacion.views module<a class="headerlink" href="#module-publicacion.views" title="Link to this heading">¶</a></h2>
+<p>Vistas de la aplicación publicacion.</p>
+<p>Define las vistas para la creacion y listado de publicaciones.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="publicacion.views.home">
-<span class="sig-prename descclassname"><span class="pre">publicacion.views.</span></span><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#publicacion.views.home" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="publicacion.views.crear_publicacion">
+<span class="sig-prename descclassname"><span class="pre">publicacion.views.</span></span><span class="sig-name descname"><span class="pre">crear_publicacion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#publicacion.views.crear_publicacion" title="Link to this definition">¶</a></dt>
+<dd><p>Renderiza la página para crear una nueva publicación.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Renderiza la plantilla “publicacion/crear.html”.</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-even"><p>HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="publicacion.views.mis_publicaciones">
+<span class="sig-prename descclassname"><span class="pre">publicacion.views.</span></span><span class="sig-name descname"><span class="pre">mis_publicaciones</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#publicacion.views.mis_publicaciones" title="Link to this definition">¶</a></dt>
+<dd><p>Muestra una lista de las publicaciones del usuario autenticado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Renderiza la plantilla “publicacion/mis_publicaciones.html”.</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-even"><p>HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
 
 </section>
 <section id="module-publicacion">

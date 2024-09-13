@@ -1,5 +1,3 @@
-from django.db import models
-from Perfil.models import Usuario
 """
 Modelos de la aplicación login.
 
@@ -7,8 +5,11 @@ Contiene los modelos:
 - Permiso: Define permisos específicos.
 - Rol: Relaciona roles con permisos.
 - Categoria: Define las categorías para gestionar publicaciones u otros elementos.
-- Usuario: Define los usuarios del sistema con sus atributos.
+- UsuarioRolCategoria: Relaciona usuarios, roles y categorías.
 """
+
+from django.db import models
+from Perfil.models import Usuario
 
 class Permiso(models.Model):
     """
@@ -84,7 +85,7 @@ class UsuarioRolCategoria(models.Model):
     Atributos:
         usuario (ForeignKey): Referencia al modelo Usuario. Indica el usuario asociado.
         rol (ForeignKey): Referencia al modelo Rol. Indica el rol del usuario en la categoría.
-            Por defecto, se asigna el rol con nombre 'Suscriptor'.
+        Por defecto, se asigna el rol con nombre 'Suscriptor'.
         categoria (ForeignKey): Referencia al modelo Categoria. Indica la categoría asociada.
 
     Meta:
@@ -95,6 +96,7 @@ class UsuarioRolCategoria(models.Model):
     Métodos:
         __str__(): Retorna una representación en cadena del objeto en el formato 'usuario - rol - categoría'.
     """
+
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     rol = models.ForeignKey(Rol, on_delete=models.CASCADE, default=lambda: Rol.objects.get(nombre='Suscriptor'))  # Rol por defecto
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)

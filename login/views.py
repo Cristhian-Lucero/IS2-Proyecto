@@ -16,12 +16,32 @@ from django.contrib.auth import logout
 # Create your views here.
 @login_required
 def home(request):
+    """
+    Renderiza la página principal para usuarios autenticados.
+
+    Argumentos:
+        categorias (QuerySet): Lista de todas las categorías disponibles.
+
+    Retorna:
+        HttpResponse: Renderiza la plantilla "rol/home.html" con el contexto proporcionado.
+    """
+
     return render(request, "rol/home.html", {
         'categorias': list(Categoria.objects.all())
     })
 
 @login_required
 def listadoCategorias(request):
+    """
+    Muestra un listado de todas las categorías.
+
+    Argumentos:
+        categorias (QuerySet): Lista de todas las categorías disponibles.
+
+    Retorna:
+        HttpResponse: Renderiza la plantilla "rol/listadoCategoria.html" con el contexto proporcionado.
+    """
+
     return render(request, "rol/listadoCategoria.html", {
         'categorias': list(Categoria.objects.all())
     })
@@ -30,9 +50,6 @@ def listadoCategorias(request):
 def inicio(request):
     """
     Renderiza la página de inicio de sesión.
-
-    Argumentos:
-        request (HttpRequest): El objeto de la solicitud HTTP.
 
     Retorna:
         HttpResponse: Renderiza la plantilla "login/inicio.html".
@@ -44,9 +61,6 @@ def inicio(request):
 def exit(request):
     """
     Cierra la sesión del usuario y redirige a la página de inicio.
-
-    Argumentos:
-        request (HttpRequest): El objeto de la solicitud HTTP.
 
     Retorna:
         HttpResponse: Redirige a la vista "inicio" después de cerrar sesión.
@@ -60,9 +74,6 @@ def rol(request):
     """
     Renderiza la página de gestión de roles. Requiere que el usuario haya iniciado sesión.
 
-    Argumentos:
-        request (HttpRequest): El objeto de la solicitud HTTP.
-
     Retorna:
         HttpResponse: Renderiza la plantilla "rol/gestionRol.html".
     """
@@ -73,20 +84,19 @@ def rol(request):
 def gestionarRol(request):
     """
     Renderiza la página de gestión de roles con la lista de categorías y roles.
-
-    Argumentos:
-        request (HttpRequest): El objeto de la solicitud HTTP.
+    Maneja solicitudes POST para actualizar el rol de un usuario en una categoría.
 
     Retorna:
-        HttpResponse: Renderiza la plantilla "rol/gestionRol.html" con categorías y roles.
+        HttpResponseRedirect: Redirige a 'gestionrol' después de procesar la solicitud.
+        HttpResponse: Renderiza la plantilla 'rol/gestionRol.html' en caso de GET o error.
     """
-    
+
     if request.method == 'POST':
         # Obtener los valores seleccionados
         usuario_id = request.POST.get('usuario')
         categoria_id = request.POST.get('categoria')
         rol_id = request.POST.get('rol')
-        
+
         try:
             print(f'categoria id: {categoria_id}')
             print(f'rol id: {rol_id}')
@@ -130,13 +140,18 @@ def gestionarRol(request):
 @login_required
 def agregarRol(request):
     """
-    Renderiza la página para agregar un rol y maneja la solicitud POST para guardar el nuevo rol.
+    Permite agregar un nuevo rol al sistema.
 
-    Argumentos:
-        request (HttpRequest): El objeto de la solicitud HTTP.
+    Maneja solicitudes GET para mostrar el formulario y POST para crear el rol.
+
+    Contexto:
+        categorias (QuerySet): Lista de todas las categorías.
+        roles (QuerySet): Lista de todos los roles existentes.
+        permisos (QuerySet): Lista de todos los permisos disponibles.
+        form (Form): Instancia del formulario para crear un nuevo rol.
 
     Retorna:
-        HttpResponse: Renderiza la plantilla "rol/crudRol.html" o maneja la solicitud POST para guardar un nuevo rol.
+        HttpResponse: Renderiza la plantilla "rol/crudRol.html" o redirige a 'adicionrol' después de crear el rol.
     """
 
     x = list((Rol.objects.all()).order_by('id'))
@@ -159,15 +174,17 @@ def agregarRol(request):
 def eliminarRol(request, rol_id):
     """
     Elimina un rol específico basado en su ID y redirige a la página de adición de roles.
+    Nota:
+    No se eliminan los roles con ID menores o iguales a 5, ya que son fundamentales para el funcionamiento de la página.
+
 
     Argumentos:
-        request (HttpRequest): El objeto de la solicitud HTTP.
         rol_id (int): El ID del rol a eliminar.
 
     Retorna:
         HttpResponse: Redirige a 'adicionrol' después de eliminar el rol.
     """
-    #Para que no se eliminen los 5 primeros roles, que son los fundamentales para el funcionamiento de la pagina
+
     if rol_id > 5:
         rol_seleccionado = get_object_or_404(Rol, id=rol_id)
         rol_seleccionado.delete()
@@ -181,7 +198,6 @@ def editarRol(request, rol_id):
     Renderiza la página para editar un rol y maneja la solicitud POST para actualizar los detalles del rol.
 
     Argumentos:
-        request (HttpRequest): El objeto de la solicitud HTTP.
         rol_id (int): El ID del rol a editar.
 
     Retorna:
@@ -219,10 +235,9 @@ def editarRol(request, rol_id):
 @login_required
 def gestionCategoria(request):
     """
-    Renderiza la página de gestión de categorías y maneja las solicitudes POST para agregar una nueva categoría.
+    Gestiona la creación y visualización de categorías.
 
-    Argumentos:
-        request (HttpRequest): El objeto de la solicitud HTTP.
+    Maneja solicitudes GET para mostrar el formulario y POST para crear una nueva categoría.
 
     Retorna:
         HttpResponse: Renderiza la plantilla 'rol/gestionCategoria.html' con la lista de categorías o crea una nueva categoría.
@@ -250,10 +265,9 @@ def gestionCategoria(request):
 @login_required
 def eliminarCategoria(request, categoria_id):
     """
-    Elimina una categoría específica identificada por su ID y redirige a la página de gestión de categorías.
+    Elimina una categoría específica identificada por su ID.
 
     Argumentos:
-        request (HttpRequest): El objeto de la solicitud HTTP.
         categoria_id (int): El ID de la categoría a eliminar.
 
     Retorna:
@@ -267,18 +281,19 @@ def eliminarCategoria(request, categoria_id):
 @login_required
 def editarCategoria(request, categoria_id):
     """
-    Renderiza la página para editar una categoría y maneja la solicitud POST para actualizar los detalles de la categoría.
+    Permite editar una categoría existente.
+
+    Maneja solicitudes GET para mostrar el formulario prellenado y POST para actualizar la categoría.
 
     Argumentos:
-        request (HttpRequest): El objeto de la solicitud HTTP.
         categoria_id (int): El ID de la categoría a editar.
 
     Retorna:
         HttpResponse: Renderiza la plantilla 'rol/gestionCategoria.html' o actualiza la categoría y redirige a 'gestioncategoria'.
     """
-    
+
     categoria = get_object_or_404(Categoria, id=categoria_id)
-    
+
     if request.method == 'POST':
         form = CreateNewCategoria(request.POST)
         if form.is_valid():
@@ -302,5 +317,11 @@ def editarCategoria(request, categoria_id):
 
 @login_required
 def seleccionar_plantilla(request):
+    """
+    Renderiza la página para seleccionar una plantilla de publicación.
+
+    Retorna:
+        HttpResponse: Renderiza la plantilla 'crearpublicaciones/templates/seleccionar_plantilla.html'.
+    """
+
     return render(request, 'crearpublicaciones/templates/seleccionar_plantilla.html')
-   

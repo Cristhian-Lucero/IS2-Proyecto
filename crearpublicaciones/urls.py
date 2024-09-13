@@ -1,3 +1,11 @@
+"""
+URLs de la aplicación 'crearpublicaciones'.
+
+Este archivo define las rutas de URL para gestionar las diferentes acciones
+relacionadas con las publicaciones, como crear, modificar, eliminar, previsualizar,
+y gestionar plantillas.
+"""
+
 from django.urls import path
 from .views import *
 
