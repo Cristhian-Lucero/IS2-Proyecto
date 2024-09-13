@@ -6,6 +6,9 @@ from Perfil.models import Usuario
 
 from django.contrib.auth.decorators import login_required #para redirigir a login obligandolo a logearse
 from django.contrib.auth import logout
+
+from utils.decorators import check_permiso
+
 # Create your views here.
 @login_required
 def home(request):
@@ -32,7 +35,9 @@ def exit(request):
 def rol(request):
     return render(request, "rol/gestionRol.html")
 
+#asignar roles
 @login_required
+@check_permiso('asignar roles', categoria_id=2)
 def gestionarRol(request):
     if request.method == 'POST':
         # Obtener los valores seleccionados
@@ -81,6 +86,7 @@ def gestionarRol(request):
     })
 
 @login_required
+@check_permiso('gestionar roles', categoria_id=2)
 def agregarRol(request):
     x = list((Rol.objects.all()).order_by('id'))
     y = list(Permiso.objects.all())
@@ -99,6 +105,7 @@ def agregarRol(request):
         return redirect('adicionrol')
 
 @login_required
+@check_permiso('gestionar roles', categoria_id=2)
 def eliminarRol(request, rol_id):
     #Para que no se eliminen los 5 primeros roles, que son los fundamentales para el funcionamiento de la pagina
     if rol_id > 5: 
@@ -107,6 +114,7 @@ def eliminarRol(request, rol_id):
     return redirect('adicionrol')
 
 @login_required
+@check_permiso('gestionar roles', categoria_id=2)
 def editarRol(request, rol_id):
     rol = get_object_or_404(Rol, id=rol_id)
 
@@ -137,6 +145,7 @@ def editarRol(request, rol_id):
     })
 
 @login_required
+@check_permiso('gestionar categorias', categoria_id=2)
 def gestionCategoria(request):
     if request.method == 'GET':
         #Si se entra desde el metodo GET 'visita la pagina'
@@ -158,6 +167,7 @@ def gestionCategoria(request):
         })
 
 @login_required
+@check_permiso('gestionar categorias', categoria_id=2)
 def eliminarCategoria(request, categoria_id):
 
     categoria = get_object_or_404(Categoria, id=categoria_id)
@@ -165,6 +175,7 @@ def eliminarCategoria(request, categoria_id):
     return redirect('gestioncategoria')
 
 @login_required
+@check_permiso('gestionar categorias', categoria_id=2)
 def editarCategoria(request, categoria_id):
     categoria = get_object_or_404(Categoria, id=categoria_id)
     
@@ -190,6 +201,7 @@ def editarCategoria(request, categoria_id):
     })
 
 @login_required
+@check_permiso('crear contenido', categoria_id=2)
 def seleccionar_plantilla(request):
     return render(request, 'crearpublicaciones/templates/seleccionar_plantilla.html')
    
