@@ -13,6 +13,9 @@ from Perfil.models import Usuario
 
 from django.contrib.auth.decorators import login_required #para redirigir a login obligandolo a logearse
 from django.contrib.auth import logout
+
+from utils.decorators import check_permiso
+
 # Create your views here.
 @login_required
 def home(request):
@@ -80,7 +83,9 @@ def rol(request):
 
     return render(request, "rol/gestionRol.html")
 
+#asignar roles
 @login_required
+@check_permiso('asignar roles', categoria_id=2)
 def gestionarRol(request):
     """
     Renderiza la página de gestión de roles con la lista de categorías y roles.
@@ -138,6 +143,7 @@ def gestionarRol(request):
     })
 
 @login_required
+@check_permiso('gestionar roles', categoria_id=2)
 def agregarRol(request):
     """
     Permite agregar un nuevo rol al sistema.
@@ -171,6 +177,7 @@ def agregarRol(request):
         return redirect('adicionrol')
 
 @login_required
+@check_permiso('gestionar roles', categoria_id=2)
 def eliminarRol(request, rol_id):
     """
     Elimina un rol específico basado en su ID y redirige a la página de adición de roles.
@@ -193,6 +200,7 @@ def eliminarRol(request, rol_id):
     return redirect('adicionrol')
 
 @login_required
+@check_permiso('gestionar roles', categoria_id=2)
 def editarRol(request, rol_id):
     """
     Renderiza la página para editar un rol y maneja la solicitud POST para actualizar los detalles del rol.
@@ -233,6 +241,7 @@ def editarRol(request, rol_id):
     })
 
 @login_required
+@check_permiso('gestionar categorias', categoria_id=2)
 def gestionCategoria(request):
     """
     Gestiona la creación y visualización de categorías.
@@ -263,6 +272,7 @@ def gestionCategoria(request):
         })
 
 @login_required
+@check_permiso('gestionar categorias', categoria_id=2)
 def eliminarCategoria(request, categoria_id):
     """
     Elimina una categoría específica identificada por su ID.
@@ -279,6 +289,7 @@ def eliminarCategoria(request, categoria_id):
     return redirect('gestioncategoria')
 
 @login_required
+@check_permiso('gestionar categorias', categoria_id=2)
 def editarCategoria(request, categoria_id):
     """
     Permite editar una categoría existente.
@@ -316,6 +327,7 @@ def editarCategoria(request, categoria_id):
     })
 
 @login_required
+@check_permiso('crear contenido', categoria_id=2)
 def seleccionar_plantilla(request):
     """
     Renderiza la página para seleccionar una plantilla de publicación.
