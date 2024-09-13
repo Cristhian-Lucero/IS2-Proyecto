@@ -297,7 +297,7 @@
                        
                         
                         <li class="dropdown-submenu">
-                            <a style="text-transform: uppercase;" href="#">>NUEVA PUBLICACION</a>
+                            <a style="text-transform: uppercase;" href="{% url 'seleccionar_plantilla' %}">>NUEVA PUBLICACION</a>
                             <ul class="dropdown-menu">
                                 {% for i in categorias %}
                                     {% if i.estado == 'Activo' %}
@@ -324,7 +324,7 @@
                 </li>
 
                 <li class="dropdown"> <!-- CATEGORIAS -->
-                    <a href="lista_categoria">CATEGORIAS</a>
+                    <a href="/home/lista_categoria">CATEGORIAS</a>
                     <!-- Menú desplegable -->
                     <ul class="dropdown-menu">
                         {% for i in categorias %}
