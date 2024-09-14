@@ -1,6 +1,4 @@
 {% load custom_filters %}
-<p>Filtro cargado correctamente.</p>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -23,6 +21,12 @@
             box-sizing: border-box;
         }
 
+        .logo a {
+            font-family: 'Yanone Kaffeesatz','Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 35px;
+            color: #fff;
+        }
         a {
             font-family: "Open Sans";
             color: #A0C1F9; /* Cambia #FF0000 por el color que prefieras */
@@ -284,7 +288,7 @@
 <body>
     <header>
         <div class="logo">
-            <h1>Journal X</h1>
+            <h1><a class="logo" href="/home">Journal X</a></h1>
         </div>
         <nav>
             <ul>
