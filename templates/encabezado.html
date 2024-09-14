@@ -291,35 +291,47 @@
                     <a href="#">ACCIONES</a>
                     <!-- Menú desplegable -->
                     <ul class="dropdown-menu">
-                        <li><a href="/gestionrol">ASIGNAR ROL</a></li>
-                        <li><a href="/adicionrol">GESTIONAR ROL</a></li>
-                        <li><a href="/gestioncategoria">GESTIONAR CATEGORIA</a></li>
-                       
+                        {% if 'asignar roles' in permisos_usuario %}
+                            <li><a href="/gestionrol">ASIGNAR ROL</a></li>
+                        {% endif %}
+                        {% if 'gestionar roles' in permisos_usuario %}
+                            <li><a href="/adicionrol">GESTIONAR ROL</a></li>
+                        {% endif %}
+                        {% if 'gestionar categorias' in permisos_usuario %}
+                            <li><a href="/gestioncategoria">GESTIONAR CATEGORIA</a></li>
+                        {% endif %}
                         
-                        <li class="dropdown-submenu">
-                            <a style="text-transform: uppercase;" href="{% url 'seleccionar_plantilla' %}">>NUEVA PUBLICACION</a>
-                            <ul class="dropdown-menu">
-                                {% for i in categorias %}
-                                    {% if i.estado == 'Activo' %}
-                                        <li><a href="#">{{ i.descripcion_corta }}</a></li>
-                                    {% endif %}
-                                 {% endfor %}
-                            </ul>
-                        </li>
+                        {% if 'publicar contenido' in permisos_usuario %}
+                            <li class="dropdown-submenu">
+                                <a style="text-transform: uppercase;" href="{% url 'seleccionar_plantilla' %}">>NUEVA PUBLICACION</a>
+                                <ul class="dropdown-menu">
+                                    {% for i in categorias %}
+                                        {% if i.estado == 'Activo' %}
+                                            <li><a href="#">{{ i.descripcion_corta }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endif %}
 
-                        <li class="dropdown-submenu">
-                            <a style="text-transform: uppercase;" href="#">>REVISIONES</a>
-                            <ul class="dropdown-menu">
-                                {% for i in categorias %}
-                                    {% if i.estado == 'Activo' %}
-                                        <li><a href="#">{{ i.descripcion_corta }}</a></li>
-                                    {% endif %}
-                                 {% endfor %}
-                            </ul>
-                        </li>
+                        {% if 'publicar contenido' in permisos_usuario %}
+                            <li class="dropdown-submenu">
+                                <a style="text-transform: uppercase;" href="#">>REVISIONES</a>
+                                <ul class="dropdown-menu">
+                                    {% for i in categorias %}
+                                        {% if i.estado == 'Activo' %}
+                                            <li><a href="#">{{ i.descripcion_corta }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endif %}
                             
                         <li><a href="{% url 'mis_publicaciones' %}">MIS PUBLICACIONES</a></li>
+
+                        {% if 'acceder reportes' in permisos_usuario %}
                         <li><a href="#">REPORTES</a></li>
+                        {% endif %}
                     </ul>
                 </li>
 
