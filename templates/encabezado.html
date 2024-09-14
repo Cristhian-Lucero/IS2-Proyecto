@@ -1,3 +1,6 @@
+{% load custom_filters %}
+<p>Filtro cargado correctamente.</p>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -301,12 +304,12 @@
                             <li><a href="/gestioncategoria">GESTIONAR CATEGORIA</a></li>
                         {% endif %}
                         
-                        {% if 'publicar contenido' in permisos_usuario %}
+                        {% if 'crear contenido' in permisos_usuario %}
                             <li class="dropdown-submenu">
                                 <a style="text-transform: uppercase;" href="{% url 'seleccionar_plantilla' %}">>NUEVA PUBLICACION</a>
                                 <ul class="dropdown-menu">
                                     {% for i in categorias %}
-                                        {% if i.estado == 'Activo' %}
+                                        {% if i.estado == 'Activo' and 'crear contenido' in permisos_categoria|get_item:i.id %}
                                             <li><a href="#">{{ i.descripcion_corta }}</a></li>
                                         {% endif %}
                                     {% endfor %}
@@ -314,12 +317,12 @@
                             </li>
                         {% endif %}
 
-                        {% if 'publicar contenido' in permisos_usuario %}
+                        {% if 'rechazar contenido' in permisos_usuario %}
                             <li class="dropdown-submenu">
                                 <a style="text-transform: uppercase;" href="#">>REVISIONES</a>
                                 <ul class="dropdown-menu">
                                     {% for i in categorias %}
-                                        {% if i.estado == 'Activo' %}
+                                        {% if i.estado == 'Activo' and 'rechazar contenido' in permisos_categoria|get_item:i.id %}
                                             <li><a href="#">{{ i.descripcion_corta }}</a></li>
                                         {% endif %}
                                     {% endfor %}
