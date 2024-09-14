@@ -98,8 +98,13 @@ class UsuarioRolCategoria(models.Model):
     """
 
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    rol = models.ForeignKey(Rol, on_delete=models.CASCADE, default=lambda: Rol.objects.get(nombre='Suscriptor'))  # Rol por defecto
+    rol = models.ForeignKey(Rol, on_delete=models.CASCADE)  # Rol por defecto
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if not self.rol_id:  # Si no se ha asignado un rol aún
+            self.rol = Rol.objects.get(nombre='Suscriptor')
+        super().save(*args, **kwargs)
 
     class Meta:
         unique_together = ('usuario', 'rol', 'categoria')  # Asegura que no se repita la misma combinación

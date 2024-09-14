@@ -5,6 +5,7 @@ Modelo de la aplicación para gestionar las publicaciones de los usuarios.
 
 from django.db import models  # Asegúrate de que esta línea esté presente
 from django.contrib.auth.models import User  # Si usas la clase User para relaciones
+from login.models import Categoria
 
 class Publicacion(models.Model):
     """
@@ -28,6 +29,16 @@ class Publicacion(models.Model):
     cita = models.TextField(null=True, blank=True)  # Campo para las citas
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    ############################ PARTE DE IVAN ############################
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if not self.categoria_id:  # Si no se ha asignado un rol aún
+            self.categoria = Categoria.objects.get(id=1)
+        super().save(*args, **kwargs)
+
+    #######################################################################
 
     def __str__(self):
         return self.titulo
