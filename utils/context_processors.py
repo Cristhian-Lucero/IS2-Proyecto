@@ -25,7 +25,8 @@ def permisos_categoria_usuario_context(request):
     if not request.user.is_authenticated:
         return {}
 
-    usuario_instancia = Usuario.objects.get(user_id=request.user)
+    user = Usuario.objects.get(user_id=request.user)
+    usuario_instancia = user
     roles_usuario = UsuarioRolCategoria.objects.filter(usuario=usuario_instancia)
     permisos = {}
 
@@ -59,6 +60,9 @@ def permisos_categoria_usuario_context(request):
 	# Ciberseguridad : ['permiso1', 'permiso2', ..., 'permisoN']
     ######################################################
 
-    return {'permisos_categoria': permisos}
+    return {
+        'permisos_categoria': permisos,
+        'user': user.user
+        }
 
 
