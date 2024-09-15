@@ -54,7 +54,7 @@
 
     <h1>Crear Publicación</h1>
     <div class="form-container">
-        <form id="publicacionForm" action="{% url 'crear_publicacion' %}" method="POST" enctype="multipart/form-data">
+        <form id="publicacionForm" action="{% url 'crear_publicacion' categoria_id %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <label for="titulo">Encabezado</label>
             <input type="text" id="titulo" name="titulo" placeholder="Escribe el título de la publicación" required>

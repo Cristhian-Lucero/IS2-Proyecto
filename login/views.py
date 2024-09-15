@@ -327,13 +327,18 @@ def editarCategoria(request, categoria_id):
     })
 
 @login_required
-@check_permiso('crear contenido', categoria_id=2)
-def seleccionar_plantilla(request):
-    """
-    Renderiza la página para seleccionar una plantilla de publicación.
 
-    Retorna:
-        HttpResponse: Renderiza la plantilla 'crearpublicaciones/templates/seleccionar_plantilla.html'.
+def seleccionar_plantilla(request, categoria_id):
+    """
+    Vista para seleccionar una plantilla para la publicación.
+
+    Muestra las opciones de plantillas disponibles para ser usadas
+    en la creación de publicaciones.
+
+    Returns:
+        HttpResponse: Renderiza la página de selección de plantillas.
     """
 
-    return render(request, 'crearpublicaciones/templates/seleccionar_plantilla.html')
+    return render(request, 'seleccionar_plantilla.html', {
+        'categoria_id': categoria_id
+    })

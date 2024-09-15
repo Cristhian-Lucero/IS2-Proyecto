@@ -9,7 +9,7 @@ from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
 #from .forms import *
 
-
+'''
 # Create your views here.
 
 from django.shortcuts import render
@@ -33,3 +33,4 @@ def mis_publicaciones(request):
     """
 
     return render(request, 'publicacion/mis_publicaciones.html')
+'''

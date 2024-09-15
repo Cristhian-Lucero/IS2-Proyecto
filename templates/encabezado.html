@@ -310,11 +310,11 @@
                         
                         {% if 'crear contenido' in permisos_usuario %}
                             <li class="dropdown-submenu">
-                                <a style="text-transform: uppercase;" href="{% url 'seleccionar_plantilla' %}">>NUEVA PUBLICACION</a>
+                                <a style="text-transform: uppercase;" href="#">>NUEVA PUBLICACION</a>
                                 <ul class="dropdown-menu">
                                     {% for i in categorias %}
                                         {% if i.estado == 'Activo' and 'crear contenido' in permisos_categoria|get_item:i.id %}
-                                            <li><a href="#">{{ i.descripcion_corta }}</a></li>
+                                            <li><a href="{% url 'seleccionar_plantilla' i.id %}">{{ i.descripcion_corta }}</a></li>
                                         {% endif %}
                                     {% endfor %}
                                 </ul>

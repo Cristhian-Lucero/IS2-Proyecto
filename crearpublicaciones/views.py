@@ -9,12 +9,13 @@ de plantillas y la personalización de las publicaciones.
 from django.shortcuts import render
 from .forms import PublicacionForm
 from .models import Publicacion
+from login.models import Categoria
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 import time
 
 @login_required
-def crear_publicacion(request):
+def crear_publicacion(request, categoria_id):
     """
     Vista para crear una nueva publicación.
 
@@ -33,13 +34,17 @@ def crear_publicacion(request):
         if form.is_valid():
             publicacion = form.save(commit=False)
             publicacion.user = request.user  # Asigna el usuario autenticado
+            publicacion.categoria = Categoria.objects.get(id=categoria_id)
             publicacion.save()  # Guarda la publicación
             time.sleep(1)
             return redirect('mis_publicaciones')  # Redirige a la página "Mis Publicaciones"
     else:
         form = PublicacionForm()
 
-    return render(request, 'crearpublicacion.html', {'form': form})
+    return render(request, 'crearpublicacion.html', {
+        'form': form,
+        'categoria_id': categoria_id
+        })
 
 
 
@@ -124,7 +129,7 @@ def eliminar_publicacion(request, id):
         return redirect('mis_publicaciones')
     return render(request, 'eliminarpublicacion.html', {'publicacion': publicacion})
 
-def seleccionar_plantilla(request):
+def seleccionar_plantilla(request, categoria_id):
     """
     Vista para seleccionar una plantilla para la publicación.
 
@@ -135,7 +140,9 @@ def seleccionar_plantilla(request):
         HttpResponse: Renderiza la página de selección de plantillas.
     """
 
-    return render(request, 'seleccionar_plantilla.html')
+    return render(request, 'seleccionar_plantilla.html', {
+        'categoria_id': categoria_id
+    })
 
 @login_required
 def personalizable(request):

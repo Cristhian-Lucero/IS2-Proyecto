@@ -78,7 +78,7 @@
                 <td>
                     <button class="btn-edit" onclick="window.location.href='{% url 'editar_rol' i.id %}'">Editar</button>
                     {% if forloop.counter > 5 %}
-                        <form action="{% url 'eliminar_rol' i.id %}" method="post" style="display:inline;">
+                        <form action="{% url 'eliminar_rol' categoria_id %}" method="post" style="display:inline;">
                             {% csrf_token %}
                             <button type="submit" class="btn-delete">Eliminar</button>
                         </form>
