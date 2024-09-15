@@ -13,6 +13,7 @@ from Perfil.models import Usuario
 
 from django.contrib.auth.decorators import login_required #para redirigir a login obligandolo a logearse
 from django.contrib.auth import logout
+from crearpublicaciones.models import Publicacion
 
 from utils.decorators import check_permiso
 
@@ -30,8 +31,23 @@ def home(request):
     """
 
     return render(request, "rol/home.html", {
-        'categorias': list(Categoria.objects.all())
+        'publicaciones': list((Publicacion.objects.all()).order_by('-fecha_creacion'))
     })
+
+@login_required
+def publicacionCategoria(request, descripcion_corta):
+
+    publicaciones = list((Publicacion.objects.all()).order_by('-fecha_creacion'))
+    publicacones_filtradas = []
+    for i in publicaciones:
+        if i.categoria.descripcion_corta == descripcion_corta:
+            publicacones_filtradas.append(i)
+
+    return render(request, "rol/publicacionCategoria.html", {
+        'publicaciones': publicacones_filtradas,
+        'categoria_seleccionada': descripcion_corta
+    })
+
 
 @login_required
 def listadoCategorias(request):

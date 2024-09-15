@@ -343,12 +343,12 @@
                 </li>
 
                 <li class="dropdown"> <!-- CATEGORIAS -->
-                    <a href="/home/lista_categoria">CATEGORIAS</a>
+                    <a href="/home/categoria">CATEGORIAS</a>
                     <!-- Menú desplegable -->
                     <ul class="dropdown-menu">
                         {% for i in categorias %}
                             {% if i.estado == 'Activo' %}
-                                <li><a style="text-transform: uppercase;" href="#">{{ i.descripcion_corta }}</a></li>
+                                <li><a style="text-transform: uppercase;" href="{% url 'categoria' i.descripcion_corta %}">{{ i.descripcion_corta }}</a></li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -383,7 +383,7 @@
             <div class="footer-center">
                 <ul>
                     <li><a href="/home">Inicio</a></li>
-                    <li><a href="/home/lista_categoria">Categoria</a></li>
+                    <li><a href="/home/categoria">Categoria</a></li>
                     <li><a href="#">Sobre Nosotros</a></li>
                     <li><a href="#">Contacto</a></li>
                 </ul>

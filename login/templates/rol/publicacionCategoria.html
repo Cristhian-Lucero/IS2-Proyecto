@@ -46,21 +46,20 @@
     </style>
 </head>
 <body>
-    <br><br><br>
+    <h1 style="text-transform: uppercase; text-align: center;"> {{ categoria_seleccionada }} </h1>
+    <br>
     {% for i in publicaciones %}
-        {% if i.categoria.estado == 'Activo' %}
-            <div class="article-container" style="text-align: justify;">
-                <img src="{{ i.imagen1.url }}"  alt="Perfil">
-                <div class="article-content">
-                    <h2 style="text-transform: uppercase;" class="article-title">{{ i.titulo }}</h2>
-                    <div class="category"> <a style="text-transform: uppercase;" href="#">{{ i.categoria.descripcion_corta }}</a> </div>
-                    <div class="description">
-                        {{ i.texto_corto }}
-                    </div>
-                    <a class="read-more" href="{% url 'previsualizar_publicacion' i.id %}">LEER MÁS</a>
+        <div class="article-container" style="text-align: justify;">
+            <img src="{{ i.imagen1.url }}"  alt="Perfil">
+            <div class="article-content">
+                <h2 style="text-transform: uppercase;" class="article-title">{{ i.titulo }}</h2>
+                <div class="category"> <a style="text-transform: uppercase;" href="#">{{ i.categoria.descripcion_corta }}</a> </div>
+                <div class="description">
+                    {{ i.texto_corto }}
                 </div>
+                <a class="read-more" href="{% url 'previsualizar_publicacion' i.id %}">LEER MÁS</a>
             </div>
-        {% endif %}
+        </div>
     {% endfor %}
 
 {% endblock %}

@@ -14,7 +14,8 @@ urlpatterns = [
     path('rol/', rol, name='rol' ),
 
     path('home/', home, name='home'),
-    path('home/lista_categoria', listadoCategorias, name='lista_categoria'),
+    path('home/categoria/<str:descripcion_corta>/', publicacionCategoria, name='categoria'),
+    path('home/categoria/', listadoCategorias, name='categoria'),
 
     path('gestionrol/', gestionarRol, name='gestionrol'),
 
