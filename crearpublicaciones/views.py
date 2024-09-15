@@ -12,9 +12,11 @@ from .models import Publicacion
 from login.models import Categoria
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
+from utils.decorators import *
 import time
 
 @login_required
+@check_permiso_categoria(['crear contenido'])
 def crear_publicacion(request, categoria_id):
     """
     Vista para crear una nueva publicación.
@@ -47,22 +49,22 @@ def crear_publicacion(request, categoria_id):
         })
 
 
-
-def previsualizar_publicacion(request, pk):
+@login_required
+def previsualizar_publicacion(request, publicacion_id):
     """
     Vista para previsualizar una publicación.
 
-    Busca una publicación por su clave primaria (pk) y la muestra en una página
+    Busca una publicación por su clave primaria (publicacion_id) y la muestra en una página
     de previsualización.
 
     Argumentos:
-        pk (int): Clave primaria de la publicación a previsualizar.
+        publicacion_id (int): Clave primaria de la publicación a previsualizar.
 
     Returns:
         HttpResponse: Renderiza la página de previsualización con los datos de la publicación.
     """
 
-    publicacion = get_object_or_404(Publicacion, id=pk)
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
     return render(request, 'previsualizacion.html', {'publicacion': publicacion, 'user': publicacion.user})
 
 @login_required
@@ -81,7 +83,9 @@ def mis_publicaciones(request):
 
     return render(request, 'misPublicaciones.html', {'publicaciones': publicaciones})
 
+
 @login_required
+@check_permiso_publicacion_modificar(['crear contenido'])
 def modificar_publicacion(request, publicacion_id):
     """
     Vista para modificar una publicación existente.
@@ -109,7 +113,10 @@ def modificar_publicacion(request, publicacion_id):
 
     return render(request, 'modificarpublicacion.html', {'form': form})
 
-def eliminar_publicacion(request, id):
+
+@login_required
+@check_permiso_publicacion_modificar(['crear contenido'])
+def eliminar_publicacion(request, publicacion_id):
     """
     Vista para eliminar una publicación.
 
@@ -117,18 +124,21 @@ def eliminar_publicacion(request, id):
     Luego, redirige a 'Mis Publicaciones'.
 
     Argumentos:
-        id (int): ID de la publicación que se desea eliminar.
+        publicacion_id (int): ID de la publicación que se desea eliminar.
 
     Returns:
         HttpResponse: Renderiza la página de confirmación de eliminación o redirige tras eliminar.
     """
 
-    publicacion = get_object_or_404(Publicacion, id=id)
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
     if request.method == 'POST':
         publicacion.delete()
         return redirect('mis_publicaciones')
     return render(request, 'eliminarpublicacion.html', {'publicacion': publicacion})
 
+
+@login_required
+@check_permiso_categoria(['crear contenido'])
 def seleccionar_plantilla(request, categoria_id):
     """
     Vista para seleccionar una plantilla para la publicación.
@@ -144,7 +154,9 @@ def seleccionar_plantilla(request, categoria_id):
         'categoria_id': categoria_id
     })
 
+
 @login_required
+@check_permiso_publicacion_modificar(['crear contenido'])
 def personalizable(request):
     """
     Vista para personalizar una publicación utilizando una plantilla seleccionada.
