@@ -98,11 +98,12 @@ def check_permiso_publicacion_modificar(permisos):
             if local_publicacion_id is None:
                 return HttpResponseForbidden("No se proporcionó una categoría válida")
             
+            
             #Aca comienza la logica
             try:
                 # Lógica para verificar los permisos del usuario en la categoría
                 publicacion_acceso = Publicacion.objects.get(id=local_publicacion_id)
-                local_categoria_id = publicacion_acceso.id
+                local_categoria_id = publicacion_acceso.categoria.id
                 usuario_instancia = Usuario.objects.get(user_id=user)
                 usuario_rol = UsuarioRolCategoria.objects.get(usuario=usuario_instancia, categoria_id=local_categoria_id)
 
