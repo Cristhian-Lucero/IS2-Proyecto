@@ -62,7 +62,7 @@ def permisos_categoria_usuario_context(request):
 
     return {
         'permisos_categoria': permisos,
-        'user': user.user
+        'userlogeado': user.user
         }
 
 

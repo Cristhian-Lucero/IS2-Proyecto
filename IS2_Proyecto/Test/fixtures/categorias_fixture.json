@@ -1,0 +1,12 @@
+[
+    {
+        "model": "login.categoria",
+        "pk": 1,
+        "fields": {
+            "descripcion_corta": "Inteligencia Artificial",
+            "descripcion_larga": "Estudios y desarrollos en inteligencia artificial, incluyendo aprendizaje automatico, redes neuronales, y mas. editado",
+            "estado": "Inactivo"
+        }
+    }
+    ]
+    

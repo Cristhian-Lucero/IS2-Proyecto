@@ -1,9 +1,11 @@
 import pytest
-from login.models import Categoria
-
+from login.models import Categoria, Rol
 
 @pytest.mark.django_db
 def test_categoria_creation():
+
+    suscriptor_rol = Rol.objects.create(nombre='Suscriptor')
+
     # se crea una nueva categoria
     categoria = Categoria.objects.create(
         descripcion_corta="Descripción corta de prueba",

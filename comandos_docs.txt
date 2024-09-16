@@ -2,7 +2,10 @@ sphinx-quickstart docs
 
 sphinx-apidoc -o docs/source/ .
 
-sphinx-build -b html source build\
+sphinx-build -b html source build\      o       sphinx-multiversion source build
+
+
+
 
 ./make.bat html
 
