@@ -17,8 +17,6 @@ def check_permiso_categoria(permisos, categoria_id=None):
 
             local_categoria_id = categoria_id
 
-            print(f"La categoria es ")
-
             if local_categoria_id is None:
                 local_categoria_id = kwargs.get('categoria_id')  # Intentar obtener desde kwargs
                 if local_categoria_id is None and len(args) > 1:
@@ -65,7 +63,6 @@ def check_permiso_publicacion_nueva(permisos):
             
             local_categoria_id = Publicacion.objects.get(id=local_publicacion_id).id
 
-            print(f"La categoria es {local_categoria_id}")
 
             try:
                 # Lógica para verificar los permisos del usuario en la categoría
@@ -76,7 +73,6 @@ def check_permiso_publicacion_nueva(permisos):
                     if not usuario_rol.rol.permisos.filter(nombre=permiso_nombre).exists():
                         return render(request, 'sin_permiso.html')
                         return HttpResponseForbidden("No tienes permiso para realizar esta acción")
-                    print(f"se tiene permiso para '{permiso_nombre}' en la categoria con id {local_categoria_id}")
             except UsuarioRolCategoria.DoesNotExist:
                 return HttpResponseForbidden("No tienes un rol asignado en esta categoría")
 

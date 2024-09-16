@@ -122,11 +122,8 @@ def gestionarRol(request):
             rol_id = request.POST.get('rol')
 
             try:
-                print(f'categoria id: {categoria_id}')
-                print(f'rol id: {rol_id}')
                 # Buscar la relación en UsuarioRolCategoria
                 usuario_instancia = Usuario.objects.get(user_id=usuario_id)
-                print(f'usuario id: {usuario_instancia}')
                 usuario_rol_categoria = UsuarioRolCategoria.objects.get(usuario_id=usuario_instancia, categoria_id=categoria_id)
 
                 # Actualizar el rol
@@ -142,9 +139,6 @@ def gestionarRol(request):
                 categorias = Categoria.objects.all()
                 roles = Rol.objects.all()
                 # Si no existe la relación, puedes manejar el error (opcional)
-                print(f'usuario id: {usuario_id}')
-                print(f'categoria id: {categoria_id}')
-                print(f'rol id: {rol_id}')
                 return render(request, 'rol/gestionRol.html', {
                     'usuarios': usuarios,
                     'categorias': categorias,
