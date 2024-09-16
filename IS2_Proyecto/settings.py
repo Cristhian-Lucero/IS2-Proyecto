@@ -104,6 +104,7 @@ WSGI_APPLICATION = 'IS2_Proyecto.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
 if ENVIRONMENT == 'production':
     DATABASES = {
         'default': {
@@ -121,7 +122,7 @@ else:
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'is2_proyecto',
             'USER': 'postgres',
-            'PASSWORD': 'zoevQiTbJFKFFzvncJmjQyuyCgRSOmWIe',
+            'PASSWORD': 'postgres',
             'HOST': 'localhost',
             'PORT': '5432',
         },
