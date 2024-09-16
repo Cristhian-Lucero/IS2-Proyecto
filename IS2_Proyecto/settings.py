@@ -16,6 +16,8 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ENVIRONMENT = os.getenv('DJANGO_ENV', 'development') 
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -103,16 +105,28 @@ WSGI_APPLICATION = 'IS2_Proyecto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'is2_proyecto',
-        'USER': 'postgres',
-        'PASSWORD': 'zoevQiTbJFKFFzvncJmjQyuyCgRSOmWIe',
-        'HOST': '24.144.64.29',
-        'PORT': '5432',
-    },
-}
+if ENVIRONMENT == 'production':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'is2_proyecto',
+            'USER': 'postgres',
+            'PASSWORD': 'zoevQiTbJFKFFzvncJmjQyuyCgRSOmWIe',
+            'HOST': '24.144.64.29',
+            'PORT': '5432',
+        },
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'is2_proyecto',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        },
+    }
 
 
 # Password validation
