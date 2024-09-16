@@ -28,3 +28,20 @@ def asignar_rol_suscriptor(sender, instance, created, **kwargs):
                 rol=rol_suscriptor,
                 categoria=categoria
             )
+    
+@receiver(post_save, sender=Categoria)
+def asignar_rol_a_usuarios(sender, instance, created, **kwargs):
+    if created:
+        # Obtener el rol "Suscriptor"
+        suscriptor_rol = Rol.objects.get(nombre='Suscriptor')
+
+        # Obtener todos los usuarios
+        usuarios = Usuario.objects.all()
+
+        # Crear una relación UsuarioRolCategoria para cada usuario con la nueva categoría
+        for usuario in usuarios:
+            UsuarioRolCategoria.objects.create(
+                usuario=usuario,
+                rol=suscriptor_rol,
+                categoria=instance
+            )

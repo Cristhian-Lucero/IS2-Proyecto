@@ -109,6 +109,7 @@ def check_permiso_publicacion_modificar(permisos):
 
                 
                 if user.id != publicacion_acceso.user.id and not usuario_rol.rol.permisos.filter(nombre='gestionar contenido otros').exists():
+                    return render(request, 'sin_permiso.html')
                     return HttpResponseForbidden("No vayas a tocar cosa ajena. Ish")
                 
                 for permiso_nombre in permisos:
