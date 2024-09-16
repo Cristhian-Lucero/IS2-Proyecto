@@ -193,7 +193,7 @@ def agregarRol(request):
         return redirect('adicionrol')
 
 @login_required
-@check_permiso_categoria('gestionar roles', categoria_id=2)
+@check_permiso_categoria(['gestionar roles'], categoria_id=2)
 def eliminarRol(request, rol_id):
     """
     Elimina un rol específico basado en su ID y redirige a la página de adición de roles.
