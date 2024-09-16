@@ -16,7 +16,7 @@ def check_permiso_categoria(permisos, categoria_id=None):
             
 
             local_categoria_id = categoria_id
-
+            print(f'la categoria id es: {categoria_id}')
             if local_categoria_id is None:
                 local_categoria_id = kwargs.get('categoria_id')  # Intentar obtener desde kwargs
                 if local_categoria_id is None and len(args) > 1:

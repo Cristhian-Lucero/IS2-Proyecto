@@ -216,7 +216,7 @@ def eliminarRol(request, rol_id):
     return redirect('adicionrol')
 
 @login_required
-@check_permiso_categoria('gestionar roles', categoria_id=2)
+@check_permiso_categoria(['gestionar roles'], categoria_id=2)
 def editarRol(request, rol_id):
     """
     Renderiza la página para editar un rol y maneja la solicitud POST para actualizar los detalles del rol.
