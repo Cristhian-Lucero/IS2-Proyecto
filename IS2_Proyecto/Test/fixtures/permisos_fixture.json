@@ -1,0 +1,146 @@
+[
+    {
+        "model": "login.permiso",
+        "pk": 1,
+        "fields": {
+            "nombre": "crear usuarios",
+            "descripcion": "Permite crear nuevos usuarios en el sistema."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 2,
+        "fields": {
+            "nombre": "editar usuarios",
+            "descripcion": "Permite modificar la informacion de usuarios existentes."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 3,
+        "fields": {
+            "nombre": "eliminar usuarios",
+            "descripcion": "Permite eliminar usuarios del sistema."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 4,
+        "fields": {
+            "nombre": "asignar roles",
+            "descripcion": "Permite asignar o cambiar los roles de los usuarios."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 5,
+        "fields": {
+            "nombre": "crear contenido",
+            "descripcion": "Permite crear nuevas publicaciones o entradas en el sistema."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 9,
+        "fields": {
+            "nombre": "gestionar contenido otros",
+            "descripcion": "Permite eliminar o modificar contenido creado por otros usuarios."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 10,
+        "fields": {
+            "nombre": "aprobar contenido",
+            "descripcion": "Permite aprobar contenido para su publicacion."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 11,
+        "fields": {
+            "nombre": "rechazar contenido",
+            "descripcion": "Permite rechazar contenido que no cumple con los estandares."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 12,
+        "fields": {
+            "nombre": "publicar contenido",
+            "descripcion": "Permite hacer que el contenido aprobado sea visible para el publico."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 13,
+        "fields": {
+            "nombre": "cambiar estado publicacion",
+            "descripcion": "Permite cambiar el estado de una publicacion (ej. activo/inactivo)."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 14,
+        "fields": {
+            "nombre": "visualizar historial cambios",
+            "descripcion": "Permite ver el historial de ediciones de cualquier contenido."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 15,
+        "fields": {
+            "nombre": "gestionar categorias",
+            "descripcion": "Permite crear eliminar y modificar categorias para organizar el contenido."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 18,
+        "fields": {
+            "nombre": "gestionar plantillas",
+            "descripcion": "Permite modificar, eliminar o crear plantillas para la creacion de contenido."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 22,
+        "fields": {
+            "nombre": "acceder reportes",
+            "descripcion": "Permite acceder a reportes y estadisticas del sistema."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 23,
+        "fields": {
+            "nombre": "ver contenido publicado",
+            "descripcion": "Permite ver el contenido que ya ha sido publicado."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 24,
+        "fields": {
+            "nombre": "interactuar publicaciones",
+            "descripcion": "Permite interactuar con publicaciones (ej. comentarios, likes)."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 25,
+        "fields": {
+            "nombre": "editar perfil",
+            "descripcion": "Permite modificar la informacion del propio perfil."
+        }
+    },
+    {
+        "model": "login.permiso",
+        "pk": 26,
+        "fields": {
+            "nombre": "gestionar roles",
+            "descripcion": "permite la creacion, modificacion y eliminacion de roles"
+        }
+    }
+    ]

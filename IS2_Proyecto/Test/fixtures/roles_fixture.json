@@ -1,0 +1,114 @@
+[
+{
+    "model": "login.rol",
+    "pk": 1,
+    "fields": {
+        "nombre": "Administrador",
+        "descripcion": "El Administrador tiene acceso total al sistema y puede realizar cualquier accion. Este rol incluye la capacidad de gestionar usuarios, asignar roles, configurar el sistema, y acceder a todas las funcionalidades y reportes. El Administrador es responsable de mantener y supervisar el sistema, asegurando que todo funcione correctamente.",
+        "permisos": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            10,
+            11,
+            12,
+            13,
+            14,
+            22,
+            23,
+            24,
+            25,
+            15,
+            18,
+            26,
+            9
+        ]
+    }
+},
+{
+    "model": "login.rol",
+    "pk": 2,
+    "fields": {
+        "nombre": "Editor",
+        "descripcion": "El Editor es responsable de revisar, aprobar y, en algunos casos, publicar contenido creado por otros usuarios (como autores). El Editor tiene acceso para modificar el contenido de otros, asegurandose de que cumple con los estandares del sistema antes de ser publicado.",
+        "permisos": [
+            5,
+            9,
+            10,
+            14,
+            18,
+            23,
+            24,
+            25
+        ]
+    }
+},
+{
+    "model": "login.rol",
+    "pk": 3,
+    "fields": {
+        "nombre": "Autor",
+        "descripcion": "El Autor es responsable de crear contenido dentro del sistema. Pueden crear, editar y eliminar su propio contenido, pero no tienen la capacidad de publicar directamente. El contenido creado por un Autor generalmente pasa por una revision antes de ser publicado.",
+        "permisos": [
+            5,
+            23,
+            24,
+            25
+        ]
+    }
+},
+{
+    "model": "login.rol",
+    "pk": 4,
+    "fields": {
+        "nombre": "Publicador",
+        "descripcion": "El Publicador tiene la capacidad de hacer que el contenido aprobado sea visible para el publico. Este rol es crucial para el control final de lo que se publica en la plataforma. Ademas de publicar, pueden programar publicaciones para que aparezcan en fechas especificas.",
+        "permisos": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            18,
+            23,
+            24,
+            25
+        ]
+    }
+},
+{
+    "model": "login.rol",
+    "pk": 5,
+    "fields": {
+        "nombre": "Suscriptor",
+        "descripcion": "El Suscriptor tiene acceso limitado y generalmente solo puede ver y, en algunos casos, interactuar con el contenido publicado. No tienen permisos para crear, editar o gestionar contenido. Pueden suscribirse a boletines y recibir notificaciones sobre nuevas publicaciones.",
+        "permisos": [
+            23,
+            24,
+            25
+        ]
+    }
+},
+{
+    "model": "login.rol",
+    "pk": 6,
+    "fields": {
+        "nombre": "Prueba",
+        "descripcion": "esto es una prueba",
+        "permisos": [
+            1,
+            2,
+            3,
+            4,
+            22,
+            23,
+            24,
+            25,
+            15
+        ]
+    }
+}
+]
