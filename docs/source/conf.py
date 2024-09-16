@@ -28,6 +28,9 @@ extensions = [
     'sphinx_multiversion',
 ]
 
+smv_branch_whitelist = r'^Ivan---based-on-cris$'  # Aca se especifica la rama que queres documentar, creo que pueden ser varios
+smv_tag_whitelist = r'^Version-\d+\.\d+$'   #smv_tag_whitelist = r'^v\d+\.\d+$'  # Aquí se especifican las etiquetas de versión (por ejemplo, etiquetas como 'v1.0', 'v2.1'), en este caso Version-x.x
+
 templates_path = ['_templates']
 exclude_patterns = []
 

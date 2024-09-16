@@ -11,11 +11,12 @@ def asignar_rol_suscriptor(sender, instance, created, **kwargs):
         sender (Model class): El modelo que envió la señal, en este caso, 'Usuario'.
         instance (Usuario): La instancia del modelo 'Usuario' que se acaba de crear.
         created (bool): Valor booleano que indica si la instancia fue creada (True) o actualizada (False).
-        **kwargs: Parámetros adicionales.
+        kwargs: Parámetros adicionales.
 
     Retorna:
         None: La función no retorna un valor, pero crea registros en la tabla 'UsuarioRolCategoria'.
     """
+
     if created:
         # Obtén el rol con id 5
         rol_suscriptor = Rol.objects.get(id=5)
