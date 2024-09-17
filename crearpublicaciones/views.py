@@ -85,6 +85,18 @@ def mis_publicaciones(request):
 
 
 @login_required
+
+@check_permiso_categoria(['gestionar contenido otros'])
+def gestionPublicacionOtros(request, categoria_id):
+
+    publicaciones_gestionables = Publicacion.objects.filter(categoria=categoria_id)
+
+    return render(request, 'GestionPublicaciones3ros.html', {
+        'publicaciones': publicaciones_gestionables,
+        'categoria_nombre': get_object_or_404(Categoria, id=categoria_id).descripcion_corta
+        })
+
+@login_required
 @check_permiso_publicacion_modificar(['crear contenido'])
 def modificar_publicacion(request, publicacion_id):
     """

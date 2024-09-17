@@ -321,6 +321,19 @@
                             </li>
                         {% endif %}
 
+                        {% if 'gestionar contenido otros' in permisos_usuario %}
+                            <li class="dropdown-submenu">
+                                <a style="text-transform: uppercase;" href="#">>GESTIONAR CONTENIDO DE 3ROS</a>
+                                <ul class="dropdown-menu">
+                                    {% for i in categorias %}
+                                        {% if i.estado == 'Activo' and 'gestionar contenido otros' in permisos_categoria|get_item:i.id %}
+                                            <li><a href="{% url 'gestionPublicacionOtros' i.id %}">{{ i.descripcion_corta }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endif %}
+
                         {% if 'rechazar contenido' in permisos_usuario %}
                             <li class="dropdown-submenu">
                                 <a style="text-transform: uppercase;" href="#">>REVISIONES</a>

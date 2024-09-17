@@ -11,12 +11,10 @@ def check_permiso_categoria(permisos, categoria_id=None):
         def _wrapped_view(request, *args, **kwargs):
             user = request.user
             if not user.is_authenticated:
-                return render(request, 'sin_permiso.html')
                 return HttpResponseForbidden("No tienes permiso para realizar esta acción")
             
 
             local_categoria_id = categoria_id
-            print(f'la categoria id es: {categoria_id}')
             if local_categoria_id is None:
                 local_categoria_id = kwargs.get('categoria_id')  # Intentar obtener desde kwargs
                 if local_categoria_id is None and len(args) > 1:
@@ -86,8 +84,8 @@ def check_permiso_publicacion_modificar(permisos):
         def _wrapped_view(request, *args, **kwargs):
             user = request.user
             if not user.is_authenticated:
-                return render(request, 'sin_permiso.html')
                 return HttpResponseForbidden("No tienes permiso para realizar esta acción")
+
             local_publicacion_id = kwargs.get('publicacion_id')
             if local_publicacion_id is None and len(args) > 1:
                 local_publicacion_id = args[1]
