@@ -1,2 +1,5 @@
 __pycache__/
 *.pyc
+*.env
+/IS2_Proyecto/__pycache__
+/login/__pycache__
