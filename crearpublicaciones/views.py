@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 from utils.decorators import *
 import time
+import json
 from django.http import JsonResponse
 from django.shortcuts import redirect
 
@@ -53,21 +54,11 @@ def crear_publicacion(request, categoria_id):
 
 @login_required
 def previsualizar_publicacion(request, publicacion_id):
-    """
-    Vista para previsualizar una publicación.
-
-    Busca una publicación por su clave primaria (publicacion_id) y la muestra en una página
-    de previsualización.
-
-    Argumentos:
-        publicacion_id (int): Clave primaria de la publicación a previsualizar.
-
-    Returns:
-        HttpResponse: Renderiza la página de previsualización con los datos de la publicación.
-    """
-
+    # Obtener la publicación por su ID
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
-    return render(request, 'previsualizacion.html', {'publicacion': publicacion, 'user': publicacion.user})
+    
+    # Renderizar la plantilla de previsualización
+    return render(request, 'previsualizacion.html', {'publicacion': publicacion})
 
 @login_required
 def mis_publicaciones(request):
