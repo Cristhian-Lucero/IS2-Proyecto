@@ -14,9 +14,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 from utils.decorators import *
 import time
+from django.http import JsonResponse
+from django.shortcuts import redirect
 
 @login_required
-@check_permiso_categoria(['crear contenido'])
+# @check_permiso_categoria(['crear contenido'])
 def crear_publicacion(request, categoria_id):
     """
     Vista para crear una nueva publicación.
@@ -97,7 +99,7 @@ def gestionPublicacionOtros(request, categoria_id):
         })
 
 @login_required
-@check_permiso_publicacion_modificar(['crear contenido'])
+# @check_permiso_publicacion_modificar(['crear contenido'])
 def modificar_publicacion(request, publicacion_id):
     """
     Vista para modificar una publicación existente.
@@ -127,7 +129,7 @@ def modificar_publicacion(request, publicacion_id):
 
 
 @login_required
-@check_permiso_publicacion_modificar(['crear contenido'])
+# @check_permiso_publicacion_modificar(['crear contenido'])
 def eliminar_publicacion(request, publicacion_id):
     """
     Vista para eliminar una publicación.
@@ -150,7 +152,7 @@ def eliminar_publicacion(request, publicacion_id):
 
 
 @login_required
-@check_permiso_categoria(['crear contenido'])
+# @check_permiso_categoria(['crear contenido'])
 def seleccionar_plantilla(request, categoria_id):
     """
     Vista para seleccionar una plantilla para la publicación.
@@ -168,34 +170,36 @@ def seleccionar_plantilla(request, categoria_id):
 
 
 @login_required
-@check_permiso_publicacion_modificar(['crear contenido'])
-def personalizable(request):
-    """
-    Vista para personalizar una publicación utilizando una plantilla seleccionada.
+# @check_permiso_publicacion_modificar(['crear contenido'])
+def personalizable(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+    return render(request, 'personalizable.html', {
+        'categoria': categoria
+    })
 
-    Permite al usuario crear una publicación con un título y texto corto personalizados.
-    Si es una solicitud POST, guarda la publicación en la base de datos y redirige a 'Mis Publicaciones'.
 
-    Returns:
-        HttpResponse: Renderiza la página de personalización o redirige tras guardar.
-    """
-
+@login_required
+def guardar_publicacion_ajax(request):
     if request.method == 'POST':
-        titulo = request.POST.get('titulo', 'Título por defecto')
-        texto_corto = request.POST.get('texto_corto', 'Texto corto por defecto')
+        data = json.loads(request.body)
+        titulo = data.get('title')
+        contenido_html = data.get('content')
+        categoria_id = data.get('categoria_id')
 
-        # Crea y guarda la publicación
-        publicacion = Publicacion(
+        # Buscar la categoría por ID
+        categoria = Categoria.objects.get(id=categoria_id)
+
+        # Crear la nueva publicación con estado 'borrador' por defecto
+        nueva_publicacion = Publicacion(
             titulo=titulo,
-            texto_corto=texto_corto,
+            contenido_html=contenido_html,
+            estado='borrador',  # Estado por defecto
             user=request.user,
+            categoria=categoria
         )
-        publicacion.save()
+        nueva_publicacion.save()
 
-        # Espera 1 seg antes de redirigir
-        time.sleep(1)
+        # Devolver una respuesta JSON de éxito
+        return JsonResponse({'success': True})
 
-        # Redirige a "Mis Publicaciones"
-        return redirect('misPublicaciones')
-
-    return render(request, 'personalizable.html')
+    return JsonResponse({'error': 'Invalid request'}, status=400)
