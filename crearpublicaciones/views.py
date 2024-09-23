@@ -148,6 +148,28 @@ def eliminar_publicacion(request, publicacion_id):
         return redirect('mis_publicaciones')
     return render(request, 'eliminarpublicacion.html', {'publicacion': publicacion})
 
+@login_required
+@check_permiso_publicacion_modificar(['gestionar contenido otros'])
+def eliminar_publicacion_otros(request, publicacion_id):
+    """
+    Vista para eliminar una publicación de un tercero.
+
+    Busca una publicación por su ID y la elimina si la solicitud es POST.
+    Luego, redirige a 'Gestion de publicaciones'.
+
+    Argumentos:
+        publicacion_id (int): ID de la publicación que se desea eliminar.
+
+    Returns:
+        HttpResponse: Renderiza la página de confirmación de eliminación o redirige tras eliminar.
+    """
+
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+    if request.method == 'POST':
+        publicacion.delete()
+        return redirect('home')
+    return render(request, 'eliminarpublicacion.html', {'publicacion': publicacion})
+
 
 @login_required
 @check_permiso_categoria(['crear contenido'])
