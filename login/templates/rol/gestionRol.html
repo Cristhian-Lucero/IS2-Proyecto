@@ -44,8 +44,8 @@
     <h1>Gestión de Roles</h1>
     <form action="{% url 'gestionrol' %}" method="post">
         {% csrf_token %}
-        <label for="usuario-select">Seleccionar Usuario:</label>
-        <select id="usuario-select" name="usuario-select" onchange="filtrarPorUsuario()">
+        <label for="usuario">Seleccionar Usuario:</label>
+        <select id="usuario" name="usuario" onchange="filtrarPorUsuario()">
             {% for i in usuarios %}
             <option value="{{ i.user.id }}"> {{ i.user.username }} </option>
             {% endfor %}
@@ -95,7 +95,7 @@
 
         <script>
             function filtrarPorUsuario() {
-                var usuarioSeleccionado = document.getElementById('usuario-select').value;
+                var usuarioSeleccionado = document.getElementById('usuario').value;
                 var filas = document.querySelectorAll('.fila-usuario');
                 
                 filas.forEach(function(fila) {
