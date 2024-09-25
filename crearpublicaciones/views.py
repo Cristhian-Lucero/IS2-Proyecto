@@ -7,7 +7,7 @@ de plantillas y la personalización de las publicaciones.
 """
 
 from django.shortcuts import render
-from .forms import PublicacionForm
+from .forms import *
 from .models import Publicacion
 from login.models import Categoria
 from django.contrib.auth.decorators import login_required
@@ -17,6 +17,7 @@ import time
 import json
 from django.http import JsonResponse
 from django.shortcuts import redirect
+from django.urls import reverse
 
 @login_required
 # @check_permiso_categoria(['crear contenido'])
@@ -57,8 +58,12 @@ def previsualizar_publicacion(request, publicacion_id):
     # Obtener la publicación por su ID
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
     
+    comentarios = Comentario.objects.filter(publicacion=publicacion_id)
     # Renderizar la plantilla de previsualización
-    return render(request, 'previsualizacion.html', {'publicacion': publicacion})
+    return render(request, 'previsualizacion.html', {
+        'publicacion': publicacion,
+        'comentarios': comentarios
+        })
 
 @login_required
 def mis_publicaciones(request):
@@ -194,3 +199,37 @@ def guardar_publicacion_ajax(request):
         return JsonResponse({'success': True})
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+@login_required
+@check_permiso_publicacion_modificar(['interactuar publicaciones'])
+def comentario(request, publicacion_id):
+    # Obtener la publicación en base al id
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+
+    # Si el formulario ha sido enviado
+    if request.method == 'POST':
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.user = request.user
+            comentario.publicacion = publicacion  # Asignar el comentario a la publicación
+            comentario.save()
+            # Redireccionar después de guardar el comentario (opcional)
+            return redirect(reverse('previsualizar_publicacion', args=[publicacion_id]))
+    else:
+        form = ComentarioForm()
+
+    # Renderizar el template y pasar el formulario y la publicación al contexto
+    return render(request, 'comentar.html', {
+        'form': form, 
+        'publicacion': publicacion
+        })
+
+@login_required
+#@check_permiso_publicacion_modificar(['gestionar contenido otros'])
+def eliminar_comentario(request, comentario_id):
+    comentario = get_object_or_404(Comentario, id=comentario_id)
+    
+    if request.method == 'POST':
+        comentario.delete()
+        return redirect('previsualizar_publicacion', publicacion_id=comentario.publicacion.id)

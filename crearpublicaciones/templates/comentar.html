@@ -1,0 +1,36 @@
+{% extends 'encabezado.html' %}
+
+{% block content%}
+<head>
+    <title>Crear Publicación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        h1 {
+            text-align: center; 
+            margin-bottom: 15px; 
+            font-family: 'Yanone Kaffeesatz';
+            font-size: 40px;
+        }
+        h2{
+            font-size: 20px;
+            margin-bottom: 5px; 
+        }
+    </style>
+</head>
+<body>
+    <section id="comments-section">
+        <h1>Nuevo Comentario</h1>
+        <h2>Título: {{ publicacion.titulo }} <br> Autor: {{ publicacion.user.username }}</h2>
+      
+        <!-- Formulario para enviar un nuevo comentario -->
+        <form method="POST" action="{% url 'comentario' publicacion.id %}">
+            {% csrf_token %}
+            <p><label for="comment">Descripción:</label>
+            <textarea id="comment" name="descripcion" rows="4" required></textarea></p>
+        
+            <button type="submit">Enviar comentario</button>
+        </form>
+      
+        </div>
+      </section>      
+{% endblock %}

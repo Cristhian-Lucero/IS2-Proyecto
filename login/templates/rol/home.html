@@ -47,7 +47,7 @@
 </head>
 <body>
     <br><br><br>
-    {% for i in publicaciones %}
+    {% for i in page_obj %}
         {% if i.categoria.estado == 'Activo' %}
             <div class="article-container" style="text-align: justify;">
                 <img src="{{ i.imagen1.url }}"  alt="Perfil">
@@ -62,5 +62,32 @@
             </div>
         {% endif %}
     {% endfor %}
+
+    <div class="pagination" style="text-align: center;">
+        <span>
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </span>
+    
+        <div>
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Primera</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% endif %}
+    
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <strong>{{ num }}</strong>
+                {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    
 
 {% endblock %}

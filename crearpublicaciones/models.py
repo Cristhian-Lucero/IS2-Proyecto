@@ -39,3 +39,12 @@ class Publicacion(models.Model):
 
     class Meta:
         db_table = 'publicacion'
+
+class Comentario(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    descripcion = models.TextField()
+
+    def __str__(self):
+        return f'{self.user.username} - {self.publicacion.titulo} - {self.fecha_creacion}'

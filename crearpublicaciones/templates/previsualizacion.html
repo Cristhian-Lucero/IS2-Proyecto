@@ -1,33 +1,69 @@
 {% extends 'encabezado.html' %}
 
 {% block content %}
-<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
-    <h1 style="text-align: center;">{{ publicacion.titulo }}</h1>
-
-    <div class="contenido" style="max-width: 100%; margin: 0 auto;">
-        <!-- Mostrar el contenido HTML almacenado -->
-        {{ publicacion.contenido_html|safe }}
+<head>
+    <style>
+        .contenido img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto; /* Centra la imagen */
+        }
+        .comentario-container {
+                display: flex;
+                align-items: flex-start;
+                background-color: #171717;
+                padding: 20px;
+                border-radius: 20px;
+                margin-left: 15%;
+                margin-right: 15%;
+                margin-bottom: 2%;
+            }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+        <h1 style="text-align: center;">{{ publicacion.titulo }}</h1>
+    
+        <div class="contenido" style="max-width: 100%; margin: 0 auto;">
+            <!-- Mostrar el contenido HTML almacenado -->
+            {{ publicacion.contenido_html|safe }}
+        </div>
+    
+        <div class="informacion-extra" style="text-align: center; margin-top: 20px;">
+            <p><strong>Publicado por:</strong> {{ publicacion.user.username }}</p>
+            <p><strong>Categoría:</strong> {{ publicacion.categoria.descripcion_corta }}</p>
+            <p><strong>Fecha de Creación:</strong> {{ publicacion.fecha_creacion }}</p>
+            <p><strong>Estado:</strong> {{ publicacion.get_estado_display }}</p>
+        </div>
+    
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{% url 'mis_publicaciones' %}" class="btn btn-primary">Volver a mis publicaciones</a>
+        </div>
     </div>
 
-    <div class="informacion-extra" style="text-align: center; margin-top: 20px;">
-        <p><strong>Publicado por:</strong> {{ publicacion.user.username }}</p>
-        <p><strong>Categoría:</strong> {{ publicacion.categoria.descripcion_corta }}</p>
-        <p><strong>Fecha de Creación:</strong> {{ publicacion.fecha_creacion }}</p>
-        <p><strong>Estado:</strong> {{ publicacion.get_estado_display }}</p>
-    </div>
+    <form action="{% url 'comentario' publicacion.id %}" method="POST" style="text-align: center; margin-bottom: 2%;">
+        {% csrf_token %}
+        <button type="submit">Nuevo Comentario</button>
+    </form>
 
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="{% url 'mis_publicaciones' %}" class="btn btn-primary">Volver a mis publicaciones</a>
-    </div>
-</div>
+    {% for comentario in comentarios %}
+        <div class="comentario-container" style="text-align: justify;">
+            <div class="article-content">
+                <h2 style="text-transform: uppercase;" class="article-title"> {{comentario.user.username}} </h2>
+                <p> {{ comentario.fecha_creacion }} </p>
+                <div class="description">
+                    <p>{{ comentario.descripcion }}</p>
 
-<!-- Estilos para ajustar las imágenes -->
-<style>
-    .contenido img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-        margin: 0 auto; /* Centra la imagen */
-    }
-</style>
+                    {% if request.user == comentario.user %}
+                        <form action="{% url 'eliminar_comentario' comentario.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-delete">Eliminar</button>
+                        </form>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

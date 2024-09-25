@@ -10,6 +10,7 @@ from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from Perfil.models import Usuario
+from django.core.paginator import Paginator
 
 from django.contrib.auth.decorators import login_required #para redirigir a login obligandolo a logearse
 from django.contrib.auth import logout
@@ -31,8 +32,14 @@ def home(request):
         HttpResponse: Renderiza la plantilla "rol/home.html" con el contexto proporcionado.
     """
 
+    publicaciones = list((Publicacion.objects.all()).order_by('-fecha_creacion'))
+    paginator = Paginator(publicaciones, 10)  # Muestra 10 publicaciones por página
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, "rol/home.html", {
-        'publicaciones': list((Publicacion.objects.all()).order_by('-fecha_creacion'))
+        'page_obj': page_obj
     })
 
 @login_required

@@ -117,3 +117,4 @@ def check_permiso_publicacion_modificar(permisos):
             return view_func(request, *args, **kwargs)
         return _wrapped_view
     return decorator
+
