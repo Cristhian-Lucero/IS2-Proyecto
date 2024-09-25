@@ -18,6 +18,7 @@ urlpatterns = [
     path('seleccionar-plantilla/<int:categoria_id>/', seleccionar_plantilla, name='seleccionar_plantilla'),
     path('personalizable/<int:categoria_id>/', personalizable, name='personalizable'),
     path('gestionPublicacionOtros/<int:categoria_id>/', gestionPublicacionOtros, name='gestionPublicacionOtros'),
-    path('guardar-publicacion/', guardar_publicacion_ajax, name='guardar_publicacion_ajax'),
+    path('modificar_publicacion_ajax/<int:id>/', modificar_publicacion_ajax, name='modificar_publicacion_ajax'),
+    path('guardar_publicacion/<int:publicacion_id>/', guardar_publicacion_ajax, name='guardar_publicacion_ajax'),
 ]
 
