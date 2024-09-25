@@ -109,7 +109,7 @@ def rol(request):
 
 #asignar roles
 @login_required
-@check_permiso_categoria(['gestionar roles'], categoria_id=2)
+#@check_permiso_categoria(['gestionar roles'], categoria_id=2)
 def gestionarRol(request):
     #retorna True si tiene permiso 'asignar roles' en categoria con id=2
     if confirmarPermiso(request, ['asignar roles'], 2):
@@ -152,14 +152,16 @@ def gestionarRol(request):
                     'roles': roles,
                 })
         # En caso de GET, renderiza el formulario
-        usuarios = Usuario.objects.all()
+        usuarios = Usuario.objects.all().order_by('user__username')
         categorias = Categoria.objects.all()
         roles = Rol.objects.all()
+        gestion = list(UsuarioRolCategoria.objects.all().order_by('usuario'))
 
         return render(request, 'rol/gestionRol.html', {
             'usuarios': usuarios,
             'categorias': categorias,
             'roles': roles,
+            'usuarioRolCategoria': gestion
         })
     else:
         return HttpResponseForbidden("No tienes un rol asignado en esta categoría")
