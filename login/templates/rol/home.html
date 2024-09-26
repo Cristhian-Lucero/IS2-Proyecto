@@ -43,9 +43,158 @@
             line-height: 1.6;
             margin-bottom: 10px;
         }
+
+        #search-button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            right: 500px;
+            top: 15px;
+        }
+
+        #filter-options {
+            display: none;
+            margin-left: 15%;
+            margin-right: 15%;
+            margin-top: 10px;
+            border: 1px solid #333;
+            padding: 20px;
+            background-color: #171717;
+            border-radius: 10px;
+            color: #fff;
+        }
+
+        #filter-options.active {
+            display: block;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form input, form select, form button {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #1e1e1e;
+            color: #fff;
+        }
+
+        button {
+            background-color: #4C994B;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #3B7A3B;
+        }
+
+        #search-button img {
+            filter: invert(100%);
+            width: 20px;
+        }
+
+        #search-button img:hover {
+            filter: invert(50%);
+        }
+
+        .filter-tag {
+            background-color: #4C994B;
+            color: #fff;
+            padding: 5px 10px;
+            margin: 5px;
+            border-radius: 10px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .filter-tag .remove-filter {
+            background-color: red;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+        }
+
+        .disabled {
+            background-color: #333;
+            color: #888;
+            pointer-events: none;
+        }
+
+        select option:first-child {
+            color: #888;
+        }
     </style>
 </head>
+
 <body>
+    <button id="search-button">
+        <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Lupa" width="20px">
+    </button>
+
+    <div id="filter-options">
+        <div id="selected-filters" style="margin-left: 0px; margin-top: 0px; color: #fff;">
+            <h4>Filtros seleccionados:</h4>
+            <div id="filter-summary">
+                <span id="no-filters">Ningún filtro seleccionado</span>
+            </div>
+        </div>
+
+        <form id="search-filters" style="margin-top: 10px;" action="/search" method="GET">
+            <div>
+                <label for="keyword">Palabras clave</label>
+                <input type="text" placeholder="Palabras clave..." id="keyword" name="keyword">
+            </div>
+
+            <div>
+                <label for="categoria">Categoría</label>
+                <select id="categoria" name="category">
+                    <option value="">Ninguno</option>
+                    <option value="news">Noticias</option>
+                    <option value="tutorials">Tutoriales</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="estado">Estado</label>
+                <select id="estado" name="status">
+                    <option value="">Ninguno</option>
+                    <option value="draft">Borrador</option>
+                    <option value="published">Publicado</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="fecha">Fecha desde</label>
+                <input type="date" id="fecha" name="date-from">
+            </div>
+
+            <div>
+                <label for="autor">Autor</label>
+                <input type="text" id="autor" name="autor" placeholder="Autor">
+            </div>
+
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
     <br><br><br>
     {% for i in publicaciones %}
         {% if i.categoria.estado == 'Activo' %}
@@ -63,4 +212,46 @@
         {% endif %}
     {% endfor %}
 
+    <script>
+        document.getElementById('search-button').addEventListener('click', function() {
+            const filterOptions = document.getElementById('filter-options');
+            filterOptions.classList.toggle('active');
+        });
+
+        function removeFilter(filterId) {
+            document.getElementById(filterId).value = "";
+            updateSelectedFilters();
+        }
+
+        function updateSelectedFilters() {
+            const keyword = document.getElementById('keyword').value;
+            const categoria = document.getElementById('categoria').value;
+            const estado = document.getElementById('estado').value;
+            const fecha = document.getElementById('fecha').value;
+            const autor = document.getElementById('autor').value;
+
+            const filterSummary = document.getElementById('filter-summary');
+            filterSummary.innerHTML = ''; // Limpia el contenido actual
+
+            if (keyword || categoria || estado || fecha || autor) {
+                if (keyword) filterSummary.innerHTML += `<span class="filter-tag">Palabra clave: ${keyword} <span class="remove-filter" onclick="removeFilter('keyword')">x</span></span>`;
+                if (categoria) filterSummary.innerHTML += `<span class="filter-tag">Categoría: ${categoria} <span class="remove-filter" onclick="removeFilter('categoria')">x</span></span>`;
+                if (estado) filterSummary.innerHTML += `<span class="filter-tag">Estado: ${estado} <span class="remove-filter" onclick="removeFilter('estado')">x</span></span>`;
+                if (fecha) {
+                    const dateParts = fecha.split('-');
+                    const formattedDate = dateParts[2] +'/'+ dateParts[1] +'/'+ dateParts[0];
+                    filterSummary.innerHTML += `<span class="filter-tag">Fecha desde: ${formattedDate} <span class="remove-filter" onclick="removeFilter('fecha')">x</span></span>`;
+                }
+                if (autor) filterSummary.innerHTML += `<span class="filter-tag">Autor: ${autor} <span class="remove-filter" onclick="removeFilter('autor')">x</span></span>`;
+            } else {
+                filterSummary.innerHTML = '<span id="no-filters">Ningún filtro seleccionado</span>';
+            }
+        }
+
+        document.querySelectorAll('#search-filters input, #search-filters select').forEach(item => {
+            item.addEventListener('input', updateSelectedFilters);
+        });
+
+    </script>
+</body>
 {% endblock %}
