@@ -16,7 +16,9 @@ urlpatterns = [
     path('modificar/<int:publicacion_id>/', modificar_publicacion, name='modificar_publicacion'),
     path('eliminar/<int:publicacion_id>/', eliminar_publicacion, name='eliminar_publicacion'),
     path('seleccionar-plantilla/<int:categoria_id>/', seleccionar_plantilla, name='seleccionar_plantilla'),
-    path('personalizable/', personalizable, name='personalizable'),
+    path('personalizable/<int:categoria_id>/', personalizable, name='personalizable'),
     path('gestionPublicacionOtros/<int:categoria_id>/', gestionPublicacionOtros, name='gestionPublicacionOtros'),
+    path('modificar_publicacion_ajax/<int:id>/', modificar_publicacion_ajax, name='modificar_publicacion_ajax'),
+    path('guardar_publicacion/<int:publicacion_id>/', guardar_publicacion_ajax, name='guardar_publicacion_ajax'),
 ]
 

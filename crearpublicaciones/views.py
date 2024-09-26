@@ -14,9 +14,14 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 from utils.decorators import *
 import time
+import json
+from bs4 import BeautifulSoup
+from django.http import JsonResponse
+from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
 
 @login_required
-@check_permiso_categoria(['crear contenido'])
+# @check_permiso_categoria(['crear contenido'])
 def crear_publicacion(request, categoria_id):
     """
     Vista para crear una nueva publicación.
@@ -51,21 +56,11 @@ def crear_publicacion(request, categoria_id):
 
 @login_required
 def previsualizar_publicacion(request, publicacion_id):
-    """
-    Vista para previsualizar una publicación.
-
-    Busca una publicación por su clave primaria (publicacion_id) y la muestra en una página
-    de previsualización.
-
-    Argumentos:
-        publicacion_id (int): Clave primaria de la publicación a previsualizar.
-
-    Returns:
-        HttpResponse: Renderiza la página de previsualización con los datos de la publicación.
-    """
-
+    # Obtener la publicación por su ID
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
-    return render(request, 'previsualizacion.html', {'publicacion': publicacion, 'user': publicacion.user})
+    
+    # Renderizar la plantilla de previsualización
+    return render(request, 'previsualizacion.html', {'publicacion': publicacion})
 
 @login_required
 def mis_publicaciones(request):
@@ -96,38 +91,94 @@ def gestionPublicacionOtros(request, categoria_id):
         'categoria_nombre': get_object_or_404(Categoria, id=categoria_id).descripcion_corta
         })
 
+def parse_content(html_content):
+    soup = BeautifulSoup(html_content, 'html.parser')
+    blocks = []
+    
+    for element in soup.contents:
+        if element.name == 'p':
+            blocks.append({'type': 'paragraph', 'content': element.text})
+        elif element.name == 'h2':
+            blocks.append({'type': 'heading', 'level': 'h2', 'content': element.text})
+        elif element.name == 'h3':
+            blocks.append({'type': 'heading', 'level': 'h3', 'content': element.text})
+        elif element.name == 'blockquote':
+            blocks.append({'type': 'quote', 'content': element.text})
+        elif element.name == 'ul':
+            items = [li.text for li in element.find_all('li')]
+            blocks.append({'type': 'list', 'items': items})
+        elif element.name == 'img':
+            blocks.append({'type': 'image', 'src': element['src']})
+        # Agrega más casos si es necesario
+
+    return blocks
+
+
 @login_required
-@check_permiso_publicacion_modificar(['crear contenido'])
+# @check_permiso_publicacion_modificar(['crear contenido'])
 def modificar_publicacion(request, publicacion_id):
-    """
-    Vista para modificar una publicación existente.
-
-    Permite al usuario editar una publicación específica. Si es una solicitud
-    POST, actualiza la publicación y redirige a 'Mis Publicaciones'. Si es una solicitud GET,
-    muestra el formulario con los datos de la publicación existente.
-
-    Argumentos:
-        publicacion_id (int): ID de la publicación que se desea modificar.
-
-    Returns:
-        HttpResponse: Renderiza la página de modificación o redirige después de guardar.
-    """
-
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
-
-    if request.method == 'POST':
-        form = PublicacionForm(request.POST, request.FILES, instance=publicacion)
-        if form.is_valid():
-            form.save()
-            return redirect('mis_publicaciones')  # Redirige a la lista de publicaciones después de guardar
+    if request.method == 'GET':
+        blocks = parse_content(publicacion.contenido_html)
+        context = {
+            'publicacion': publicacion,
+            'blocks': blocks,
+        }
+        return render(request, 'modificarpublicacion.html', context)
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        publicacion.titulo = data.get('title', publicacion.titulo)
+        publicacion.contenido_html = data.get('contenido_html', publicacion.contenido_html)
+        publicacion.save()
+        return JsonResponse({'status': 'success'})
     else:
-        form = PublicacionForm(instance=publicacion)
+        return JsonResponse({'status': 'error', 'message': 'Método no permitido.'}, status=405)
 
-    return render(request, 'modificarpublicacion.html', {'form': form})
+
+def split_content_into_blocks(content):
+    bloques = []
+    soup = BeautifulSoup(content, 'html.parser')
+    
+    # Extraer todos los párrafos, imágenes y listas como bloques separados
+    for tag in soup.find_all(['p', 'img', 'ul', 'h2', 'h3']):
+        if tag.name == 'p':
+            bloques.append({'tipo': 'texto', 'contenido': tag.text})
+        elif tag.name == 'img':
+            bloques.append({'tipo': 'imagen', 'contenido': tag['src']})
+        elif tag.name == 'ul':
+            items = [li.get_text() for li in tag.find_all('li')]
+            bloques.append({'tipo': 'viñetas', 'contenido': items})
+        elif tag.name == 'h2':
+            bloques.append({'tipo': 'heading2', 'contenido': tag.text})
+        elif tag.name == 'h3':
+            bloques.append({'tipo': 'heading3', 'contenido': tag.text})
+    
+    return bloques
+
+
+@csrf_exempt
+def modificar_publicacion_ajax(request, id):
+    if request.method == 'POST':
+        publicacion = get_object_or_404(Publicacion, id=id)
+
+        try:
+            data = json.loads(request.body)
+            publicacion.titulo = data.get('title', publicacion.titulo)
+            publicacion.contenido_html = data.get('content', publicacion.contenido_html)
+
+            # Guardar los cambios en la publicación
+            publicacion.save()
+
+            return JsonResponse({'message': '¡Publicación actualizada con éxito!'})
+        except Exception as e:
+            return JsonResponse({'message': str(e)}, status=400)
+
+    return JsonResponse({'message': 'Método no permitido.'}, status=405)
+
 
 
 @login_required
-@check_permiso_publicacion_modificar(['crear contenido'])
+# @check_permiso_publicacion_modificar(['crear contenido'])
 def eliminar_publicacion(request, publicacion_id):
     """
     Vista para eliminar una publicación.
@@ -150,7 +201,7 @@ def eliminar_publicacion(request, publicacion_id):
 
 
 @login_required
-@check_permiso_categoria(['crear contenido'])
+# @check_permiso_categoria(['crear contenido'])
 def seleccionar_plantilla(request, categoria_id):
     """
     Vista para seleccionar una plantilla para la publicación.
@@ -168,34 +219,38 @@ def seleccionar_plantilla(request, categoria_id):
 
 
 @login_required
-@check_permiso_publicacion_modificar(['crear contenido'])
-def personalizable(request):
-    """
-    Vista para personalizar una publicación utilizando una plantilla seleccionada.
+# @check_permiso_publicacion_modificar(['crear contenido'])
+def personalizable(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+    return render(request, 'personalizable.html', {
+        'categoria': categoria
+    })
 
-    Permite al usuario crear una publicación con un título y texto corto personalizados.
-    Si es una solicitud POST, guarda la publicación en la base de datos y redirige a 'Mis Publicaciones'.
 
-    Returns:
-        HttpResponse: Renderiza la página de personalización o redirige tras guardar.
-    """
-
+@login_required
+def guardar_publicacion_ajax(request, publicacion_id):
     if request.method == 'POST':
-        titulo = request.POST.get('titulo', 'Título por defecto')
-        texto_corto = request.POST.get('texto_corto', 'Texto corto por defecto')
-
-        # Crea y guarda la publicación
-        publicacion = Publicacion(
-            titulo=titulo,
-            texto_corto=texto_corto,
-            user=request.user,
-        )
+        publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+        data = json.loads(request.body)
+        # Actualiza la publicación con los datos recibidos
+        publicacion.titulo = data.get('title', publicacion.titulo)
+        publicacion.contenido_html = data.get('contenido_html', publicacion.contenido_html)
         publicacion.save()
+        return JsonResponse({'status': 'success'})
 
-        # Espera 1 seg antes de redirigir
-        time.sleep(1)
-
-        # Redirige a "Mis Publicaciones"
-        return redirect('misPublicaciones')
-
-    return render(request, 'personalizable.html')
+@csrf_exempt
+def modificar_publicacion_ajax(request, id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            publicacion = Publicacion.objects.get(id=id)
+            publicacion.titulo = data.get('title', publicacion.titulo)
+            publicacion.contenido_html = data.get('content', publicacion.contenido_html)
+            publicacion.categoria_id = data.get('categoria_id', publicacion.categoria_id)
+            publicacion.save()
+            return JsonResponse({'message': 'Publicación actualizada con éxito.'}, status=200)
+        except Publicacion.DoesNotExist:
+            return JsonResponse({'message': 'Publicación no encontrada.'}, status=404)
+        except Exception as e:
+            return JsonResponse({'message': f'Error: {str(e)}'}, status=500)
+    return JsonResponse({'message': 'Método no permitido.'}, status=405)
