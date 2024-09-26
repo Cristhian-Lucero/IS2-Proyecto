@@ -31,6 +31,19 @@
         </div>
     
         <div class="informacion-extra" style="text-align: center; margin-top: 20px;">
+            <p style="text-align: right;"><strong>Visualizaciones:</strong> {{ publicacion.vistas }}</p>
+            <p style="text-align: right;"><strong>
+            {% if likeado %}
+                <a href="{% url 'dislikear' publicacion.id  %}">Ya no me gusta 💔😭</a></strong>
+            {% else %}
+                <a href="{% url 'likear' publicacion.id %}">Me gusta 💖✨</a></strong>
+            {% endif %}
+
+            {% if publicacion.me_gustas == 1 %}
+                A {{ publicacion.me_gustas }} persona le ha gustado </p>
+            {% else %}
+                A {{ publicacion.me_gustas }} personas les ha gustado </p>
+            {% endif %}
             <p><strong>Publicado por:</strong> {{ publicacion.user.username }}</p>
             <p><strong>Categoría:</strong> {{ publicacion.categoria.descripcion_corta }}</p>
             <p><strong>Fecha de Creación:</strong> {{ publicacion.fecha_creacion }}</p>

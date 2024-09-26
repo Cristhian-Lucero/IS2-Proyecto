@@ -8,7 +8,7 @@ de plantillas y la personalización de las publicaciones.
 
 from django.shortcuts import render
 from .forms import *
-from .models import Publicacion
+from .models import *
 from login.models import Categoria
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
@@ -57,13 +57,40 @@ def crear_publicacion(request, categoria_id):
 def previsualizar_publicacion(request, publicacion_id):
     # Obtener la publicación por su ID
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
-    
     comentarios = Comentario.objects.filter(publicacion=publicacion_id)
+    publicacion.vistas += 1
+    publicacion.save()
+    likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
     # Renderizar la plantilla de previsualización
     return render(request, 'previsualizacion.html', {
         'publicacion': publicacion,
-        'comentarios': comentarios
+        'comentarios': comentarios,
+        'likeado': likeado
         })
+
+@login_required
+def likear(request, publicacion_id):
+    likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
+    if not likeado:
+        publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+        nuevo_like = Likes(user=request.user, publicacion=publicacion)
+        nuevo_like.save()
+        publicacion.me_gustas += 1
+        publicacion.save()
+    return redirect('previsualizar_publicacion', publicacion_id=publicacion_id)
+
+@login_required
+def dislikear(request, publicacion_id):
+    likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
+    like = Likes.objects.filter(user=request.user, publicacion=publicacion_id)
+    if likeado:
+        like.delete()
+        publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+        publicacion.me_gustas -= 1
+        publicacion.save()
+    return redirect('previsualizar_publicacion', publicacion_id=publicacion_id)
+        
+
 
 @login_required
 def mis_publicaciones(request):
