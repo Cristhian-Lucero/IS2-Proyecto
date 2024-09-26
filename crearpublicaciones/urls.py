@@ -17,5 +17,6 @@ urlpatterns = [
     path('eliminar/<int:publicacion_id>/', eliminar_publicacion, name='eliminar_publicacion'),
     path('seleccionar-plantilla/<int:categoria_id>/', seleccionar_plantilla, name='seleccionar_plantilla'),
     path('personalizable/', personalizable, name='personalizable'),
+    path('gestionPublicacionOtros/<int:categoria_id>/', gestionPublicacionOtros, name='gestionPublicacionOtros'),
 ]
 
