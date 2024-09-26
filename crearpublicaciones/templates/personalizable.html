@@ -1,251 +1,422 @@
+{% extends 'encabezado.html' %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editor Personalizado</title>
-    {% load static %}
-    <link rel="shortcut icon" href="{% static 'css/favicon.ico' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <title>Editor de Blog</title>
+    <!-- Librería Sortable.js para permitir arrastrar y soltar bloques -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <style>
+        /* Estilos básicos del cuerpo */
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 20px;
-            color: black;
+            padding: 0;
         }
+        /* Contenedor principal */
         .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        /* Estilo para títulos H1 */
+        .tituloplantilla h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 10px;
+            border-bottom: 2px solid #eee;
+            background-color: #171717;
+            border-radius: 10px;
+            color :#000000;
+        }
+        /* Estilos para los bloques de contenido */
+        .block {
+            padding: 10px 40px 10px 10px; /* Ajustar padding para el botón de eliminar */
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #171717;
+            cursor: move;
+            position: relative;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            min-height: 40px;
+        }
+        /* Estilo para el contenido editable de texto */
+        .block textarea, .block input {
+            width: calc(100% - 40px); /* Ajustar ancho para no interferir con el botón de eliminar */
+            border: none;
+            background-color: transparent;
+            font-size: 16px;
+            padding: 10px;
+            resize: none;
+            outline: none;
+            overflow: hidden;
+        }
+        /* Controles para agregar nuevos bloques */
+        .controls {
             display: flex;
             justify-content: space-between;
-            height: 100vh;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
-        .sidebar {
-            width: 20%;
-            background-color: #fff;
-            border-right: 1px solid #ddd;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .sidebar h2 {
-            text-align: center;
-            font-size: 1.5em;
-        }
-        .block {
+        /* Botones de control */
+        .controls button {
+            flex: 1;
+            margin: 5px 5px;
             padding: 10px;
-            background-color: #4a90e2;
-            color: white;
-            margin-bottom: 10px;
-            text-align: center;
-            cursor: grab;
-            border-radius: 5px;
-        }
-        .block:hover {
-            background-color: #357abd;
-        }
-        .editor {
-            width: 75%;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            min-height: 100vh;
-        }
-        .editor h2 {
-            text-align: center;
-            font-size: 1.5em;
-            color: #4a90e2;
-        }
-        .dropzone {
-            min-height: 500px;
-            border: 2px dashed #ccc;
-            padding: 20px;
-            text-align: center;
-            background-color: #f9f9f9;
-            border-radius: 10px;
-        }
-        .dropzone .block {
-            margin-bottom: 15px;
-            padding: 20px;
-            background-color: #eee;
-            text-align: left;
-            position: relative;
-        }
-        .dropzone .block img {
-            width: 100px;
-            height: auto;
-        }
-        input[type="file"] {
-            display: none;
-        }
-        .save-button {
-            display: block;
-            width: 100%;
-            padding: 10px 0;
-            background-color: #4CAF50;
+            background-color: #3498db;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
+        }
+        .controls button:hover {
+            background-color: #2980b9;
+        }
+        /* Botón para guardar la publicación */
+        .save-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
             margin-top: 10px;
         }
         .save-button:hover {
-            background-color: #45a049;
+            background-color: #27ae60;
         }
-        .delete-button {
+        /* Estilos para imágenes redimensionables */
+        .resizable {
+            display: inline-block;
+            resize: both;
+            overflow: auto;
+            max-width: 100%;
+            margin: 10px 0;
+        }
+        .resizable img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        /* Botón de eliminar cuadrado y más pequeño */
+        .delete-btn {
             position: absolute;
             top: 5px;
-            right: 10px;
-            background-color: red;
+            right: 5px;
+            padding: 3px;
+            background-color: #e74c3c;
             color: white;
             border: none;
-            padding: 5px 10px;
+            width: 20px;
+            height: 20px;
             cursor: pointer;
+            border-radius: 3px;
+            font-size: 12px;
+            transition: background-color 0.3s ease;
+            line-height: 18px;
+            text-align: center;
+        }
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+        /* Estilo para el bloque fantasma al arrastrar */
+        .sortable-ghost {
+            opacity: 0.5;
+            background-color: #dcdcdc;
+        }
+        /* Estilos para listas de viñetas */
+        .bullet-list {
+            padding-left: 20px;
+        }
+        .bullet-list li {
+            margin-bottom: 5px;
+        }
+        /* Estilos para la barra de herramientas flotante */
+        .toolbar {
+            position: absolute;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+        .toolbar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin: 0 2px;
+            font-size: 16px;
+        }
+        .toolbar button:hover {
+            color: #3498db;
+        }
+        /* Estilo para el bloque de cita */
+        .quote-block {
+            font-style: italic;
+            border-left: 4px solid #ccc;
+            padding-left: 10px;
+            color: #555;
+            background-color: #f9f9f9;
         }
     </style>
 </head>
 <body>
 
+<!-- Contenedor principal de la página -->
 <div class="container">
-    <div class="sidebar">
-        <h2>Elementos</h2>
-        <div class="block" draggable="true" data-type="heading">Encabezado</div>
-        <div class="block" draggable="true" data-type="text">Texto</div>
-        <div class="block" draggable="true" data-type="quote">Cita</div>
-        <div class="block" draggable="true" data-type="image">Imagen</div>
-        <input type="file" id="fileInput" accept="image/*">
-        <button id="saveButton" class="save-button">Guardar</button> 
+    <!-- Título editable de la publicación -->
+    <h1 contenteditable="true" id="title" class="tituloplantilla">Título Principal</h1>
+
+    <!-- Mostrar el nombre de la categoría -->
+    <h2>Categoría: {{ categoria.descripcion_corta }}</h2>
+
+    <!-- Contenedor para los bloques de contenido -->
+    <div id="editor"></div>
+
+    <!-- Controles para agregar nuevos bloques -->
+    <div class="controls">
+        <button onclick="addTextBlock()">Texto</button>
+        <button onclick="addImageBlock()">Imagen</button>
+        <button onclick="addHeadingBlock('H2')">Heading 2</button>
+        <button onclick="addHeadingBlock('H3')">Heading 3</button>
+        <button onclick="addBulletListBlock()">Viñetas</button>
+        <button onclick="addQuoteBlock()">Cita</button>
     </div>
 
-    <div class="editor">
-        <h2>Área de Personalización</h2>
-        <div id="dropzone" class="dropzone">
-            Arrastra y suelta bloques aquí
-        </div>
-    </div>
+    <!-- Botón para guardar la publicación -->
+    <button class="save-button" onclick="saveContent()">Guardar Publicación</button>
+</div>
+
+<!-- Barra de herramientas flotante -->
+<div id="toolbar" class="toolbar">
+    <button onclick="formatText('bold')"><b>B</b></button>
+    <button onclick="formatText('italic')"><i>I</i></button>
+    <button onclick="formatText('underline')"><u>U</u></button>
+    <button onclick="formatText('strikeThrough')"><s>S</s></button>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const blocks = document.querySelectorAll('.block');
-        const dropzone = document.getElementById('dropzone');
-        const saveButton = document.getElementById('saveButton');
-        const fileInput = document.getElementById('fileInput');
+    // Inicializar Sortable para permitir arrastrar y soltar los bloques
+    const editor = document.getElementById('editor');
+    Sortable.create(editor, {
+        animation: 150,
+        handle: '.block',
+        ghostClass: 'sortable-ghost'
+    });
 
-        let headingCount = 0;
-        let textCount = 0;
-        let quoteCount = 0;
-        let imageCount = 0;
+    // Variables para la barra de herramientas
+    let toolbar = document.getElementById('toolbar');
+    let selectedRange;
 
-        blocks.forEach(block => {
-            block.addEventListener('dragstart', function (e) {
-                e.dataTransfer.setData('type', this.getAttribute('data-type'));
-            });
-        });
+    // Función para crear un bloque de texto
+    function addTextBlock() {
+        const block = createBlock('<textarea placeholder="Escribe aquí..." onmouseup="showToolbar(event)" onkeyup="hideToolbar()"></textarea>');
+        editor.appendChild(block);
+        scrollToBottom();
+    }
 
-        dropzone.addEventListener('dragover', function (e) {
-            e.preventDefault();
-        });
+    // Función para crear un bloque de imagen
+    function addImageBlock() {
+        const block = createBlock('<input type="file" accept="image/*" onchange="loadImage(event)" />');
+        editor.appendChild(block);
+        scrollToBottom();
+    }
 
-        dropzone.addEventListener('drop', function (e) {
-            e.preventDefault();
-            const type = e.dataTransfer.getData('type');
-            let element = null;
+    // Función para crear un bloque de título (H2 o H3)
+    function addHeadingBlock(headingType) {
+        const fontSize = headingType === 'H2' ? '24px' : '20px';
+        const block = createBlock(`<textarea placeholder="Título (${headingType})" style="font-size: ${fontSize}; font-weight: bold;" oninput="autoResize(this)"></textarea>`);
+        editor.appendChild(block);
+        scrollToBottom();
+    }
 
-            if (type === 'image' && imageCount < 2) {
-                element = document.createElement('img');
-                element.alt = 'Imagen personalizada';
-                element.style.width = '100%';
-                showImageUploadDialog(element);
-                imageCount++;
-            } else if (type === 'heading' && headingCount < 1) {
-                element = createElement(type);
-                headingCount++;
-            } else if (type === 'text' && textCount < 2) {
-                element = createElement(type);
-                textCount++;
-            } else if (type === 'quote' && quoteCount < 1) {
-                element = createElement(type);
-                quoteCount++;
+    // Función para crear un bloque de cita
+    function addQuoteBlock() {
+        const block = createBlock('<textarea placeholder="Escribe una cita..." class="quote-block" onmouseup="showToolbar(event)" onkeyup="hideToolbar()"></textarea>');
+        editor.appendChild(block);
+        scrollToBottom();
+    }
+
+    // Función para crear un bloque de lista de viñetas
+    function addBulletListBlock() {
+        const block = createBlock('<ul contenteditable="true" class="bullet-list" onmouseup="showToolbar(event)" onkeyup="hideToolbar()"><li></li></ul>');
+        editor.appendChild(block);
+        scrollToBottom();
+    }
+
+    // Función para crear un bloque genérico con un botón de eliminar
+    function createBlock(content) {
+        const block = document.createElement('div');
+        block.classList.add('block');
+        block.innerHTML = content + `<button class="delete-btn" onclick="deleteBlock(this)">X</button>`;
+        return block;
+    }
+
+    // Función para eliminar un bloque
+    function deleteBlock(button) {
+        const block = button.parentNode;
+        block.remove();
+    }
+
+    // Función para cargar y mostrar una imagen seleccionada por el usuario
+    function loadImage(event) {
+        const block = event.target.parentNode;
+        const reader = new FileReader();
+        reader.onload = function () {
+            block.innerHTML = `<div class="resizable"><img src="${reader.result}" alt="Imagen"></div>
+                               <button class="delete-btn" onclick="deleteBlock(this)">X</button>`;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    // Función para guardar el contenido en la base de datos
+    function saveContent() {
+        const title = document.getElementById('title').innerText;
+        const categoriaId = {{ categoria.id }};  // Utilizar el categoria_id del contexto
+        const blocks = editor.children;
+        let contentHTML = '';
+
+        for (let block of blocks) {
+            if (block.querySelector('textarea')) {
+                let content = block.querySelector('textarea').value;
+                let style = block.querySelector('textarea').style.cssText;
+                if (block.querySelector('.quote-block')) {
+                    contentHTML += `<blockquote>${content}</blockquote>`;
+                } else if (style.includes('font-size: 24px')) {
+                    contentHTML += `<h2>${content}</h2>`;
+                } else if (style.includes('font-size: 20px')) {
+                    contentHTML += `<h3>${content}</h3>`;
+                } else {
+                    contentHTML += `<p>${content}</p>`;
+                }
+            } else if (block.querySelector('.resizable')) {
+                let src = block.querySelector('img').src;
+                contentHTML += `<img src="${src}" alt="Imagen">`;
+            } else if (block.querySelector('ul')) {
+                let listHTML = block.querySelector('ul').outerHTML;
+                contentHTML += listHTML;
+            }
+        }
+
+        const data = {
+            'title': title,
+            'content': contentHTML,
+            'categoria_id': categoriaId
+        };
+
+        // Obtener el token CSRF
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (const cookie of cookies) {
+                    const cookieTrimmed = cookie.trim();
+                    if (cookieTrimmed.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookieTrimmed.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+        fetch("{% url 'guardar_publicacion_ajax' %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            if (response.ok) {
+                alert('¡Publicación guardada!');
+                // Redireccionar a "Mis Publicaciones"
+                window.location.href = "{% url 'mis_publicaciones' %}";
             } else {
-                alert('Has alcanzado el límite de elementos permitidos.');
-                return;
-            }
-
-            if (element) {
-                const blockDiv = document.createElement('div');
-                blockDiv.className = 'block';
-                blockDiv.appendChild(element);
-
-                // Crear el botón de eliminar
-                const deleteButton = document.createElement('button');
-                deleteButton.className = 'delete-button';
-                deleteButton.textContent = 'Eliminar';
-                deleteButton.addEventListener('click', function () {
-                    blockDiv.remove();
-                    if (type === 'heading') headingCount--;
-                    if (type === 'text') textCount--;
-                    if (type === 'quote') quoteCount--;
-                    if (type === 'image') imageCount--;
+                response.json().then(data => {
+                    alert('Error al guardar la publicación: ' + data.message);
                 });
-
-                blockDiv.appendChild(deleteButton);
-                dropzone.appendChild(blockDiv);
             }
+        }).catch(error => {
+            console.error('Error:', error);
+            alert('Error al guardar la publicación.');
         });
+    }
 
-        function createElement(type) {
-            let element = null;
-            switch (type) {
-                case 'heading':
-                    element = document.createElement('h3');
-                    element.textContent = 'Nuevo Encabezado';
-                    element.style.color = 'black';
-                    element.contentEditable = 'true';
-                    break;
-                case 'text':
-                    element = document.createElement('p');
-                    element.textContent = 'Este es un bloque de texto.';
-                    element.style.color = 'black';
-                    element.contentEditable = 'true';
-                    break;
-                case 'quote':
-                    element = document.createElement('blockquote');
-                    element.textContent = 'Este es un bloque de cita.';
-                    element.style.fontStyle = 'italic';
-                    element.style.borderLeft = '5px solid #4a90e2';
-                    element.style.paddingLeft = '10px';
-                    element.style.color = 'black';
-                    element.contentEditable = 'true';
-                    break;
+    // Función para hacer scroll automáticamente al final de la página
+    function scrollToBottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    // Mostrar la barra de herramientas flotante
+    function showToolbar(event) {
+        const target = event.target;
+        if (target.tagName === 'TEXTAREA' || target.isContentEditable) {
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0 && !selection.isCollapsed) {
+                selectedRange = selection.getRangeAt(0);
+                const rect = selectedRange.getBoundingClientRect();
+                toolbar.style.top = (window.scrollY + rect.top - toolbar.offsetHeight - 5) + 'px';
+                toolbar.style.left = (window.scrollX + rect.left) + 'px';
+                toolbar.style.display = 'block';
+            } else {
+                toolbar.style.display = 'none';
             }
-            return element;
         }
+    }
 
-        function showImageUploadDialog(imgElement) {
-            fileInput.onchange = function(event) {
-                const file = event.target.files[0];
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    imgElement.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            };
-            fileInput.click();
+    // Ocultar la barra de herramientas
+    function hideToolbar() {
+        toolbar.style.display = 'none';
+    }
+
+    // Aplicar formato al texto seleccionado
+    function formatText(command) {
+        if (selectedRange) {
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(selectedRange);
+
+            document.execCommand(command, false, null);
+
+            selection.removeAllRanges();
+            toolbar.style.display = 'none';
         }
+    }
 
-        // Funcionalidad del botón Guardar
-        saveButton.addEventListener('click', function () {
-            alert("Publicación guardada con éxito!");
-            
-            // Redirige a la página de "Mis Publicaciones" después de 2 segundos
-            setTimeout(function () {
-                window.location.href = "{% url 'mis_publicaciones' %}"; 
-            }, 2000);
-        });
+    // Función para autoajustar la altura del textarea
+    function autoResize(textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = (textarea.scrollHeight) + 'px';
+    }
 
+    // Ocultar la barra de herramientas al hacer clic fuera
+    document.addEventListener('mousedown', function(event) {
+        if (!toolbar.contains(event.target)) {
+            toolbar.style.display = 'none';
+        }
+    });
+
+    // Actualizar la selección cuando se mueve el cursor
+    document.addEventListener('mouseup', function(event) {
+        if (!toolbar.contains(event.target)) {
+            showToolbar(event);
+        }
     });
 </script>
 
 </body>
 </html>
+{% endblock %}

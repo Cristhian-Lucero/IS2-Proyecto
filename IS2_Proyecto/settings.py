@@ -11,13 +11,17 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 
 import os
 from pathlib import Path
-
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ENVIRONMENT = os.getenv('DJANGO_ENV', 'development') 
+env = environ.Env(
+    DJANGO_ENV=(str, 'development'),  # Leer DJANGO_ENV, por defecto 'development' si no se encuentra el .env
+)
+environ.Env.read_env(os.path.join(BASE_DIR, '.env')) # Cargar el archivo .env
 
+ENVIRONMENT = env('DJANGO_ENV')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -26,7 +30,12 @@ ENVIRONMENT = os.getenv('DJANGO_ENV', 'development')
 SECRET_KEY = 'django-insecure-=#kx0pp3o()eyu0t)oshc!@xqu7j%tnh)1l*4ubzq)yx8#noq^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+if ENVIRONMENT == 'production':
+    DEBUG = False
+else:
+    DEBUG = True
+
 CSRF_TRUSTED_ORIGINS = ['https://is2grupo07.servehttp.com','https://journalx.info']
 APPEND_SLASH = True
 
@@ -228,5 +237,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Direccion para guardar imagenes
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-DEBUG = True
