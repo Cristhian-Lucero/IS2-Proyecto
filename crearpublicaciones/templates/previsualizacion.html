@@ -1,84 +1,82 @@
 {% extends 'encabezado.html' %}
 
-{% block content%}
+{% block content %}
 <head>
-    <title>Previsualización</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        .container {
-            width: 70%;
-            margin: 20px auto;
+        .contenido img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto; /* Centra la imagen */
         }
-        header {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-        }
-        header h2, header p {
-            margin: 0;
-            font-weight: bold;
-        }
-        .content {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-        .text {
-            width: 60%;
-        }
-        .text h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        .text p {
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        .image {
-            width: 35%;
-        }
-        .image img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .bottom-image {
-            margin-top: 40px;
-            width: 100%;
-        }
-        .bottom-image img {
-            width: 100%;
-            border-radius: 10px;
-        }
+        .comentario-container {
+                display: flex;
+                align-items: flex-start;
+                background-color: #171717;
+                padding: 20px;
+                border-radius: 20px;
+                margin-left: 15%;
+                margin-right: 15%;
+                margin-bottom: 2%;
+            }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <!-- Mostrar el nombre del usuario que creó la publicación -->
-            <h2>{{ user.username }}</h2>
-            <!-- Mostrar la fecha actual -->
-            <p>{% now "d \d\e F" %}</p>
-        </header>
-
-        <div class="content">
-            <div class="text">
-                <h1>{{ publicacion.titulo }}</h1>
-                <p>{{ publicacion.texto_corto }}</p>
-            </div>
-            <div class="image">
-                <img src="{{ publicacion.imagen1.url }}" alt="Imagen principal">
-            </div>
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+        <h1 style="text-align: center;">{{ publicacion.titulo }}</h1>
+    
+        <div class="contenido" style="max-width: 100%; margin: 0 auto;">
+            <!-- Mostrar el contenido HTML almacenado -->
+            {{ publicacion.contenido_html|safe }}
         </div>
+    
+        <div class="informacion-extra" style="text-align: center; margin-top: 20px;">
+            <p style="text-align: right;"><strong>Visualizaciones:</strong> {{ publicacion.vistas }}</p>
+            <p style="text-align: right;"><strong>
+            {% if likeado %}
+                <a href="{% url 'dislikear' publicacion.id  %}">Ya no me gusta 💔😭</a></strong>
+            {% else %}
+                <a href="{% url 'likear' publicacion.id %}">Me gusta 💖✨</a></strong>
+            {% endif %}
 
-        <div class="text">
-            <p>{{ publicacion.texto_largo }}</p>
+            {% if publicacion.me_gustas == 1 %}
+                A {{ publicacion.me_gustas }} persona le ha gustado </p>
+            {% else %}
+                A {{ publicacion.me_gustas }} personas les ha gustado </p>
+            {% endif %}
+            <p><strong>Publicado por:</strong> {{ publicacion.user.username }}</p>
+            <p><strong>Categoría:</strong> {{ publicacion.categoria.descripcion_corta }}</p>
+            <p><strong>Fecha de Creación:</strong> {{ publicacion.fecha_creacion }}</p>
+            <p><strong>Estado:</strong> {{ publicacion.get_estado_display }}</p>
         </div>
-
-        {% if publicacion.imagen2 %}
-        <div class="bottom-image">
-            <img src="{{ publicacion.imagen2.url }}" alt="Imagen adicional">
+    
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{% url 'mis_publicaciones' %}" class="btn btn-primary">Volver a mis publicaciones</a>
         </div>
-        {% endif %}
     </div>
+
+    <form action="{% url 'comentario' publicacion.id %}" method="POST" style="text-align: center; margin-bottom: 2%;">
+        {% csrf_token %}
+        <button type="submit">Nuevo Comentario</button>
+    </form>
+
+    {% for comentario in comentarios %}
+        <div class="comentario-container" style="text-align: justify;">
+            <div class="article-content">
+                <h2 style="text-transform: uppercase;" class="article-title"> {{comentario.user.username}} </h2>
+                <p> {{ comentario.fecha_creacion }} </p>
+                <div class="description">
+                    <p>{{ comentario.descripcion }}</p>
+
+                    {% if request.user == comentario.user %}
+                        <form action="{% url 'eliminar_comentario' comentario.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-delete">Eliminar</button>
+                        </form>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

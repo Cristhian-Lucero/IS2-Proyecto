@@ -11,36 +11,103 @@
         form{
             margin-left: 5%;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border-radius: 15px; /* Bordes redondeados externos */
+            overflow: hidden;
+        }
+        table, th, td {
+            border: 1px solid #606368;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #171717;
+        }
+        table {
+            border: 1px solid #606368; /* Borde externo de la tabla */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
+<body>
+    <h1>Gestión de Roles</h1>
+    <form action="{% url 'gestionrol' %}" method="post">
+        {% csrf_token %}
+        <label for="usuario">Seleccionar Usuario:</label>
+        <select id="usuario" name="usuario" onchange="filtrarPorUsuario()">
+            {% for i in usuarios %}
+            <option value="{{ i.user.id }}"> {{ i.user.username }} </option>
+            {% endfor %}
+        </select>
+        <br><br>
+        <label for="categoria">Seleccionar Categoria:</label>
+        <select id="categoria" name="categoria">
+            {% for i in categorias %}
+            <option value="{{i.id}}"> {{ i.descripcion_corta }} </option>
+            {% endfor %}
+        </select>
+        <br><br>
 
-<h1>Gestión de Roles</h1>
-<form action="{% url 'gestionrol' %}" method="post">
-    {% csrf_token %}
-    <label for="usuario">Seleccionar Usuario:</label>
-    <select id="usuario" name="usuario">
-        {% for i in usuarios %}
-        <option value="{{ i.user.id }}"> {{ i.user.username }} </option>
-        {% endfor %}
-    </select>
-    <br><br>
-    <label for="categoria">Seleccionar Categoria:</label>
-    <select id="categoria" name="categoria">
-        {% for i in categorias %}
-        <option value="{{i.id}}"> {{ i.descripcion_corta }} </option>
-        {% endfor %}
-    </select>
-    <br><br>
+        <label for="rol">Asignar Rol:</label>
+        <select id="rol" name="rol">
+            {% for i in roles %}
+            <option value="{{i.id}}"> {{ i.nombre }} </option>
+            {% endfor %}
+        </select>
+        <br><br>
+        
+        <button type="submit">Asignar Rol</button>
+    </form>
 
-    <label for="rol">Asignar Rol:</label>
-    <select id="rol" name="rol">
-        {% for i in roles %}
-        <option value="{{i.id}}"> {{ i.nombre }} </option>
-        {% endfor %}
-    </select>
-    <br><br>
-    
-    <button type="submit">Asignar Rol</button>
-</form>
+    <br>
+    <h2>Roles asignados por usuarios</h2> 
+    <br>
+        <table>
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Categoria</th>
+                    <th>Rol</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in usuarioRolCategoria %}
+                <tr class="fila-usuario" data-usuario="{{ i.usuario.user_id }}">
+                    <td> {{ i.usuario }} </td>
+                    <td> {{ i.categoria.descripcion_corta }} </td>
+                    <td> {{ i.rol.nombre }} </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+        <script>
+            function filtrarPorUsuario() {
+                var usuarioSeleccionado = document.getElementById('usuario').value;
+                var filas = document.querySelectorAll('.fila-usuario');
+                
+                filas.forEach(function(fila) {
+                    var usuarioFila = fila.getAttribute('data-usuario');
+                    if (String(usuarioFila) === String(usuarioSeleccionado)) {
+                        fila.style.display = ''; // Mostrar la fila
+                    } else {
+                        fila.style.display = 'none'; // Ocultar la fila
+                    }
+                });
+            }
+        </script>
+        
 
 {% endblock %}

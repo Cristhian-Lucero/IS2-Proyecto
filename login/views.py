@@ -10,6 +10,7 @@ from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from Perfil.models import Usuario
+from django.core.paginator import Paginator
 
 from django.contrib.auth.decorators import login_required #para redirigir a login obligandolo a logearse
 from django.contrib.auth import logout
@@ -31,8 +32,14 @@ def home(request):
         HttpResponse: Renderiza la plantilla "rol/home.html" con el contexto proporcionado.
     """
 
+    publicaciones = list((Publicacion.objects.all()).order_by('-fecha_creacion'))
+    paginator = Paginator(publicaciones, 10)  # Muestra 10 publicaciones por página
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, "rol/home.html", {
-        'publicaciones': list((Publicacion.objects.all()).order_by('-fecha_creacion'))
+        'page_obj': page_obj
     })
 
 @login_required
@@ -102,7 +109,7 @@ def rol(request):
 
 #asignar roles
 @login_required
-@check_permiso_categoria(['gestionar roles'], categoria_id=2)
+#@check_permiso_categoria(['gestionar roles'], categoria_id=2)
 def gestionarRol(request):
     #retorna True si tiene permiso 'asignar roles' en categoria con id=2
     if confirmarPermiso(request, ['asignar roles'], 2):
@@ -118,12 +125,14 @@ def gestionarRol(request):
         if request.method == 'POST':
             # Obtener los valores seleccionados
             usuario_id = request.POST.get('usuario')
+            print(f'el user id del form es {usuario_id}')
             categoria_id = request.POST.get('categoria')
             rol_id = request.POST.get('rol')
 
             try:
                 # Buscar la relación en UsuarioRolCategoria
                 usuario_instancia = Usuario.objects.get(user_id=usuario_id)
+                print(f'el user id del filtrado es {usuario_instancia}')
                 usuario_rol_categoria = UsuarioRolCategoria.objects.get(usuario_id=usuario_instancia, categoria_id=categoria_id)
 
                 # Actualizar el rol
@@ -145,14 +154,16 @@ def gestionarRol(request):
                     'roles': roles,
                 })
         # En caso de GET, renderiza el formulario
-        usuarios = Usuario.objects.all()
+        usuarios = Usuario.objects.all().order_by('user__username')
         categorias = Categoria.objects.all()
         roles = Rol.objects.all()
+        gestion = list(UsuarioRolCategoria.objects.all().order_by('usuario'))
 
         return render(request, 'rol/gestionRol.html', {
             'usuarios': usuarios,
             'categorias': categorias,
             'roles': roles,
+            'usuarioRolCategoria': gestion
         })
     else:
         return HttpResponseForbidden("No tienes un rol asignado en esta categoría")
