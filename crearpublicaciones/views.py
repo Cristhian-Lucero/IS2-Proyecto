@@ -208,7 +208,6 @@ def modificar_publicacion_ajax(request, id):
     return JsonResponse({'message': 'Método no permitido.'}, status=405)
 
 
-
 @login_required
 # @check_permiso_publicacion_modificar(['crear contenido'])
 def eliminar_publicacion(request, publicacion_id):
@@ -230,6 +229,7 @@ def eliminar_publicacion(request, publicacion_id):
         publicacion.delete()
         return redirect('mis_publicaciones')
     return render(request, 'eliminarpublicacion.html', {'publicacion': publicacion})
+
 
 @login_required
 @check_permiso_publicacion_modificar(['gestionar contenido otros'])
@@ -274,16 +274,25 @@ def seleccionar_plantilla(request, categoria_id):
 
 @login_required
 #@check_permiso_publicacion_modificar(['crear contenido'])
-def personalizable(request, publicacion_id):
-    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
-    categoria = publicacion.categoria  # Obtener la categoría a partir de la relación con la publicación
-    blocks = split_content_into_blocks(publicacion.contenido_html)  # Desglosar el contenido HTML en bloques
+def personalizable(request, categoria_id):
+    # Obtener la categoría
+    categoria = get_object_or_404(Categoria, id=categoria_id)
 
-    return render(request, 'modificarpublicacion.html', {
-        'publicacion': publicacion, 
-        'blocks': blocks, 
-        'categoria': categoria, 
-        'publicacion_id': publicacion_id  
+    # Crear una nueva publicación en borrador o reutilizar una existente
+    publicacion, created = Publicacion.objects.get_or_create(
+        user=request.user,
+        categoria=categoria,
+        estado='borrador',
+        defaults={'titulo': '', 'contenido_html': ''}
+    )
+
+    blocks = split_content_into_blocks(publicacion.contenido_html) if publicacion.contenido_html else []
+
+    return render(request, 'personalizable.html', {
+        'publicacion': publicacion,
+        'blocks': blocks,
+        'categoria': categoria,
+        'publicacion_id': publicacion.id,
     })
 
 
@@ -292,30 +301,12 @@ def guardar_publicacion_ajax(request, publicacion_id):
     if request.method == 'POST':
         publicacion = get_object_or_404(Publicacion, id=publicacion_id)
         data = json.loads(request.body)
-        # Actualiza la publicación con los datos recibidos
         publicacion.titulo = data.get('title', publicacion.titulo)
-        publicacion.contenido_html = data.get('contenido_html', publicacion.contenido_html)
+        publicacion.contenido_html = data.get('content', publicacion.contenido_html)
         publicacion.save()
         return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error', 'message': 'Método no permitido.'}, status=405)
 
-
-        # Buscar la categoría por ID
-        categoria = Categoria.objects.get(id=categoria_id)
-
-        # Crear la nueva publicación con estado 'borrador' por defecto
-        nueva_publicacion = Publicacion(
-            titulo=titulo,
-            contenido_html=contenido_html,
-            estado='borrador',  # Estado por defecto
-            user=request.user,
-            categoria=categoria
-        )
-        nueva_publicacion.save()
-
-        # Devolver una respuesta JSON de éxito
-        return JsonResponse({'success': True})
-
-    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 @login_required
 @check_permiso_publicacion_modificar(['interactuar publicaciones'])
@@ -342,6 +333,7 @@ def comentario(request, publicacion_id):
         'publicacion': publicacion
         })
 
+
 @login_required
 #@check_permiso_publicacion_modificar(['gestionar contenido otros'])
 def eliminar_comentario(request, comentario_id):
@@ -350,6 +342,8 @@ def eliminar_comentario(request, comentario_id):
     if request.method == 'POST':
         comentario.delete()
         return redirect('previsualizar_publicacion', publicacion_id=comentario.publicacion.id)
+    
+
 @csrf_exempt
 def modificar_publicacion_ajax(request, id):
     if request.method == 'POST':
