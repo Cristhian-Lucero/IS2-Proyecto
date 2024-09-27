@@ -61,7 +61,6 @@ INSTALLED_APPS = [
 
     'login',
     'Perfil',
-    'Tablero',
 
     "crispy_forms", #crispy forms
     'crispy_bootstrap4',

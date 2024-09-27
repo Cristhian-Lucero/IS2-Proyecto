@@ -332,9 +332,7 @@
         }
         const csrftoken = getCookie('csrftoken');
 
-        let url = `/guardar_publicacion/${publicacion_id}/`;  // Construir la URL con la variable JS
-
-        fetch(url, {
+        fetch("{% url 'guardar_publicacion_ajax' publicacion_id %}", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -355,7 +353,6 @@
             console.error('Error:', error);
             alert('Error al guardar la publicación.');
         });
-
     }
 
     // Función para hacer scroll automáticamente al final de la página
