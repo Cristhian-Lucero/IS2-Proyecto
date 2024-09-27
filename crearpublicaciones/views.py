@@ -7,8 +7,8 @@ de plantillas y la personalización de las publicaciones.
 """
 
 from django.shortcuts import render
-from .forms import PublicacionForm
-from .models import Publicacion
+from .forms import *
+from .models import *
 from login.models import Categoria
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
@@ -18,6 +18,7 @@ import json
 from bs4 import BeautifulSoup
 from django.http import JsonResponse
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 @login_required
@@ -58,9 +59,40 @@ def crear_publicacion(request, categoria_id):
 def previsualizar_publicacion(request, publicacion_id):
     # Obtener la publicación por su ID
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
-    
+    comentarios = Comentario.objects.filter(publicacion=publicacion_id)
+    publicacion.vistas += 1
+    publicacion.save()
+    likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
     # Renderizar la plantilla de previsualización
-    return render(request, 'previsualizacion.html', {'publicacion': publicacion})
+    return render(request, 'previsualizacion.html', {
+        'publicacion': publicacion,
+        'comentarios': comentarios,
+        'likeado': likeado
+        })
+
+@login_required
+def likear(request, publicacion_id):
+    likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
+    if not likeado:
+        publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+        nuevo_like = Likes(user=request.user, publicacion=publicacion)
+        nuevo_like.save()
+        publicacion.me_gustas += 1
+        publicacion.save()
+    return redirect('previsualizar_publicacion', publicacion_id=publicacion_id)
+
+@login_required
+def dislikear(request, publicacion_id):
+    likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
+    like = Likes.objects.filter(user=request.user, publicacion=publicacion_id)
+    if likeado:
+        like.delete()
+        publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+        publicacion.me_gustas -= 1
+        publicacion.save()
+    return redirect('previsualizar_publicacion', publicacion_id=publicacion_id)
+        
+
 
 @login_required
 def mis_publicaciones(request):
@@ -199,6 +231,28 @@ def eliminar_publicacion(request, publicacion_id):
         return redirect('mis_publicaciones')
     return render(request, 'eliminarpublicacion.html', {'publicacion': publicacion})
 
+@login_required
+@check_permiso_publicacion_modificar(['gestionar contenido otros'])
+def eliminar_publicacion_otros(request, publicacion_id):
+    """
+    Vista para eliminar una publicación de un tercero.
+
+    Busca una publicación por su ID y la elimina si la solicitud es POST.
+    Luego, redirige a 'Gestion de publicaciones'.
+
+    Argumentos:
+        publicacion_id (int): ID de la publicación que se desea eliminar.
+
+    Returns:
+        HttpResponse: Renderiza la página de confirmación de eliminación o redirige tras eliminar.
+    """
+
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+    if request.method == 'POST':
+        publicacion.delete()
+        return redirect('home')
+    return render(request, 'eliminarpublicacion.html', {'publicacion': publicacion})
+
 
 @login_required
 # @check_permiso_categoria(['crear contenido'])
@@ -245,6 +299,57 @@ def guardar_publicacion_ajax(request, publicacion_id):
         return JsonResponse({'status': 'success'})
 
 
+        # Buscar la categoría por ID
+        categoria = Categoria.objects.get(id=categoria_id)
+
+        # Crear la nueva publicación con estado 'borrador' por defecto
+        nueva_publicacion = Publicacion(
+            titulo=titulo,
+            contenido_html=contenido_html,
+            estado='borrador',  # Estado por defecto
+            user=request.user,
+            categoria=categoria
+        )
+        nueva_publicacion.save()
+
+        # Devolver una respuesta JSON de éxito
+        return JsonResponse({'success': True})
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+@login_required
+@check_permiso_publicacion_modificar(['interactuar publicaciones'])
+def comentario(request, publicacion_id):
+    # Obtener la publicación en base al id
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+
+    # Si el formulario ha sido enviado
+    if request.method == 'POST':
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.user = request.user
+            comentario.publicacion = publicacion  # Asignar el comentario a la publicación
+            comentario.save()
+            # Redireccionar después de guardar el comentario (opcional)
+            return redirect(reverse('previsualizar_publicacion', args=[publicacion_id]))
+    else:
+        form = ComentarioForm()
+
+    # Renderizar el template y pasar el formulario y la publicación al contexto
+    return render(request, 'comentar.html', {
+        'form': form, 
+        'publicacion': publicacion
+        })
+
+@login_required
+#@check_permiso_publicacion_modificar(['gestionar contenido otros'])
+def eliminar_comentario(request, comentario_id):
+    comentario = get_object_or_404(Comentario, id=comentario_id)
+    
+    if request.method == 'POST':
+        comentario.delete()
+        return redirect('previsualizar_publicacion', publicacion_id=comentario.publicacion.id)
 @csrf_exempt
 def modificar_publicacion_ajax(request, id):
     if request.method == 'POST':

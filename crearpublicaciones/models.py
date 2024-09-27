@@ -33,9 +33,25 @@ class Publicacion(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    vistas = models.IntegerField(default=0)
+    me_gustas = models.IntegerField(default=0)
 
     def __str__(self):
         return self.titulo
 
     class Meta:
         db_table = 'publicacion'
+
+class Likes(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE)
+    
+
+class Comentario(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    descripcion = models.TextField()
+
+    def __str__(self):
+        return f'{self.user.username} - {self.publicacion.titulo} - {self.fecha_creacion}'
