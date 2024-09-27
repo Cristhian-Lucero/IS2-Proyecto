@@ -219,11 +219,17 @@ def seleccionar_plantilla(request, categoria_id):
 
 
 @login_required
-# @check_permiso_publicacion_modificar(['crear contenido'])
-def personalizable(request, categoria_id):
-    categoria = get_object_or_404(Categoria, id=categoria_id)
-    return render(request, 'personalizable.html', {
-        'categoria': categoria
+#@check_permiso_publicacion_modificar(['crear contenido'])
+def personalizable(request, publicacion_id):
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+    categoria = publicacion.categoria  # Obtener la categoría a partir de la relación con la publicación
+    blocks = split_content_into_blocks(publicacion.contenido_html)  # Desglosar el contenido HTML en bloques
+
+    return render(request, 'modificarpublicacion.html', {
+        'publicacion': publicacion, 
+        'blocks': blocks, 
+        'categoria': categoria, 
+        'publicacion_id': publicacion_id  
     })
 
 
@@ -237,6 +243,7 @@ def guardar_publicacion_ajax(request, publicacion_id):
         publicacion.contenido_html = data.get('contenido_html', publicacion.contenido_html)
         publicacion.save()
         return JsonResponse({'status': 'success'})
+
 
 @csrf_exempt
 def modificar_publicacion_ajax(request, id):

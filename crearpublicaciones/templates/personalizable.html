@@ -332,7 +332,7 @@
         }
         const csrftoken = getCookie('csrftoken');
 
-        fetch("{% url 'guardar_publicacion_ajax' %}", {
+        fetch("{% url 'guardar_publicacion_ajax' publicacion_id %}", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
