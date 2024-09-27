@@ -24,5 +24,7 @@ urlpatterns = [
     path('comentario/eliminar/<int:comentario_id>/', eliminar_comentario, name='eliminar_comentario'),
     path('likear/<int:publicacion_id>/', likear, name='likear'),
     path('dislikear/<int:publicacion_id>/', dislikear, name='dislikear'),
+    path('modificar_publicacion_ajax/<int:id>/', modificar_publicacion_ajax, name='modificar_publicacion_ajax'),
+    #path('guardar_publicacion/<int:publicacion_id>/', guardar_publicacion_ajax, name='guardar_publicacion_ajax'),
 ]
 

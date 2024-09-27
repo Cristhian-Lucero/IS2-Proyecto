@@ -15,9 +15,11 @@ from django.shortcuts import get_object_or_404, redirect
 from utils.decorators import *
 import time
 import json
+from bs4 import BeautifulSoup
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 @login_required
 # @check_permiso_categoria(['crear contenido'])
@@ -121,34 +123,90 @@ def gestionPublicacionOtros(request, categoria_id):
         'categoria_nombre': get_object_or_404(Categoria, id=categoria_id).descripcion_corta
         })
 
+def parse_content(html_content):
+    soup = BeautifulSoup(html_content, 'html.parser')
+    blocks = []
+    
+    for element in soup.contents:
+        if element.name == 'p':
+            blocks.append({'type': 'paragraph', 'content': element.text})
+        elif element.name == 'h2':
+            blocks.append({'type': 'heading', 'level': 'h2', 'content': element.text})
+        elif element.name == 'h3':
+            blocks.append({'type': 'heading', 'level': 'h3', 'content': element.text})
+        elif element.name == 'blockquote':
+            blocks.append({'type': 'quote', 'content': element.text})
+        elif element.name == 'ul':
+            items = [li.text for li in element.find_all('li')]
+            blocks.append({'type': 'list', 'items': items})
+        elif element.name == 'img':
+            blocks.append({'type': 'image', 'src': element['src']})
+        # Agrega más casos si es necesario
+
+    return blocks
+
+
 @login_required
 # @check_permiso_publicacion_modificar(['crear contenido'])
 def modificar_publicacion(request, publicacion_id):
-    """
-    Vista para modificar una publicación existente.
-
-    Permite al usuario editar una publicación específica. Si es una solicitud
-    POST, actualiza la publicación y redirige a 'Mis Publicaciones'. Si es una solicitud GET,
-    muestra el formulario con los datos de la publicación existente.
-
-    Argumentos:
-        publicacion_id (int): ID de la publicación que se desea modificar.
-
-    Returns:
-        HttpResponse: Renderiza la página de modificación o redirige después de guardar.
-    """
-
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
-
-    if request.method == 'POST':
-        form = PublicacionForm(request.POST, request.FILES, instance=publicacion)
-        if form.is_valid():
-            form.save()
-            return redirect('mis_publicaciones')  # Redirige a la lista de publicaciones después de guardar
+    if request.method == 'GET':
+        blocks = parse_content(publicacion.contenido_html)
+        context = {
+            'publicacion': publicacion,
+            'blocks': blocks,
+        }
+        return render(request, 'modificarpublicacion.html', context)
+    elif request.method == 'POST':
+        data = json.loads(request.body)
+        publicacion.titulo = data.get('title', publicacion.titulo)
+        publicacion.contenido_html = data.get('contenido_html', publicacion.contenido_html)
+        publicacion.save()
+        return JsonResponse({'status': 'success'})
     else:
-        form = PublicacionForm(instance=publicacion)
+        return JsonResponse({'status': 'error', 'message': 'Método no permitido.'}, status=405)
 
-    return render(request, 'modificarpublicacion.html', {'form': form})
+
+def split_content_into_blocks(content):
+    bloques = []
+    soup = BeautifulSoup(content, 'html.parser')
+    
+    # Extraer todos los párrafos, imágenes y listas como bloques separados
+    for tag in soup.find_all(['p', 'img', 'ul', 'h2', 'h3']):
+        if tag.name == 'p':
+            bloques.append({'tipo': 'texto', 'contenido': tag.text})
+        elif tag.name == 'img':
+            bloques.append({'tipo': 'imagen', 'contenido': tag['src']})
+        elif tag.name == 'ul':
+            items = [li.get_text() for li in tag.find_all('li')]
+            bloques.append({'tipo': 'viñetas', 'contenido': items})
+        elif tag.name == 'h2':
+            bloques.append({'tipo': 'heading2', 'contenido': tag.text})
+        elif tag.name == 'h3':
+            bloques.append({'tipo': 'heading3', 'contenido': tag.text})
+    
+    return bloques
+
+
+@csrf_exempt
+def modificar_publicacion_ajax(request, id):
+    if request.method == 'POST':
+        publicacion = get_object_or_404(Publicacion, id=id)
+
+        try:
+            data = json.loads(request.body)
+            publicacion.titulo = data.get('title', publicacion.titulo)
+            publicacion.contenido_html = data.get('content', publicacion.contenido_html)
+
+            # Guardar los cambios en la publicación
+            publicacion.save()
+
+            return JsonResponse({'message': '¡Publicación actualizada con éxito!'})
+        except Exception as e:
+            return JsonResponse({'message': str(e)}, status=400)
+
+    return JsonResponse({'message': 'Método no permitido.'}, status=405)
+
 
 
 @login_required
@@ -224,12 +282,15 @@ def personalizable(request, categoria_id):
 
 
 @login_required
-def guardar_publicacion_ajax(request):
+def guardar_publicacion_ajax(request, publicacion_id):
     if request.method == 'POST':
+        publicacion = get_object_or_404(Publicacion, id=publicacion_id)
         data = json.loads(request.body)
-        titulo = data.get('title')
-        contenido_html = data.get('content')
-        categoria_id = data.get('categoria_id')
+        # Actualiza la publicación con los datos recibidos
+        publicacion.titulo = data.get('title', publicacion.titulo)
+        publicacion.contenido_html = data.get('contenido_html', publicacion.contenido_html)
+        publicacion.save()
+        return JsonResponse({'status': 'success'})
 
         # Buscar la categoría por ID
         categoria = Categoria.objects.get(id=categoria_id)
@@ -282,3 +343,19 @@ def eliminar_comentario(request, comentario_id):
     if request.method == 'POST':
         comentario.delete()
         return redirect('previsualizar_publicacion', publicacion_id=comentario.publicacion.id)
+@csrf_exempt
+def modificar_publicacion_ajax(request, id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            publicacion = Publicacion.objects.get(id=id)
+            publicacion.titulo = data.get('title', publicacion.titulo)
+            publicacion.contenido_html = data.get('content', publicacion.contenido_html)
+            publicacion.categoria_id = data.get('categoria_id', publicacion.categoria_id)
+            publicacion.save()
+            return JsonResponse({'message': 'Publicación actualizada con éxito.'}, status=200)
+        except Publicacion.DoesNotExist:
+            return JsonResponse({'message': 'Publicación no encontrada.'}, status=404)
+        except Exception as e:
+            return JsonResponse({'message': f'Error: {str(e)}'}, status=500)
+    return JsonResponse({'message': 'Método no permitido.'}, status=405)
