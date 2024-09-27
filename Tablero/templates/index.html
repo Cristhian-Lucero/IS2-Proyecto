@@ -1,0 +1,63 @@
+{% extends 'encabezado.html' %}
+{% block content %}
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tablero Kanban</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+  </head>
+  <body>
+    <div class="board">
+      <form method="get" action="{% url 'kanban_board' categoria.id %}" class="categoria-form">
+        <label for="categoria">Selecciona una categoría:</label>
+        <select name="categoria_id" id="categoria" onchange="this.form.submit()">
+            {% for cat in categorias_activas %}
+                <option value="{{ cat.id }}" {% if cat.id == categoria.id %}selected{% endif %}>
+                    {{ cat.descripcion_corta }}
+                </option>
+            {% endfor %}
+        </select>
+      </form>
+      <div class="lanes">
+        <!-- Borrador -->
+        <div class="swim-lane" id="todo-lane">
+          <h3 class="heading">Borrador</h3>
+          {% for publicacion in borrador %}
+            <p class="task" draggable="true">{{ publicacion.titulo }}</p>
+          {% endfor %}
+        </div>
+
+        <!-- Revisión -->
+        <div class="swim-lane">
+          <h3 class="heading">Revisión</h3>
+          {% for publicacion in revision %}
+            <p class="task" draggable="true">{{ publicacion.titulo }}</p>
+          {% endfor %}
+        </div>
+
+        <!-- Publicado -->
+        <div class="swim-lane">
+          <h3 class="heading">Publicado</h3>
+          {% for publicacion in publicado %}
+            <p class="task" draggable="true">{{ publicacion.titulo }}</p>
+          {% endfor %}
+        </div>
+
+        <!-- Rechazado -->
+        <div class="swim-lane">
+          <h3 class="heading">Rechazado</h3>
+          {% for publicacion in rechazado %}
+            <p class="task" draggable="true">{{ publicacion.titulo }}</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'drag.js' %}"></script>
+    <script src="{% static 'todo.js' %}"></script>
+  </body>
+</html>
+{% endblock %}
