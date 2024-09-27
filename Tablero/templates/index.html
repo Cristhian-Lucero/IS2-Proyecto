@@ -1,0 +1,44 @@
+{% extends 'encabezado.html' %}
+{% block content%}
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tablero Kanban</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+  </head>
+  <body>
+    <div class="board">
+      <div class="lanes">
+        <div class="swim-lane" id="todo-lane">
+          <h3 class="heading">Borrador</h3>
+
+          <p class="task" draggable="true">Publicación 1</p>
+          <p class="task" draggable="true">Publicación 2</p>
+          <p class="task" draggable="true">Publicación 3</p>
+        </div>
+
+        <div class="swim-lane">
+          <h3 class="heading">Revisión</h3>
+
+          <p class="task" draggable="true">Publicación 4</p>
+        </div>
+
+        <div class="swim-lane">
+          <h3 class="heading">Publicado</h3>
+          <p class="task" draggable="true"> Publicación 5</p>
+        </div>
+        <div class="swim-lane">
+          <h3 class="heading">Rechazado</h3>
+          <p class="task" draggable="true">Publicación 6</p>
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'drag.js' %}"></script>
+    <script src="{% static 'todo.js' %}"></script>
+  </body>
+</html>
+{% endblock %}
