@@ -1,5 +1,5 @@
 {% extends 'encabezado.html' %}
-{% block content%}
+{% block content %}
 {% load static %}
 <html lang="en">
   <head>
@@ -13,27 +13,36 @@
   <body>
     <div class="board">
       <div class="lanes">
+        <!-- Borrador -->
         <div class="swim-lane" id="todo-lane">
           <h3 class="heading">Borrador</h3>
-
-          <p class="task" draggable="true">Publicación 1</p>
-          <p class="task" draggable="true">Publicación 2</p>
-          <p class="task" draggable="true">Publicación 3</p>
+          {% for publicacion in borrador %}
+            <p class="task" draggable="true">{{ publicacion.titulo }}</p>
+          {% endfor %}
         </div>
 
+        <!-- Revisión -->
         <div class="swim-lane">
           <h3 class="heading">Revisión</h3>
-
-          <p class="task" draggable="true">Publicación 4</p>
+          {% for publicacion in revision %}
+            <p class="task" draggable="true">{{ publicacion.titulo }}</p>
+          {% endfor %}
         </div>
 
+        <!-- Publicado -->
         <div class="swim-lane">
           <h3 class="heading">Publicado</h3>
-          <p class="task" draggable="true"> Publicación 5</p>
+          {% for publicacion in publicado %}
+            <p class="task" draggable="true">{{ publicacion.titulo }}</p>
+          {% endfor %}
         </div>
+
+        <!-- Rechazado -->
         <div class="swim-lane">
           <h3 class="heading">Rechazado</h3>
-          <p class="task" draggable="true">Publicación 6</p>
+          {% for publicacion in rechazado %}
+            <p class="task" draggable="true">{{ publicacion.titulo }}</p>
+          {% endfor %}
         </div>
       </div>
     </div>
