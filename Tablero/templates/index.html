@@ -9,10 +9,58 @@
     <title>Tablero Kanban</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <style>
+      *{
+        font-family: 'Montserrat', sans-serif;
+      }
+      option {
+        text-align: center;
+      }
+
+      .lanes {
+        width: 100%;
+        text-align: center;
+        text-align-last: center;
+        display: flex;
+        justify-content: space-between; /* Asegura que las columnas se distribuyan uniformemente */
+        width: 100%; /* Ocupa todo el ancho */
+      }
+
+      .swim-lane {
+        flex: 1; /* Cada swim-lane ocupará un ancho igual */
+        margin: 10px; /* Margen opcional entre columnas */
+        padding: 10px;
+        box-sizing: border-box; 
+        background-color: #202124;
+      }
+
+      .heading {
+        text-align: center;
+      }
+
+      .task {
+        color: #FFFFFF;
+        padding: 8px;
+        margin: 5px 0;
+        border-radius: 5px;
+        background-color: #171717;
+        cursor: move;
+      }
+
+      .task:hover{
+        filter: brightness(0.9)
+      }
+
+      .board{
+        border-radius: 15px;
+      }
+
+    </style>
   </head>
   <body>
     <div class="board">
       <form method="get" action="{% url 'kanban_board' categoria.id %}" class="categoria-form">
+        <br>
         <label for="categoria">Selecciona una categoría:</label>
         <select name="categoria_id" id="categoria" onchange="this.form.submit()">
             {% for cat in categorias_activas %}
