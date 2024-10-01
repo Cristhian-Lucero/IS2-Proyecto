@@ -60,8 +60,8 @@ def previsualizar_publicacion(request, publicacion_id):
     # Obtener la publicación por su ID
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
     comentarios = Comentario.objects.filter(publicacion=publicacion_id)
-    publicacion.vistas += 1
-    publicacion.save()
+    #publicacion.vistas += 1
+    #publicacion.save()
     likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
     # Renderizar la plantilla de previsualización
     return render(request, 'previsualizacion.html', {
@@ -69,6 +69,20 @@ def previsualizar_publicacion(request, publicacion_id):
         'comentarios': comentarios,
         'likeado': likeado
         })
+
+@csrf_exempt
+def incrementar_vistas(request, publicacion_id):
+    if request.method == 'POST':
+        try:
+            publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+            publicacion.vistas += 1
+            publicacion.save()
+            return JsonResponse({'status': 'success', 'vistas': publicacion.vistas})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
+
+
 
 @login_required
 def likear(request, publicacion_id):

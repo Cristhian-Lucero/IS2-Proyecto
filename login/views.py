@@ -31,9 +31,13 @@ def home(request):
     Retorna:
         HttpResponse: Renderiza la plantilla "rol/home.html" con el contexto proporcionado.
     """
-
     publicaciones = list((Publicacion.objects.all()).order_by('-fecha_creacion'))
-    paginator = Paginator(publicaciones, 10)  # Muestra 10 publicaciones por página
+    publicacones_filtradas = []
+    for i in publicaciones:
+        #if i.estado == 'publicado':
+            publicacones_filtradas.append(i)
+
+    paginator = Paginator(publicacones_filtradas, 10)  # Muestra 10 publicaciones por página
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

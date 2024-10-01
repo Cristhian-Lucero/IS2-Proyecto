@@ -68,7 +68,7 @@
                 <div class="description">
                     <p>{{ comentario.descripcion }}</p>
 
-                    {% if request.user == comentario.user %}
+                    {% if request.user == comentario.user or 'gestionar contenido otros' in permisos_usuario %}
                         <form action="{% url 'eliminar_comentario' comentario.id %}" method="POST">
                             {% csrf_token %}
                             <button type="submit" class="btn-delete">Eliminar</button>
@@ -77,6 +77,32 @@
 
                 </div>
             </div>
-        </div>
+        </div>        
     {% endfor %}
+    <script>
+        // Espera 20 segundos antes de enviar la solicitud al backend
+        setTimeout(function(){
+            // Realiza una solicitud AJAX al backend
+            fetch("{% url 'incrementar_vistas' publicacion.id %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al incrementar las vistas.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Vistas incrementadas:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }, 20000); // 20 segundos
+    </script>
 {% endblock %}
