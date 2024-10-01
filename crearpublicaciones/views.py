@@ -337,7 +337,7 @@ def comentario(request, publicacion_id):
             comentario.publicacion = publicacion  # Asignar el comentario a la publicación
             comentario.save()
             # Redireccionar después de guardar el comentario (opcional)
-            return redirect(reverse('previsualizar_publicacion', args=[publicacion_id]))
+            return redirect(f"{reverse('previsualizar_publicacion', args=[publicacion_id])}#comentario_{comentario.id}")
     else:
         form = ComentarioForm()
 

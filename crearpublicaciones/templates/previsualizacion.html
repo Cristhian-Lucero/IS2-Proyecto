@@ -63,7 +63,7 @@
     {% for comentario in comentarios %}
         <div class="comentario-container" style="text-align: justify;">
             <div class="article-content">
-                <h2 style="text-transform: uppercase;" class="article-title"> {{comentario.user.username}} </h2>
+                <h2 style="text-transform: uppercase;" class="article-title" id="comentario_{{comentario.id}}"> {{comentario.user.username}} </h2>
                 <p> {{ comentario.fecha_creacion }} </p>
                 <div class="description">
                     <p>{{ comentario.descripcion }}</p>

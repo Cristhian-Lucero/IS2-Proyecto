@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
+from crearpublicaciones.models import Comentario
 from Perfil.models import Usuario
 from django.core.paginator import Paginator
 
@@ -33,6 +34,7 @@ def home(request):
     """
     publicaciones = list((Publicacion.objects.all()).order_by('-fecha_creacion'))
     publicacones_filtradas = []
+    numero_comentarios = []
     for i in publicaciones:
         #if i.estado == 'publicado':
             publicacones_filtradas.append(i)
