@@ -13,22 +13,19 @@
       *{
         font-family: 'Montserrat', sans-serif;
       }
-      option {
-        text-align: center;
-      }
 
       .lanes {
         width: 100%;
         text-align: center;
         text-align-last: center;
         display: flex;
-        justify-content: space-between; /* Asegura que las columnas se distribuyan uniformemente */
-        width: 100%; /* Ocupa todo el ancho */
+        justify-content: space-between;
+        width: 100%;
       }
 
       .swim-lane {
-        flex: 1; /* Cada swim-lane ocupará un ancho igual */
-        margin: 10px; /* Margen opcional entre columnas */
+        flex: 1;
+        margin: 10px;
         padding: 10px;
         box-sizing: border-box; 
         background-color: #202124;
@@ -55,51 +52,49 @@
         border-radius: 15px;
       }
 
+      .category-title {
+        text-align: center;
+        font-size: 24px;
+        color: #FFFFFF;
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
     <div class="board">
-      <form method="get" action="{% url 'kanban_board' categoria.id %}" class="categoria-form">
-        <br>
-        <label for="categoria">Selecciona una categoría:</label>
-        <select name="categoria_id" id="categoria" onchange="this.form.submit()">
-            {% for cat in categorias_activas %}
-                <option value="{{ cat.id }}" {% if cat.id == categoria.id %}selected{% endif %}>
-                    {{ cat.descripcion_corta }}
-                </option>
-            {% endfor %}
-        </select>
-      </form>
+      <!-- Mostrar el nombre de la categoría activa -->
+      <h2 class="category-title">Categoría: {{ categoria.descripcion_corta }}</h2>
+      
       <div class="lanes">
         <!-- Borrador -->
-        <div class="swim-lane" id="todo-lane">
+        <div class="swim-lane" id="todo-lane" data-state="borrador">
           <h3 class="heading">Borrador</h3>
           {% for publicacion in borrador %}
-            <p class="task" draggable="true">{{ publicacion.titulo }}</p>
+            <p class="task" draggable="true" data-id="{{ publicacion.id }}">{{ publicacion.titulo }}</p>
           {% endfor %}
         </div>
 
         <!-- Revisión -->
-        <div class="swim-lane">
+        <div class="swim-lane" data-state="revision">
           <h3 class="heading">Revisión</h3>
           {% for publicacion in revision %}
-            <p class="task" draggable="true">{{ publicacion.titulo }}</p>
+            <p class="task" draggable="true" data-id="{{ publicacion.id }}">{{ publicacion.titulo }}</p>
           {% endfor %}
         </div>
 
         <!-- Publicado -->
-        <div class="swim-lane">
+        <div class="swim-lane" data-state="publicado">
           <h3 class="heading">Publicado</h3>
           {% for publicacion in publicado %}
-            <p class="task" draggable="true">{{ publicacion.titulo }}</p>
+            <p class="task" draggable="true" data-id="{{ publicacion.id }}">{{ publicacion.titulo }}</p>
           {% endfor %}
         </div>
 
         <!-- Rechazado -->
-        <div class="swim-lane">
+        <div class="swim-lane" data-state="rechazado">
           <h3 class="heading">Rechazado</h3>
           {% for publicacion in rechazado %}
-            <p class="task" draggable="true">{{ publicacion.titulo }}</p>
+            <p class="task" draggable="true" data-id="{{ publicacion.id }}">{{ publicacion.titulo }}</p>
           {% endfor %}
         </div>
       </div>
