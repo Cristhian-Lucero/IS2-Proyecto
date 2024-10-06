@@ -336,7 +336,7 @@ def comentario(request, publicacion_id):
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
     if not verificar_permisos_categoria_id(request, ['interactuar publicaciones'], publicacion.categoria_id):
         return render(request, 'sin_permiso.html')
-
+    ##
     # Si el formulario ha sido enviado
     if request.method == 'POST':
         form = ComentarioForm(request.POST)
