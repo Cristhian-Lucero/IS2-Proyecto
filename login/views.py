@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
+from crearpublicaciones.models import Comentario
 from Perfil.models import Usuario
 from django.core.paginator import Paginator
 
@@ -18,8 +19,6 @@ from crearpublicaciones.models import Publicacion
 
 from utils.decorators import check_permiso_categoria
 
-
-# Create your views here.
 @login_required
 def home(request):
     """
@@ -31,9 +30,14 @@ def home(request):
     Retorna:
         HttpResponse: Renderiza la plantilla "rol/home.html" con el contexto proporcionado.
     """
-
     publicaciones = list((Publicacion.objects.all()).order_by('-fecha_creacion'))
-    paginator = Paginator(publicaciones, 10)  # Muestra 10 publicaciones por página
+    publicacones_filtradas = []
+    numero_comentarios = []
+    for i in publicaciones:
+        #if i.estado == 'publicado': cuando don cristhian termine su parte
+            publicacones_filtradas.append(i)
+
+    paginator = Paginator(publicacones_filtradas, 10)  # Muestra 10 publicaciones por página
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -96,6 +100,7 @@ def exit(request):
     logout(request)
     return redirect('inicio')
 
+#eliminar(?
 @login_required
 def rol(request):
     """
@@ -109,7 +114,7 @@ def rol(request):
 
 #asignar roles
 @login_required
-#@check_permiso_categoria(['gestionar roles'], categoria_id=2)
+@check_permiso_categoria(['gestionar roles'], categoria_id=2)
 def gestionarRol(request):
     #retorna True si tiene permiso 'asignar roles' en categoria con id=2
     if confirmarPermiso(request, ['asignar roles'], 2):
@@ -354,7 +359,7 @@ def editarCategoria(request, categoria_id):
     })
 
 @login_required
-
+@check_permiso_categoria(['crear contenido'])
 def seleccionar_plantilla(request, categoria_id):
     """
     Vista para seleccionar una plantilla para la publicación.
@@ -369,20 +374,3 @@ def seleccionar_plantilla(request, categoria_id):
     return render(request, 'seleccionar_plantilla.html', {
         'categoria_id': categoria_id
     })
-
-def confirmarPermiso(request, permisos, categoria_id):
-    user = request.user
-    if not user.is_authenticated:
-        return False
-        
-    try:
-        # Lógica para verificar los permisos del usuario en la categoría
-        usuario_instancia = Usuario.objects.get(user_id=user)
-        usuario_rol = UsuarioRolCategoria.objects.get(usuario=usuario_instancia, categoria_id=categoria_id)
-        for permiso_nombre in permisos:
-            if not usuario_rol.rol.permisos.filter(nombre=permiso_nombre).exists():
-                return False
-    except UsuarioRolCategoria.DoesNotExist:
-        return False
-    
-    return True

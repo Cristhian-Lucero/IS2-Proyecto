@@ -50,11 +50,11 @@
     {% for i in page_obj %}
         {% if i.categoria.estado == 'Activo' %}
             <div class="article-container" style="text-align: justify;">
-                <div class="article-content">
+                <div class="article-content" style="width: 100%;">
                     <h2 style="text-transform: uppercase;" class="article-title">{{ i.titulo }}</h2>
                     <div class="category"> <a style="text-transform: uppercase;" href="{% url 'categoria' i.categoria.descripcion_corta %}">{{ i.categoria.descripcion_corta }}</a> </div>
                     <div class="description">
-                        <p>Publicación hecha por: {{ i.user }}</p>
+                        <h3>Autor: {{ i.user }}</h3>
                         {{ i.contenido_html|slice:":255"|safe }}...
                     </div>
                     <a class="read-more" href="{% url 'previsualizar_publicacion' i.id %}">LEER MÁS</a>

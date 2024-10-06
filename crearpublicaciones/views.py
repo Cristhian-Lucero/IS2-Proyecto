@@ -22,7 +22,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 @login_required
-# @check_permiso_categoria(['crear contenido'])
+@check_permiso_categoria(['crear contenido'])
 def crear_publicacion(request, categoria_id):
     """
     Vista para crear una nueva publicación.
@@ -60,8 +60,8 @@ def previsualizar_publicacion(request, publicacion_id):
     # Obtener la publicación por su ID
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
     comentarios = Comentario.objects.filter(publicacion=publicacion_id)
-    publicacion.vistas += 1
-    publicacion.save()
+    #publicacion.vistas += 1
+    #publicacion.save()
     likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
     # Renderizar la plantilla de previsualización
     return render(request, 'previsualizacion.html', {
@@ -69,6 +69,20 @@ def previsualizar_publicacion(request, publicacion_id):
         'comentarios': comentarios,
         'likeado': likeado
         })
+
+@csrf_exempt
+def incrementar_vistas(request, publicacion_id):
+    if request.method == 'POST':
+        try:
+            publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+            publicacion.vistas += 1
+            publicacion.save()
+            return JsonResponse({'status': 'success', 'vistas': publicacion.vistas})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+    return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
+
+
 
 @login_required
 def likear(request, publicacion_id):
@@ -93,7 +107,6 @@ def dislikear(request, publicacion_id):
     return redirect('previsualizar_publicacion', publicacion_id=publicacion_id)
         
 
-
 @login_required
 def mis_publicaciones(request):
     """
@@ -107,12 +120,10 @@ def mis_publicaciones(request):
     """
 
     publicaciones = Publicacion.objects.filter(user=request.user)
-
     return render(request, 'misPublicaciones.html', {'publicaciones': publicaciones})
 
 
 @login_required
-
 @check_permiso_categoria(['gestionar contenido otros'])
 def gestionPublicacionOtros(request, categoria_id):
 
@@ -147,8 +158,9 @@ def parse_content(html_content):
 
 
 @login_required
-# @check_permiso_publicacion_modificar(['crear contenido'])
+#@check_permiso_publicacion_modificar(['crear contenido'])
 def modificar_publicacion(request, publicacion_id):
+    
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
     if request.method == 'GET':
         blocks = parse_content(publicacion.contenido_html)
@@ -323,7 +335,7 @@ def comentario(request, publicacion_id):
             comentario.publicacion = publicacion  # Asignar el comentario a la publicación
             comentario.save()
             # Redireccionar después de guardar el comentario (opcional)
-            return redirect(reverse('previsualizar_publicacion', args=[publicacion_id]))
+            return redirect(f"{reverse('previsualizar_publicacion', args=[publicacion_id])}#comentario_{comentario.id}")
     else:
         form = ComentarioForm()
 
