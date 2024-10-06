@@ -5,9 +5,13 @@ from login.models import Categoria, UsuarioRolCategoria, Permiso
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt  # Asegúrate de importar csrf_exempt
 import json
+from login.utils import *
 
 @login_required
 def kanban_board(request, categoria_id=None):
+
+    if not verificar_permisos_categoria_id(request, ['rechazar contenido', 'publicar contenido', 'cambiar estado publicacion'], categoria_id):
+        return render(request, 'sin_permiso.html')
     # Obtener el usuario actual
     usuario_actual = request.user
 

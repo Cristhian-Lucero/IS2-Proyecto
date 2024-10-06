@@ -18,6 +18,7 @@ from django.contrib.auth import logout
 from crearpublicaciones.models import Publicacion
 
 from utils.decorators import check_permiso_categoria
+from .utils import *
 
 @login_required
 def home(request):
@@ -110,73 +111,67 @@ def rol(request):
     Retorna:
         HttpResponse: Renderiza la plantilla "rol/gestionRol.html".
     """
-
     return render(request, "rol/gestionRol.html")
 
-#asignar roles
 @login_required
-@check_permiso_categoria(['gestionar roles'], categoria_id=2)
 def gestionarRol(request):
-    #retorna True si tiene permiso 'asignar roles' en categoria con id=2
-    if confirmarPermiso(request, ['asignar roles'], 2):
-        """
-        Renderiza la página de gestión de roles con la lista de categorías y roles.
-        Maneja solicitudes POST para actualizar el rol de un usuario en una categoría.
+    """
+    Renderiza la página de gestión de roles con la lista de categorías y roles.
+    Maneja solicitudes POST para actualizar el rol de un usuario en una categoría.
 
-        Retorna:
-            HttpResponseRedirect: Redirige a 'gestionrol' después de procesar la solicitud.
-            HttpResponse: Renderiza la plantilla 'rol/gestionRol.html' en caso de GET o error.
-        """
+    Retorna:
+        HttpResponseRedirect: Redirige a 'gestionrol' después de procesar la solicitud.
+        HttpResponse: Renderiza la plantilla 'rol/gestionRol.html' en caso de GET o error.
+    """
 
-        if request.method == 'POST':
-            # Obtener los valores seleccionados
-            usuario_id = request.POST.get('usuario')
-            print(f'el user id del form es {usuario_id}')
-            categoria_id = request.POST.get('categoria')
-            rol_id = request.POST.get('rol')
+    if not verificar_permisos_admin(request, ['gestionar roles']):
+        return render(request, 'sin_permiso.html')
+    
+    if request.method == 'POST':
+        # Obtener los valores seleccionados
+        usuario_id = request.POST.get('usuario')
+        print(f'el user id del form es {usuario_id}')
+        categoria_id = request.POST.get('categoria')
+        rol_id = request.POST.get('rol')
 
-            try:
-                # Buscar la relación en UsuarioRolCategoria
-                usuario_instancia = Usuario.objects.get(user_id=usuario_id)
-                print(f'el user id del filtrado es {usuario_instancia}')
-                usuario_rol_categoria = UsuarioRolCategoria.objects.get(usuario_id=usuario_instancia, categoria_id=categoria_id)
+        try:
+            # Buscar la relación en UsuarioRolCategoria
+            usuario_instancia = Usuario.objects.get(user_id=usuario_id)
+            print(f'el user id del filtrado es {usuario_instancia}')
+            usuario_rol_categoria = UsuarioRolCategoria.objects.get(usuario_id=usuario_instancia, categoria_id=categoria_id)
 
-                # Actualizar el rol
-                rol_instancia = Rol.objects.get(id=rol_id)
-                usuario_rol_categoria.rol = rol_instancia
-                usuario_rol_categoria.save()
+            # Actualizar el rol
+            rol_instancia = Rol.objects.get(id=rol_id)
+            usuario_rol_categoria.rol = rol_instancia
+            usuario_rol_categoria.save()
 
-                # Redirigir a una página de éxito o recargar la página
-                return redirect('gestionrol')  # Asegúrate de tener esta URL configurada
+            # Redirigir a una página de éxito o recargar la página
+            return redirect('gestionrol')  # Asegúrate de tener esta URL configurada
 
-            except UsuarioRolCategoria.DoesNotExist:
-                usuarios = Usuario.objects.all()
-                categorias = Categoria.objects.all()
-                roles = Rol.objects.all()
-                # Si no existe la relación, puedes manejar el error (opcional)
-                return render(request, 'rol/gestionRol.html', {
-                    'usuarios': usuarios,
-                    'categorias': categorias,
-                    'roles': roles,
-                })
-        # En caso de GET, renderiza el formulario
-        usuarios = Usuario.objects.all().order_by('user__username')
-        categorias = Categoria.objects.all()
-        roles = Rol.objects.all()
-        gestion = list(UsuarioRolCategoria.objects.all().order_by('usuario'))
+        except UsuarioRolCategoria.DoesNotExist:
+            usuarios = Usuario.objects.all()
+            categorias = Categoria.objects.all()
+            roles = Rol.objects.all()
+            # Si no existe la relación, puedes manejar el error (opcional)
+            return render(request, 'rol/gestionRol.html', {
+                'usuarios': usuarios,
+                'categorias': categorias,
+                'roles': roles,
+            })
+    # En caso de GET, renderiza el formulario
+    usuarios = Usuario.objects.all().order_by('user__username')
+    categorias = Categoria.objects.all()
+    roles = Rol.objects.all()
+    gestion = list(UsuarioRolCategoria.objects.all().order_by('usuario'))
 
-        return render(request, 'rol/gestionRol.html', {
-            'usuarios': usuarios,
-            'categorias': categorias,
-            'roles': roles,
-            'usuarioRolCategoria': gestion
-        })
-    else:
-        return HttpResponseForbidden("No tienes un rol asignado en esta categoría")
-
+    return render(request, 'rol/gestionRol.html', {
+        'usuarios': usuarios,
+        'categorias': categorias,
+        'roles': roles,
+        'usuarioRolCategoria': gestion
+    })
 
 @login_required
-@check_permiso_categoria(['gestionar roles'], categoria_id=2)
 def agregarRol(request):
     """
     Permite agregar un nuevo rol al sistema.
@@ -192,6 +187,9 @@ def agregarRol(request):
     Retorna:
         HttpResponse: Renderiza la plantilla "rol/crudRol.html" o redirige a 'adicionrol' después de crear el rol.
     """
+
+    if not verificar_permisos_admin(request, ['gestionar roles']):
+        return render(request, 'sin_permiso.html')
 
     x = list((Rol.objects.all()).order_by('id'))
     y = list(Permiso.objects.all())
@@ -210,7 +208,6 @@ def agregarRol(request):
         return redirect('adicionrol')
 
 @login_required
-@check_permiso_categoria(['gestionar roles'], categoria_id=2)
 def eliminarRol(request, rol_id):
     """
     Elimina un rol específico basado en su ID y redirige a la página de adición de roles.
@@ -224,6 +221,8 @@ def eliminarRol(request, rol_id):
     Retorna:
         HttpResponse: Redirige a 'adicionrol' después de eliminar el rol.
     """
+    if not verificar_permisos_admin(request, ['gestionar roles']):
+        return render(request, 'sin_permiso.html')
 
     if rol_id > 5:
         rol_seleccionado = get_object_or_404(Rol, id=rol_id)
@@ -233,7 +232,6 @@ def eliminarRol(request, rol_id):
     return redirect('adicionrol')
 
 @login_required
-@check_permiso_categoria(['gestionar roles'], categoria_id=2)
 def editarRol(request, rol_id):
     """
     Renderiza la página para editar un rol y maneja la solicitud POST para actualizar los detalles del rol.
@@ -244,6 +242,8 @@ def editarRol(request, rol_id):
     Retorna:
         HttpResponse: Renderiza la plantilla 'rol/editarRol.html' o actualiza el rol y redirige a 'adicionrol'.
     """
+    if not verificar_permisos_admin(request, ['gestionar roles']):
+        return render(request, 'sin_permiso.html')
 
     rol = get_object_or_404(Rol, id=rol_id)
 
@@ -274,7 +274,6 @@ def editarRol(request, rol_id):
     })
 
 @login_required
-@check_permiso_categoria(['gestionar categorias'], categoria_id=2)
 def gestionCategoria(request):
     """
     Gestiona la creación y visualización de categorías.
@@ -284,6 +283,8 @@ def gestionCategoria(request):
     Retorna:
         HttpResponse: Renderiza la plantilla 'rol/gestionCategoria.html' con la lista de categorías o crea una nueva categoría.
     """
+    if not verificar_permisos_admin(request, ['gestionar categorias']):
+        return render(request, 'sin_permiso.html')
 
     if request.method == 'GET':
         #Si se entra desde el metodo GET 'visita la pagina'
@@ -305,7 +306,6 @@ def gestionCategoria(request):
         })
 
 @login_required
-@check_permiso_categoria(['gestionar categorias'], categoria_id=2)
 def eliminarCategoria(request, categoria_id):
     """
     Elimina una categoría específica identificada por su ID.
@@ -317,12 +317,14 @@ def eliminarCategoria(request, categoria_id):
         HttpResponse: Redirige a la vista 'gestioncategoria' después de eliminar la categoría.
     """
 
+    if not verificar_permisos_admin(request, ['gestionar categorias']):
+        return render(request, 'sin_permiso.html')
+
     categoria = get_object_or_404(Categoria, id=categoria_id)
     categoria.delete()
     return redirect('gestioncategoria')
 
 @login_required
-@check_permiso_categoria(['gestionar categorias'], categoria_id=2)
 def editarCategoria(request, categoria_id):
     """
     Permite editar una categoría existente.
@@ -335,6 +337,9 @@ def editarCategoria(request, categoria_id):
     Retorna:
         HttpResponse: Renderiza la plantilla 'rol/gestionCategoria.html' o actualiza la categoría y redirige a 'gestioncategoria'.
     """
+
+    if not verificar_permisos_admin(request, ['gestionar categorias']):
+        return render(request, 'sin_permiso.html')
 
     categoria = get_object_or_404(Categoria, id=categoria_id)
 
@@ -371,6 +376,9 @@ def seleccionar_plantilla(request, categoria_id):
     Returns:
         HttpResponse: Renderiza la página de selección de plantillas.
     """
+
+    if not verificar_permisos_categoria_id(request, ['crear contenido'], categoria_id):
+        return render(request, 'sin_permiso.html')
 
     return render(request, 'seleccionar_plantilla.html', {
         'categoria_id': categoria_id

@@ -20,9 +20,9 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from login.utils import *
 
 @login_required
-@check_permiso_categoria(['crear contenido'])
 def crear_publicacion(request, categoria_id):
     """
     Vista para crear una nueva publicación.
@@ -36,6 +36,9 @@ def crear_publicacion(request, categoria_id):
         HttpResponse: Renderiza la página de creación de publicaciones o
         redirige a 'mis_publicaciones' después de guardar.
     """
+
+    if not verificar_permisos_categoria_id(request, ['crear contenido'], categoria_id):
+        return render(request, 'sin_permiso.html')
 
     if request.method == 'POST':
         form = PublicacionForm(request.POST, request.FILES)
@@ -53,7 +56,6 @@ def crear_publicacion(request, categoria_id):
         'form': form,
         'categoria_id': categoria_id
         })
-
 
 @login_required
 def previsualizar_publicacion(request, publicacion_id):
@@ -82,10 +84,12 @@ def incrementar_vistas(request, publicacion_id):
             return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
     return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
-
-
 @login_required
 def likear(request, publicacion_id):
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+    if not verificar_permisos_categoria_id(request, ['interactuar publicaciones'], publicacion.categoria_id):
+        return render(request, 'sin_permiso.html')
+
     likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
     if not likeado:
         publicacion = get_object_or_404(Publicacion, id=publicacion_id)
@@ -97,6 +101,10 @@ def likear(request, publicacion_id):
 
 @login_required
 def dislikear(request, publicacion_id):
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+    if not verificar_permisos_categoria_id(request, ['interactuar publicaciones'], publicacion.categoria_id):
+        return render(request, 'sin_permiso.html')
+
     likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
     like = Likes.objects.filter(user=request.user, publicacion=publicacion_id)
     if likeado:
@@ -106,7 +114,6 @@ def dislikear(request, publicacion_id):
         publicacion.save()
     return redirect('previsualizar_publicacion', publicacion_id=publicacion_id)
         
-
 @login_required
 def mis_publicaciones(request):
     """
@@ -122,11 +129,11 @@ def mis_publicaciones(request):
     publicaciones = Publicacion.objects.filter(user=request.user)
     return render(request, 'misPublicaciones.html', {'publicaciones': publicaciones})
 
-
 @login_required
-@check_permiso_categoria(['gestionar contenido otros'])
 def gestionPublicacionOtros(request, categoria_id):
-
+    if not verificar_permisos_categoria_id(request, ['gestionar contenido otros'], categoria_id):
+        return render(request, 'sin_permiso.html')
+    
     publicaciones_gestionables = Publicacion.objects.filter(categoria=categoria_id)
 
     return render(request, 'GestionPublicaciones3ros.html', {
@@ -156,12 +163,13 @@ def parse_content(html_content):
 
     return blocks
 
-
 @login_required
-#@check_permiso_publicacion_modificar(['crear contenido'])
 def modificar_publicacion(request, publicacion_id):
-    
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+
+    if not verificar_permisos_categoria_id(request, ['crear contenido'], publicacion.categoria_id):
+        return render(request, 'sin_permiso.html')
+    
     if request.method == 'GET':
         blocks = parse_content(publicacion.contenido_html)
         context = {
@@ -177,7 +185,6 @@ def modificar_publicacion(request, publicacion_id):
         return JsonResponse({'status': 'success'})
     else:
         return JsonResponse({'status': 'error', 'message': 'Método no permitido.'}, status=405)
-
 
 def split_content_into_blocks(content):
     bloques = []
@@ -199,7 +206,6 @@ def split_content_into_blocks(content):
     
     return bloques
 
-
 @csrf_exempt
 def modificar_publicacion_ajax(request, id):
     if request.method == 'POST':
@@ -219,7 +225,6 @@ def modificar_publicacion_ajax(request, id):
 
     return JsonResponse({'message': 'Método no permitido.'}, status=405)
 
-
 @login_required
 # @check_permiso_publicacion_modificar(['crear contenido'])
 def eliminar_publicacion(request, publicacion_id):
@@ -235,16 +240,16 @@ def eliminar_publicacion(request, publicacion_id):
     Returns:
         HttpResponse: Renderiza la página de confirmación de eliminación o redirige tras eliminar.
     """
-
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+    if not verificar_permisos_categoria_id(request, ['crear contenido'], publicacion.categoria_id):
+        return render(request, 'sin_permiso.html')
+
     if request.method == 'POST':
         publicacion.delete()
         return redirect('mis_publicaciones')
     return render(request, 'eliminarpublicacion.html', {'publicacion': publicacion})
 
-
 @login_required
-@check_permiso_publicacion_modificar(['gestionar contenido otros'])
 def eliminar_publicacion_otros(request, publicacion_id):
     """
     Vista para eliminar una publicación de un tercero.
@@ -260,14 +265,15 @@ def eliminar_publicacion_otros(request, publicacion_id):
     """
 
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+    if not verificar_permisos_categoria_id(request, ['gestionar contenido otros'], publicacion.categoria_id):
+        return render(request, 'sin_permiso.html')
+    
     if request.method == 'POST':
         publicacion.delete()
         return redirect('home')
     return render(request, 'eliminarpublicacion.html', {'publicacion': publicacion})
 
-
 @login_required
-# @check_permiso_categoria(['crear contenido'])
 def seleccionar_plantilla(request, categoria_id):
     """
     Vista para seleccionar una plantilla para la publicación.
@@ -279,16 +285,21 @@ def seleccionar_plantilla(request, categoria_id):
         HttpResponse: Renderiza la página de selección de plantillas.
     """
 
+    if not verificar_permisos_categoria_id(request, ['crear contenido'], categoria_id):
+        return render(request, 'sin_permiso.html')
+
     return render(request, 'seleccionar_plantilla.html', {
         'categoria_id': categoria_id
     })
 
 
 @login_required
-#@check_permiso_publicacion_modificar(['crear contenido'])
 def personalizable(request, categoria_id):
     # Obtener la categoría
     categoria = get_object_or_404(Categoria, id=categoria_id)
+
+    if not verificar_permisos_categoria_id(request, ['crear contenido'], categoria_id):
+        return render(request, 'sin_permiso.html')
 
     # Crear una nueva publicación en borrador o reutilizar una existente
     publicacion, created = Publicacion.objects.get_or_create(
@@ -319,12 +330,12 @@ def guardar_publicacion_ajax(request, publicacion_id):
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error', 'message': 'Método no permitido.'}, status=405)
 
-
 @login_required
-@check_permiso_publicacion_modificar(['interactuar publicaciones'])
 def comentario(request, publicacion_id):
     # Obtener la publicación en base al id
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+    if not verificar_permisos_categoria_id(request, ['interactuar publicaciones'], publicacion.categoria_id):
+        return render(request, 'sin_permiso.html')
 
     # Si el formulario ha sido enviado
     if request.method == 'POST':
@@ -345,17 +356,19 @@ def comentario(request, publicacion_id):
         'publicacion': publicacion
         })
 
-
 @login_required
-#@check_permiso_publicacion_modificar(['gestionar contenido otros'])
 def eliminar_comentario(request, comentario_id):
     comentario = get_object_or_404(Comentario, id=comentario_id)
+
+    publicacion = get_object_or_404(Publicacion, id=comentario.publicacion_id)
+    if(comentario.user_id != request.user.id):
+        if not verificar_permisos_categoria_id(request, ['gestionar contenido otros'], publicacion.categoria_id):
+            return render(request, 'sin_permiso.html')
     
     if request.method == 'POST':
         comentario.delete()
         return redirect('previsualizar_publicacion', publicacion_id=comentario.publicacion.id)
     
-
 @csrf_exempt
 def modificar_publicacion_ajax(request, id):
     if request.method == 'POST':
