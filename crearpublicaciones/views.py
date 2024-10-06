@@ -22,7 +22,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 @login_required
-# @check_permiso_categoria(['crear contenido'])
+@check_permiso_categoria(['crear contenido'])
 def crear_publicacion(request, categoria_id):
     """
     Vista para crear una nueva publicación.
@@ -107,7 +107,6 @@ def dislikear(request, publicacion_id):
     return redirect('previsualizar_publicacion', publicacion_id=publicacion_id)
         
 
-
 @login_required
 def mis_publicaciones(request):
     """
@@ -121,12 +120,10 @@ def mis_publicaciones(request):
     """
 
     publicaciones = Publicacion.objects.filter(user=request.user)
-
     return render(request, 'misPublicaciones.html', {'publicaciones': publicaciones})
 
 
 @login_required
-
 @check_permiso_categoria(['gestionar contenido otros'])
 def gestionPublicacionOtros(request, categoria_id):
 
@@ -161,8 +158,9 @@ def parse_content(html_content):
 
 
 @login_required
-# @check_permiso_publicacion_modificar(['crear contenido'])
+#@check_permiso_publicacion_modificar(['crear contenido'])
 def modificar_publicacion(request, publicacion_id):
+    
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
     if request.method == 'GET':
         blocks = parse_content(publicacion.contenido_html)
