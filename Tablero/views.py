@@ -38,7 +38,7 @@ def kanban_board(request, categoria_id=None):
     if not categoria:
         categoria = categorias_usuario.first()
 
-    # Filtrar publicaciones por estado y categoría seleccionada
+    # Filtrar publicaciones por estado y categoría seleccionadaaaa
     borrador = Publicacion.objects.filter(estado='borrador', categoria=categoria)
     revision = Publicacion.objects.filter(estado='revision', categoria=categoria)
     publicado = Publicacion.objects.filter(estado='publicado', categoria=categoria)
