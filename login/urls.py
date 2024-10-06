@@ -16,6 +16,7 @@ urlpatterns = [
     path('home/', home, name='home'),
     path('home/categoria/<str:descripcion_corta>/', publicacionCategoria, name='categoria'),
     path('home/categoria/', listadoCategorias, name='categoria'),
+    path('home/search/', search),
 
     path('gestionrol/', gestionarRol, name='gestionrol'),
 

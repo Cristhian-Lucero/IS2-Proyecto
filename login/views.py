@@ -375,3 +375,9 @@ def confirmarPermiso(request, permisos, categoria_id):
         return False
     
     return True
+
+def search(request):
+    
+    return render(request, 'search/busqueda_contenido.html', {
+        'publicaciones': list((Publicacion.objects.all()).order_by('-fecha_creacion'))
+    })
