@@ -53,7 +53,8 @@ def publicacionCategoria(request, descripcion_corta):
     publicacones_filtradas = []
     for i in publicaciones:
         if i.categoria.descripcion_corta == descripcion_corta:
-            publicacones_filtradas.append(i)
+            if i.estado == 'publicado':
+                publicacones_filtradas.append(i)
 
     return render(request, "rol/publicacionCategoria.html", {
         'publicaciones': publicacones_filtradas,
