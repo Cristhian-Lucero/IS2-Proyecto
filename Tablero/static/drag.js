@@ -5,42 +5,55 @@ draggables.forEach((task) => {
   task.addEventListener("dragstart", () => { // evento: añade la clase cuando se esta arrastrando
     task.classList.add("is-dragging");
   });
+
   task.addEventListener("dragend", () => { // evento: elimina la clase cuando lo suelta
     task.classList.remove("is-dragging");
+
+    // Obtener la columna donde fue soltado el elemento
+    const newState = task.parentElement.getAttribute("data-state"); // Identifica la nueva columna (estado)
+
+    // Enviar una solicitud AJAX para actualizar el estado en la base de datos
+    const taskId = task.getAttribute("data-id"); // Obtener el ID de la tarea
+
+    // Aquí está la solicitud fetch que actualiza el estado de la tarea en el servidor
+    fetch(`/Tablero/update_task_state/${taskId}/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"),  // Token CSRF para seguridad
+      },
+      body: JSON.stringify({ estado: newState }), // Enviar el nuevo estado en el cuerpo de la solicitud
+    })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Estado actualizado correctamente");
+      } else {
+        console.error("Error al actualizar el estado");
+      }
+    });
   });
 });
 
 droppables.forEach((zone) => {
   zone.addEventListener("dragover", (e) => { // para cada zona donde puede soltar el objeto
     e.preventDefault(); // permite que el objeto arrastrado pueda ser soltado
-
-    const bottomTask = insertAboveTask(zone, e.clientY); // insertAboveTask: Esta función se llama para determinar cuál es la tarea que se encuentra justo debajo del cursor del mouse, basándose en la posición clientY del mouse.
-    const curTask = document.querySelector(".is-dragging"); // Se selecciona el elemento que está siendo arrastrado actualmente con document.querySelector(".is-dragging").
-
-    if (!bottomTask) { // si es nulo se agrega al final, sino se inserta antes
-      zone.appendChild(curTask);
-    } else {
-      zone.insertBefore(curTask, bottomTask);
-    }
+    const curTask = document.querySelector(".is-dragging"); // Se selecciona el elemento que está siendo arrastrado actualmente
+    zone.appendChild(curTask); // Se mueve el elemento arrastrado a la zona de destino
   });
 });
 
-const insertAboveTask = (zone, mouseY) => { // Determina la zona mas cercana al mouse
-  const els = zone.querySelectorAll(".task:not(.is-dragging)"); //Filtra todos los task dentro de la zona que no están siendo arrastradas (.task:not(.is-dragging)).
-
-  let closestTask = null;
-  let closestOffset = Number.NEGATIVE_INFINITY;
-
-  els.forEach((task) => {
-    const { top } = task.getBoundingClientRect(); // Para cada task dentro de la zona, calcula la distancia vertical entre la parte superior del task y la posición del mouse.
-
-    const offset = mouseY - top;
-
-    if (offset < 0 && offset > closestOffset) { //Si la distancia (offset) es negativa (el mouse está por encima del task), y esta distancia es la más cercana encontrada hasta el momento, se actualiza closestTask para que sea el task más cercana al cursor.
-      closestOffset = offset;
-      closestTask = task;
+// Obtener el token CSRF para la solicitud
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
     }
-  });
-
-  return closestTask;
-};
+  }
+  return cookieValue;
+}

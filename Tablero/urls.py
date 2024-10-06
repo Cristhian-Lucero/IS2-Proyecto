@@ -8,10 +8,8 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    # Ruta sin categoría seleccionada (carga la primera categoría activa por defecto)
+    path('update_task_state/<int:task_id>/', update_task_state, name='update_task_state'),
     path('index/', kanban_board, name='kanban_board'), 
-
-    # Ruta con categoría seleccionada
     path('index/<int:categoria_id>/', kanban_board, name='kanban_board'),
 ]
 
