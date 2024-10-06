@@ -34,7 +34,7 @@ def home(request):
     publicacones_filtradas = []
     numero_comentarios = []
     for i in publicaciones:
-        #if i.estado == 'publicado': cuando don cristhian termine su parte
+        if i.estado == 'publicado':
             publicacones_filtradas.append(i)
 
     paginator = Paginator(publicacones_filtradas, 10)  # Muestra 10 publicaciones por página
