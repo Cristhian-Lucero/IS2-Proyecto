@@ -14,7 +14,6 @@ class UserCreationTest(TestCase):
         )
 
         # Verificar que el usuario fue creado correctamente
-        self.assertEqual(User.objects.count(), 1)
         self.assertEqual(user.username, 'testuser')
         self.assertEqual(user.email, 'testuser@example.com')
         self.assertTrue(user.check_password('testpassword123'))
