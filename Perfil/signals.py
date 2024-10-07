@@ -8,7 +8,7 @@ def create_user_profile(sender, instance, created, **kwargs):
     """
     Crea un perfil de Usuario asociado cada vez que se crea un nuevo User.
 
-    Args:
+    Attributes:
         sender (Model): La clase del modelo que envía la señal (User).
         instance (User): La instancia del modelo User que se ha guardado.
         created (bool): Indica si se ha creado una nueva instancia.
@@ -23,7 +23,7 @@ def save_user_profile(sender, instance, **kwargs):
     """
     Guarda el perfil de Usuario asociado cada vez que se guarda un User.
 
-    Args:
+    Attributes:
         sender (Model): La clase del modelo que envía la señal (User).
         instance (User): La instancia del modelo User que se ha guardado.
         **kwargs: Parámetros adicionales clave-valor.

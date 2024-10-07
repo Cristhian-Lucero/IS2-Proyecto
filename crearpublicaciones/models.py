@@ -10,15 +10,8 @@ from login.models import Categoria
 class Publicacion(models.Model):
     """
     Modelo que representa una publicación en el sistema.
-
-    Atributos:
-        titulo (CharField): El título de la publicación.
-        contenido_html (TextField): Contenido HTML completo generado por el editor Quill.
-        estado (CharField): Estado actual de la publicación.
-        user (ForeignKey): Relación con el modelo User, indicando el autor.
-        fecha_creacion (DateTimeField): Fecha y hora de creación de la publicación.
-        categoria (ForeignKey): Relación con el modelo Categoria.
     """
+    
     # Definición de estados posibles para la publicación
     ESTADO_CHOICES = [
         ('borrador', 'Borrador'),
@@ -43,11 +36,19 @@ class Publicacion(models.Model):
         db_table = 'publicacion'
 
 class Likes(models.Model):
+    """
+    Modelo que representa un 'me gusta' de un usuario a una publicación.
+    """
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE)
     
 
 class Comentario(models.Model):
+    """
+    Modelo que representa un comentario de un usuario en una publicación.
+    """
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField(auto_now_add=True)

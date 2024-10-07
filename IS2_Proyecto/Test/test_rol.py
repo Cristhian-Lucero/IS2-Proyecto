@@ -24,21 +24,3 @@ class RolTest(TestCase):
 
         assert rol.nombre == 'Nombre de prueba'
         assert rol.permisos.filter(nombre='permiso de prueba').exists()
-    @skip
-    def test_asignar_rol(self):
-        # Asignar rol a un usuario
-
-        usuario = User.objects.get(id=1)
-        rol = Rol.objects.get(id=1)
-        categoria = Categoria.objects.get(id=1)
-
-        # Crear la relación Usuario-Rol-Categoria
-        relacion = UsuarioRolCategoria.objects.create(
-            usuario=Usuario.objects.create(user=usuario),
-            rol=rol,
-            categoria=categoria
-        )
-        # Verificar que la relación se creó correctamente
-        self.assertEqual(relacion.usuario.user.username, 'superuser')
-        self.assertEqual(relacion.rol.nombre, 'Administrador')
-        self.assertEqual(relacion.categoria.descripcion_corta, 'Inteligencia Artificial')

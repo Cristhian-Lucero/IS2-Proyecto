@@ -15,6 +15,8 @@
     <script src="_static/translations.js?v=d190bf04"></script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="login.migrations package" href="login.migrations.html" />
+    <link rel="prev" title="crearpublicaciones.migrations package" href="crearpublicaciones.migrations.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -236,6 +238,21 @@ object the first time, the query is executed.</p>
 <dt class="sig sig-object py" id="login.models.Categoria.objects">
 <span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#login.models.Categoria.objects" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.models.Categoria.publicacion_set">
+<span class="sig-name descname"><span class="pre">publicacion_set</span></span><a class="headerlink" href="#login.models.Categoria.publicacion_set" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="login.models.Categoria.usuariorolcategoria_set">
@@ -488,6 +505,16 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <span class="sig-name descname"><span class="pre">rol_id</span></span><a class="headerlink" href="#login.models.UsuarioRolCategoria.rol_id" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="login.models.UsuarioRolCategoria.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.models.UsuarioRolCategoria.save" title="Link to this definition">¶</a></dt>
+<dd><p>Save the current instance. Override this in a subclass if you want to
+control the saving process.</p>
+<p>The “force_insert” and “force_update” parameters can be used to insist
+that the «save» must be an SQL insert or update (or equivalent for
+non-SQL backends), respectively. Normally, they should not be set.</p>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="login.models.UsuarioRolCategoria.usuario">
 <span class="sig-name descname"><span class="pre">usuario</span></span><a class="headerlink" href="#login.models.UsuarioRolCategoria.usuario" title="Link to this definition">¶</a></dt>
@@ -512,6 +539,11 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <section id="module-login.signals">
 <span id="login-signals-module"></span><h2>login.signals module<a class="headerlink" href="#module-login.signals" title="Link to this heading">¶</a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="login.signals.asignar_rol_a_usuarios">
+<span class="sig-prename descclassname"><span class="pre">login.signals.</span></span><span class="sig-name descname"><span class="pre">asignar_rol_a_usuarios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.signals.asignar_rol_a_usuarios" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="login.signals.asignar_rol_suscriptor">
 <span class="sig-prename descclassname"><span class="pre">login.signals.</span></span><span class="sig-name descname"><span class="pre">asignar_rol_suscriptor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.signals.asignar_rol_suscriptor" title="Link to this definition">¶</a></dt>
 <dd><p>Asigna el rol “Suscriptor” (con id=5) a todas las categorías cuando se crea un nuevo usuario.</p>
@@ -519,7 +551,7 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <dt>Argumentos:</dt><dd><p>sender (Model class): El modelo que envió la señal, en este caso, “Usuario”.
 instance (Usuario): La instancia del modelo “Usuario” que se acaba de crear.
 created (bool): Valor booleano que indica si la instancia fue creada (True) o actualizada (False).
-<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: Parámetros adicionales.</p>
+kwargs: Parámetros adicionales.</p>
 </dd>
 <dt>Retorna:</dt><dd><p>None: La función no retorna un valor, pero crea registros en la tabla “UsuarioRolCategoria”.</p>
 </dd>
@@ -682,6 +714,11 @@ HttpResponse: Renderiza la plantilla “rol/gestionRol.html” en caso de GET o 
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="login.views.publicacionCategoria">
+<span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">publicacionCategoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descripcion_corta</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.publicacionCategoria" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="login.views.rol">
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">rol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.rol" title="Link to this definition">¶</a></dt>
 <dd><p>Renderiza la página de gestión de roles. Requiere que el usuario haya iniciado sesión.</p>
@@ -693,10 +730,16 @@ HttpResponse: Renderiza la plantilla “rol/gestionRol.html” en caso de GET o 
 
 <dl class="py function">
 <dt class="sig sig-object py" id="login.views.seleccionar_plantilla">
-<span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">seleccionar_plantilla</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.seleccionar_plantilla" title="Link to this definition">¶</a></dt>
-<dd><p>Renderiza la página para seleccionar una plantilla de publicación.</p>
-<dl class="simple">
-<dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla “crearpublicaciones/templates/seleccionar_plantilla.html”.</p>
+<span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">seleccionar_plantilla</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoria_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.seleccionar_plantilla" title="Link to this definition">¶</a></dt>
+<dd><p>Vista para seleccionar una plantilla para la publicación.</p>
+<p>Muestra las opciones de plantillas disponibles para ser usadas
+en la creación de publicaciones.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Renderiza la página de selección de plantillas.</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-even"><p>HttpResponse</p>
 </dd>
 </dl>
 </dd></dl>
@@ -733,11 +776,30 @@ HttpResponse: Renderiza la plantilla “rol/gestionRol.html” en caso de GET o 
     </div>
 </search>
 <script>document.getElementById('searchbox').style.display = "block"</script><h3>Navegación</h3>
+<p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">IS2-Proyecto</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="IS2_Proyecto.html">IS2_Proyecto package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Perfil.html">Perfil package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crearpublicaciones.html">crearpublicaciones package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">login package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publicacion.html">publicacion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tablero.html">Tablero package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="login.templatetags.html">login.templatetags package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">IS2-Proyecto</a><ul>
+      <li>Previous: <a href="crearpublicaciones.migrations.html" title="capítulo anterior">crearpublicaciones.migrations package</a></li>
+      <li>Next: <a href="login.migrations.html" title="próximo capítulo">login.migrations package</a></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>

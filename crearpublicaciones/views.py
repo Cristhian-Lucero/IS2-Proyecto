@@ -32,6 +32,10 @@ def crear_publicacion(request, categoria_id):
     Luego, redirige a la página 'Mis Publicaciones'. Si es una solicitud GET,
     se muestra el formulario vacío para crear una nueva publicación.
 
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        categoria_id (int): ID de la categoría a la cual pertenece la publicación.
+
     Returns:
         HttpResponse: Renderiza la página de creación de publicaciones o
         redirige a 'mis_publicaciones' después de guardar.
@@ -59,6 +63,19 @@ def crear_publicacion(request, categoria_id):
 
 @login_required
 def previsualizar_publicacion(request, publicacion_id):
+    """
+    Vista para previsualizar una publicación existente.
+
+    Muestra la publicación y sus comentarios asociados, y permite saber si el usuario ha dado "Me gusta".
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        publicacion_id (int): ID de la publicación a previsualizar.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla de previsualización con la publicación y sus datos.
+    """
+    
     # Obtener la publicación por su ID
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
     comentarios = Comentario.objects.filter(publicacion=publicacion_id)
@@ -74,6 +91,17 @@ def previsualizar_publicacion(request, publicacion_id):
 
 @csrf_exempt
 def incrementar_vistas(request, publicacion_id):
+    """
+    Vista para incrementar el contador de vistas de una publicación.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        publicacion_id (int): ID de la publicación.
+
+    Returns:
+        JsonResponse: Respuesta en formato JSON con el resultado de la operación.
+    """
+
     if request.method == 'POST':
         try:
             publicacion = get_object_or_404(Publicacion, id=publicacion_id)
@@ -86,6 +114,19 @@ def incrementar_vistas(request, publicacion_id):
 
 @login_required
 def likear(request, publicacion_id):
+    """
+    Vista para dar "Me gusta" a una publicación.
+
+    Permite que el usuario autenticado agregue un "Me gusta" a la publicación especificada.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        publicacion_id (int): ID de la publicación.
+
+    Returns:
+        HttpResponse: Redirige a la previsualización de la publicación.
+    """
+
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
     if not verificar_permisos_categoria_id(request, ['interactuar publicaciones'], publicacion.categoria_id):
         return render(request, 'sin_permiso.html')
@@ -101,6 +142,19 @@ def likear(request, publicacion_id):
 
 @login_required
 def dislikear(request, publicacion_id):
+    """
+    Vista para quitar un "Me gusta" de una publicación.
+
+    Permite que el usuario autenticado quite un "Me gusta" de la publicación especificada.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        publicacion_id (int): ID de la publicación.
+
+    Returns:
+        HttpResponse: Redirige a la previsualización de la publicación.
+    """
+
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
     if not verificar_permisos_categoria_id(request, ['interactuar publicaciones'], publicacion.categoria_id):
         return render(request, 'sin_permiso.html')
@@ -113,7 +167,7 @@ def dislikear(request, publicacion_id):
         publicacion.me_gustas -= 1
         publicacion.save()
     return redirect('previsualizar_publicacion', publicacion_id=publicacion_id)
-        
+
 @login_required
 def mis_publicaciones(request):
     """
@@ -121,6 +175,9 @@ def mis_publicaciones(request):
 
     Recupera todas las publicaciones creadas por el usuario actual y las muestra
     en la página 'Mis Publicaciones'.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
 
     Returns:
         HttpResponse: Renderiza la página 'Mis Publicaciones' con todas las publicaciones del usuario.
@@ -131,9 +188,23 @@ def mis_publicaciones(request):
 
 @login_required
 def gestionPublicacionOtros(request, categoria_id):
+    """
+    Vista para gestionar las publicaciones de otros usuarios dentro de una categoría.
+
+    Permite al usuario autenticado visualizar todas las publicaciones en una categoría
+    específica si tiene los permisos adecuados.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        categoria_id (int): ID de la categoría.
+
+    Returns:
+        HttpResponse: Renderiza la página de gestión de publicaciones de terceros.
+    """
+
     if not verificar_permisos_categoria_id(request, ['gestionar contenido otros'], categoria_id):
         return render(request, 'sin_permiso.html')
-    
+
     publicaciones_gestionables = Publicacion.objects.filter(categoria=categoria_id)
 
     return render(request, 'GestionPublicaciones3ros.html', {
@@ -144,7 +215,7 @@ def gestionPublicacionOtros(request, categoria_id):
 def parse_content(html_content):
     soup = BeautifulSoup(html_content, 'html.parser')
     blocks = []
-    
+
     for element in soup.contents:
         if element.name == 'p':
             blocks.append({'type': 'paragraph', 'content': element.text})
@@ -165,6 +236,20 @@ def parse_content(html_content):
 
 @login_required
 def modificar_publicacion(request, publicacion_id):
+    """
+    Vista para modificar una publicación existente.
+
+    Permite editar el título y contenido de una publicación. Muestra el formulario con
+    el contenido existente si la solicitud es GET, y guarda los cambios si es POST.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        publicacion_id (int): ID de la publicación a modificar.
+
+    Returns:
+        HttpResponse: Renderiza la página de modificación o devuelve un JsonResponse con el estado.
+    """
+
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
 
     if not verificar_permisos_categoria_id(request, ['crear contenido'], publicacion.categoria_id):
@@ -234,7 +319,8 @@ def eliminar_publicacion(request, publicacion_id):
     Busca una publicación por su ID y la elimina si la solicitud es POST.
     Luego, redirige a 'Mis Publicaciones'.
 
-    Argumentos:
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
         publicacion_id (int): ID de la publicación que se desea eliminar.
 
     Returns:
@@ -257,7 +343,8 @@ def eliminar_publicacion_otros(request, publicacion_id):
     Busca una publicación por su ID y la elimina si la solicitud es POST.
     Luego, redirige a 'Gestion de publicaciones'.
 
-    Argumentos:
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
         publicacion_id (int): ID de la publicación que se desea eliminar.
 
     Returns:
@@ -281,6 +368,10 @@ def seleccionar_plantilla(request, categoria_id):
     Muestra las opciones de plantillas disponibles para ser usadas
     en la creación de publicaciones.
 
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        categoria_id (int): ID de la categoría de la publicación.
+
     Returns:
         HttpResponse: Renderiza la página de selección de plantillas.
     """
@@ -295,6 +386,19 @@ def seleccionar_plantilla(request, categoria_id):
 
 @login_required
 def personalizable(request, categoria_id):
+    """
+    Vista para crear una nueva publicación en modo borrador o reutilizar una existente.
+
+    Permite al usuario personalizar una publicación existente o crear una nueva en modo borrador.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        categoria_id (int): ID de la categoría a la que pertenece la publicación.
+
+    Returns:
+        HttpResponse: Renderiza la página de personalización de publicaciones.
+    """
+
     # Obtener la categoría
     categoria = get_object_or_404(Categoria, id=categoria_id)
 
@@ -321,6 +425,19 @@ def personalizable(request, categoria_id):
 
 @login_required
 def guardar_publicacion_ajax(request, publicacion_id):
+    """
+    Vista para guardar una publicación mediante una solicitud AJAX.
+
+    Permite actualizar el título y contenido de una publicación utilizando una solicitud POST.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        publicacion_id (int): ID de la publicación a guardar.
+
+    Returns:
+        JsonResponse: Respuesta en formato JSON con el estado de la operación.
+    """
+
     if request.method == 'POST':
         publicacion = get_object_or_404(Publicacion, id=publicacion_id)
         data = json.loads(request.body)
@@ -332,6 +449,19 @@ def guardar_publicacion_ajax(request, publicacion_id):
 
 @login_required
 def comentario(request, publicacion_id):
+    """
+    Vista para agregar un comentario a una publicación.
+
+    Permite al usuario autenticado agregar un comentario a la publicación especificada.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        publicacion_id (int): ID de la publicación a comentar.
+
+    Returns:
+        HttpResponse: Renderiza la página de comentarios o redirige tras agregar el comentario.
+    """
+
     # Obtener la publicación en base al id
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
     if not verificar_permisos_categoria_id(request, ['interactuar publicaciones'], publicacion.categoria_id):
@@ -358,6 +488,19 @@ def comentario(request, publicacion_id):
 
 @login_required
 def eliminar_comentario(request, comentario_id):
+    """
+    Vista para eliminar un comentario de una publicación.
+
+    Permite al usuario autenticado eliminar su propio comentario o un comentario de terceros si tiene permisos.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        comentario_id (int): ID del comentario a eliminar.
+
+    Returns:
+        HttpResponse: Redirige a la previsualización de la publicación tras eliminar el comentario.
+    """
+
     comentario = get_object_or_404(Comentario, id=comentario_id)
 
     publicacion = get_object_or_404(Publicacion, id=comentario.publicacion_id)
@@ -371,6 +514,19 @@ def eliminar_comentario(request, comentario_id):
     
 @csrf_exempt
 def modificar_publicacion_ajax(request, id):
+    """
+    Vista para modificar una publicación existente mediante una solicitud AJAX.
+
+    Permite actualizar el título, contenido y categoría de una publicación.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        id (int): ID de la publicación a modificar.
+
+    Returns:
+        JsonResponse: Respuesta en formato JSON con el estado de la operación.
+    """
+
     if request.method == 'POST':
         try:
             data = json.loads(request.body)

@@ -10,3 +10,6 @@ IS2-Proyecto
    login
    manage
    publicacion
+   Tablero
+   login.templatetags
+   utils

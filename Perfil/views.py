@@ -16,7 +16,7 @@ class PerfilDetailView(LoginRequiredMixin, DetailView):
     """
     Vista basada en clases para mostrar el perfil del usuario autenticado.
 
-    Atributos:
+    Attributes:
         model (Model): Modelo que representa el perfil de usuario (Usuario).
         template_name (str): Plantilla que se usará para renderizar la vista.
         context_object_name (str): Nombre con el que se accederá al objeto en la plantilla.

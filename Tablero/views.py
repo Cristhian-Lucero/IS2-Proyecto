@@ -9,6 +9,16 @@ from login.utils import *
 
 @login_required
 def kanban_board(request, categoria_id=None):
+    """
+    View para mostrar el tablero Kanban con publicaciones organizadas por estado.
+
+    Args:
+        request (HttpRequest): El objeto de solicitud HTTP.
+        categoria_id (int, opcional): El ID de la categoría seleccionada. Si no se proporciona, se selecciona la primera categoría activa.
+
+    Returns:
+        HttpResponse: Renderiza la plantilla 'index.html' con el contexto que incluye las publicaciones en diferentes estados y las categorías activas.
+    """
 
     if not verificar_permisos_categoria_id(request, ['rechazar contenido', 'publicar contenido', 'cambiar estado publicacion'], categoria_id):
         return render(request, 'sin_permiso.html')
@@ -63,6 +73,17 @@ def kanban_board(request, categoria_id=None):
 @csrf_exempt  # Decorador para eximir esta vista de la protección CSRF
 @login_required
 def update_task_state(request, task_id):
+    """
+    View para actualizar el estado de una publicación.
+
+    Args:
+        request (HttpRequest): El objeto de solicitud HTTP.
+        task_id (int): El ID de la publicación a actualizar.
+
+    Returns:
+        JsonResponse: Respuesta JSON indicando el éxito o error de la operación.
+    """
+
     if request.method == 'POST':
         try:
             # Obtener el nuevo estado desde el cuerpo de la solicitud
