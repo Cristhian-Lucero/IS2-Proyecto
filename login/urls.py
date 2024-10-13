@@ -30,6 +30,7 @@ urlpatterns = [
     path('seleccionar-plantilla/<int:categoria_id>/', seleccionar_plantilla, name='seleccionar_plantilla'),
 
     path('ajustes/', ajustes, name='ajustes'),
+    path('perfil/<str:username>/', perfil, name='perfil'),
 
 ]
 

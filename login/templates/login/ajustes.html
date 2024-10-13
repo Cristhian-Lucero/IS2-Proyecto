@@ -124,8 +124,14 @@
                 <label for="apellido">Apellido</label>
                 <input type="text" id="apellido" name="apellido" value="{{ request.user.last_name }}">
             </div>
-            <label for="foto">Foto de Perfil</label>
-            <input type="file" id="foto" name="foto">
+            
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}  <!-- Esto generará los campos de tu formulario, incluido el de imagen -->
+                <button type="submit">Guardar cambios</button>
+            </form>
+            
+
             <button class="submit-btn">GUARDAR</button>
         </div>
         

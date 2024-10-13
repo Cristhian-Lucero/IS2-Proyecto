@@ -34,3 +34,4 @@ class PerfilDetailView(LoginRequiredMixin, DetailView):
         return get_object_or_404(Usuario, user=self.request.user)
 
 # Create your views here.
+

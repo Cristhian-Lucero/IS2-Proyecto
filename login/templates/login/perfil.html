@@ -1,0 +1,135 @@
+{% extends 'encabezado.html' %}
+
+{% block content%}
+<head>
+    <title>Perfil de Usuario</title>
+    <style>
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #171717;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .profile-header {
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .profile-name {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        .profile-bio {
+            margin-bottom: 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            width: 60%;
+            margin-bottom: 20px;
+        }
+
+        .stats div {
+            text-align: center;
+        }
+
+        .stats div p {
+            margin: 5px 0;
+            font-size: 1.2em;
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .report {
+            position: relative;  /* Posicionamiento relativo para que la fecha pueda estar en la parte inferior */
+            background-color: #171717;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            aspect-ratio: 1 / 1;  /* Mantener el div cuadrado */
+            overflow: hidden;     /* Asegura que el contenido no se salga */
+        }
+
+        .report-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .report-text {
+            font-size: 1em;
+        }
+
+        .report-date {
+            position: absolute;
+            bottom: 10px;  /* Alinea la fecha en la parte inferior */
+            left: 20px;
+            font-size: 12px;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Perfil del usuario -->
+    <div class="profile-container">
+        <div class="profile-header">
+            {% if usuario_extra.logo %}
+                <img src="{{ user.perfil.logo.url }}" alt="Foto de perfil" class="profile-pic">
+            {% else %}
+                <img src="/media/imagenes/sin_perfil.png" alt="Foto de perfil" class="profile-pic">
+            {% endif %}
+            <div class="profile-name">@{{usuario.username}}</div>
+            <div class="profile-bio">{{ usuario_extra.descripcion }}</div>
+        </div>
+
+        <!-- Estadísticas del perfil -->
+        <div class="stats">
+            <div>
+                <p>{{ publicaciones|length }}</p>
+                <span>Publicaciones</span>
+            </div>
+            <div>
+                <p>{{ vistas }}</p>
+                <span>Vistas</span>
+            </div>
+            <div>
+                <p>{{ likes }}</p>
+                <span>Likes</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Publicaciones tipo informe -->
+    <div class="report-grid">
+        {% for i in publicaciones %}
+        <div class="report">
+            <div class="report-title">{{ i.titulo }}</div>
+            <div class="report-text"> <strong>{{ i.categoria }}</strong></div>
+            <div class="report-text">{{ i.contenido_html|slice:":255"|safe }}...</div>
+            <a href="{% url 'previsualizar_publicacion' i.id %}"> Leer más</a>
+            <div class="report-date" style="font-size: 12px;">Publicado: {{ i.fecha_creacion }}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

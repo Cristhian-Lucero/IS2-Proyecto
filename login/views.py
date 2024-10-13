@@ -6,19 +6,23 @@ con la autenticación y administración de usuarios.
 """
 
 from django.http import HttpResponse, HttpResponseForbidden
-from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
+from .models import *
 from .forms import *
 from crearpublicaciones.models import Comentario
-from Perfil.models import Usuario
-from django.core.paginator import Paginator
-
-from django.contrib.auth.decorators import login_required #para redirigir a login obligandolo a logearse
-from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required 
 from crearpublicaciones.models import Publicacion
+from Perfil.models import *
+from Perfil.forms import *
+
+from django.core.paginator import Paginator
+from django.urls import reverse
+from django.contrib.auth import logout
 
 from utils.decorators import check_permiso_categoria
 from .utils import *
+from django.contrib.auth.models import User
+
 
 @login_required
 def home(request):
@@ -386,4 +390,41 @@ def seleccionar_plantilla(request, categoria_id):
 
 @login_required
 def ajustes(request):
-    return render(request, 'login/ajustes.html')
+    perfil = request.user
+    if request.method == 'POST':
+        # Pasamos los archivos subidos (FILES) y los datos del formulario (POST)
+        form = PerfilForm(request.POST, request.FILES, instance=perfil)
+        
+        if form.is_valid():
+            form.save() 
+            return redirect(reverse('perfil', kwargs={'username': request.user.username}))  # Redirige al perfil después de guardar
+
+    else:
+        
+        form = PerfilForm(instance=perfil)
+
+    return render(request, 'login/ajustes.html', {'form': form})
+
+
+@login_required
+def perfil(request, username):
+    usuario = User.objects.get(username=username)
+    publicacion_usuario = Publicacion.objects.filter(user=usuario)
+    usuario_datos_extra = Usuario.objects.get(user_id=usuario.id)
+
+    likes = 0
+    vistas = 0
+    publicacion_usuario_filtrado = []
+    for i in publicacion_usuario:
+        if i.estado == "publicado":
+            likes += i.me_gustas
+            vistas += i.vistas
+            publicacion_usuario_filtrado.append(i)
+    
+    return render(request, 'login/perfil.html', {
+        'usuario': usuario,
+        'publicaciones': publicacion_usuario_filtrado,
+        'usuario_extra': usuario_datos_extra,
+        'likes': likes,
+        'vistas': vistas
+    })
