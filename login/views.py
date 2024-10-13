@@ -383,3 +383,7 @@ def seleccionar_plantilla(request, categoria_id):
     return render(request, 'seleccionar_plantilla.html', {
         'categoria_id': categoria_id
     })
+
+@login_required
+def ajustes(request):
+    return render(request, 'login/ajustes.html')

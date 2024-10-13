@@ -1,0 +1,173 @@
+{% extends 'encabezado.html' %}
+
+{% block content%}
+<head>
+    <title>Configuración de Perfil</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+        .container {
+            margin: 0 auto;
+            display: flex;
+            width: 70%;
+            background-color: #27272a;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+        }
+        .sidebar {
+            width: 30%;
+            background-color: #151519;
+            padding: 40px;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.1em;
+        }
+        .main-content {
+            width: 70%;
+            padding: 40px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        .form-section {
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="password"], input[type="file"], input[type="email"]  {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: none;
+            background-color: #3a3a3f;
+            color: #fff;
+        }
+        input[type="file"] {
+            color: #fff;
+        }
+        .form-section .half-input {
+            display: inline-block;
+            width: 48%;
+            margin-right: 2%;
+        }
+        .half-input:last-child {
+            margin-right: 0;
+        }
+        .submit-btn {
+            background-color: #4571E4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .btn-delete {
+            background-color: #D24330;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .submit-btn:hover {
+            filter: brightness(1.2)
+        }
+    </style>
+</head>
+<body>
+
+<h1>MI CUENTA</h1>
+<div class="container">
+    <div class="sidebar">
+        <ul>
+            <li><a href="#Personal">PERSONAL</a></li>
+            <li><a href="#Seguridad">SEGURIDAD</a></li>
+            <li><a href="#Notificacion">NOTIFICACIÓN</a></li>
+            <li><a href="#Sesion">CERRAR SESIÓN</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        
+        <!-- Detalles personales -->
+        <div class="form-section">
+            <h2 id="Personal">DETALLES PERSONALES</h2>
+            <div class="half-input">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" value="{{ request.user.first_name }}">
+            </div>
+            <div class="half-input">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" value="{{ request.user.last_name }}">
+            </div>
+            <label for="pais">País</label>
+            <input type="text" id="pais" name="pais">
+            <label for="foto">Foto de Perfil</label>
+            <input type="file" id="foto" name="foto">
+            <button class="submit-btn">GUARDAR</button>
+        </div>
+        
+        <!-- Seguridad -->
+        <div class="form-section">
+            <h2 id="Seguridad">SEGURIDAD</h2>
+            <label for="contraseña-actual">Contraseña Actual</label>
+            <input type="password" id="contraseña-actual" name="contraseña-actual">
+            
+            <label for="contraseña-nueva">Contraseña Nueva</label>
+            <input type="password" id="contraseña-nueva" name="contraseña-nueva">
+            
+            <label for="confirmar-contraseña">Confirmar Contraseña Nueva</label>
+            <input type="password" id="confirmar-contraseña" name="confirmar-contraseña">
+            
+            <button class="submit-btn">GUARDAR</button>
+        </div>
+
+        <!-- Notificacion -->
+        <div class="form-section">
+            <h2 id="Notificacion">Notificación</h2>
+            <label for="email-nuevo">Email nuevo</label>
+            <input type="email" id="email-nuevo" name="email-nuevo" value="{{ request.user.email }}">
+            
+            <label for="email-nuevo">Repetir Email</label>
+            <input type="email" id="email-nuevo" name="email-nuevo">
+            
+            <label for="confirmar-contraseña">Codigo de confirmación</label>
+            <input type="text" id="codigo-confirmacion" name="codigo-confirmacion">
+            
+            <button class="submit-btn">GUARDAR</button>
+        </div>
+
+        <!-- Cerrar sesion -->
+         <div class="form-section">
+            <h2 id="Sesion">Sesión</h2>
+            <a class="btn-delete" href="{% url 'exit' %}">CERRAR SESION</a>
+            <a class="btn-delete" href="{% url 'exit' %}">ELIMINAR CUENTA</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

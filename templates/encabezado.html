@@ -254,7 +254,7 @@
             width: 100%; /* Ajustar al tamaño del contenedor */
             height: 150px; /* Altura del textarea */
         }
-        input[type="text"], select {
+        input[type="text"],  input[type="email"], select {
             
             padding: 8px;
             box-sizing: border-box;
@@ -368,14 +368,14 @@
                 </li>
 
                 <li class="dropdown"> <!-- MI CUENTA -->
-                    <a href="#">MI CUENTA</a>
+                    <a href="/ajustes">MI CUENTA</a>
                     <!-- Menú desplegable -->
                     <ul class="dropdown-menu">
-                        <li><a style="text-transform: uppercase;" href="#">{{userlogeado}}</a></li>
+                        <li><a style="text-transform: uppercase;" href="/ajustes">{{userlogeado}}</a></li>
                         <hr style="border: .5px solid #606368;">
-                        <li><a href="#">PERSONAL</a></li>
-                        <li><a href="#">SEGURIDAD</a></li>
-                        <li><a href="#">NOTIFICACION</a></li>
+                        <li><a href="/ajustes/#Personal">PERSONAL</a></li>
+                        <li><a href="/ajustes/#Seguridad">SEGURIDAD</a></li>
+                        <li><a href="/ajustes/#Notificacion">NOTIFICACION</a></li>
                         <li><a href="{% url 'exit' %}">CERRAR SESION</a></li> 
                     </ul>
                 </li>
