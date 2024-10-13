@@ -336,7 +336,7 @@
 
                         {% if 'rechazar contenido' in permisos_usuario %}
                             <li class="dropdown-submenu">
-                                <a style="text-transform: uppercase;" href="{% url 'kanban_board' %}">>REVISIONES</a>
+                                <a style="text-transform: uppercase;" href="#">>REVISIONES</a>
                                 <ul class="dropdown-menu">
                                     {% for i in categorias %}
                                         {% if i.estado == 'Activo' and 'rechazar contenido' in permisos_categoria|get_item:i.id %}
