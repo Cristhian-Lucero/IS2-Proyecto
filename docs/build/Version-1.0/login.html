@@ -566,11 +566,6 @@ form (Form): Instancia del formulario para crear un nuevo rol.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="login.views.confirmarPermiso">
-<span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">confirmarPermiso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permisos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoria_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.confirmarPermiso" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="login.views.editarCategoria">
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">editarCategoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoria_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.editarCategoria" title="Link to this definition">¶</a></dt>
 <dd><p>Permite editar una categoría existente.</p>
@@ -645,7 +640,14 @@ No se eliminan los roles con ID menores o iguales a 5, ya que son fundamentales 
 <dl class="py function">
 <dt class="sig sig-object py" id="login.views.gestionarRol">
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">gestionarRol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.gestionarRol" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Renderiza la página de gestión de roles con la lista de categorías y roles.
+Maneja solicitudes POST para actualizar el rol de un usuario en una categoría.</p>
+<dl class="simple">
+<dt>Retorna:</dt><dd><p>HttpResponseRedirect: Redirige a “gestionrol” después de procesar la solicitud.
+HttpResponse: Renderiza la plantilla “rol/gestionRol.html” en caso de GET o error.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="login.views.home">
