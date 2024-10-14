@@ -196,43 +196,70 @@
     </div>
 
     <br><br><br>
-    {% for i in publicaciones %}
+    {% for i in page_obj %}
         {% if i.categoria.estado == 'Activo' %}
             <div class="article-container" style="text-align: justify;">
-                <img src="{{ i.imagen1.url }}"  alt="Perfil">
-                <div class="article-content">
+                <div class="article-content" style="width: 100%;">
                     <h2 style="text-transform: uppercase;" class="article-title">{{ i.titulo }}</h2>
                     <div class="category"> <a style="text-transform: uppercase;" href="{% url 'categoria' i.categoria.descripcion_corta %}">{{ i.categoria.descripcion_corta }}</a> </div>
                     <div class="description">
-                        {{ i.texto_corto }} 
+                        <a href="/perfil/{{i.user }}"><h3>Autor: {{ i.user }}</h3></a>
+                        {{ i.contenido_html|slice:":255"|safe }}...
                     </div>
                     <a class="read-more" href="{% url 'previsualizar_publicacion' i.id %}">LEER MÁS</a>
+                    <p style="text-align: right;"><strong>Visualizaciones:</strong> {{ i.vistas }} | <strong>Likes: </strong>{{ i.me_gustas }}</p>
                 </div>
             </div>
         {% endif %}
     {% endfor %}
+
+    <div class="pagination" style="text-align: center;">
+        <span>
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        <div>
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; Primera</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <strong>{{ num }}</strong>
+                {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+                    <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
 
     <script>
         document.getElementById('search-button').addEventListener('click', function() {
             const filterOptions = document.getElementById('filter-options');
             filterOptions.classList.toggle('active');
         });
-
+    
         function removeFilter(filterId) {
             document.getElementById(filterId).value = "";
             updateSelectedFilters();
         }
-
+    
         function updateSelectedFilters() {
             const keyword = document.getElementById('keyword').value;
             const categoria = document.getElementById('categoria').value;
             const estado = document.getElementById('estado').value;
             const fecha = document.getElementById('fecha').value;
             const autor = document.getElementById('autor').value;
-
+    
             const filterSummary = document.getElementById('filter-summary');
             filterSummary.innerHTML = ''; // Limpia el contenido actual
-
+    
             if (keyword || categoria || estado || fecha || autor) {
                 if (keyword) filterSummary.innerHTML += `<span class="filter-tag">Palabra clave: ${keyword} <span class="remove-filter" onclick="removeFilter('keyword')">x</span></span>`;
                 if (categoria) filterSummary.innerHTML += `<span class="filter-tag">Categoría: ${categoria} <span class="remove-filter" onclick="removeFilter('categoria')">x</span></span>`;
@@ -247,11 +274,13 @@
                 filterSummary.innerHTML = '<span id="no-filters">Ningún filtro seleccionado</span>';
             }
         }
-
+    
         document.querySelectorAll('#search-filters input, #search-filters select').forEach(item => {
             item.addEventListener('input', updateSelectedFilters);
         });
-
+    
     </script>
+
 </body>
+
 {% endblock %}

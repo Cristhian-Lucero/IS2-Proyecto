@@ -8,7 +8,7 @@ class Usuario(models.Model):
     Este modelo utiliza una relación Uno a Uno con el modelo `User` de Django para almacenar
     información adicional sobre el usuario, como su logo, descripción y estado.
 
-    Atributos:
+    Attributes:
         user (OneToOneField): Relación uno a uno con el modelo `User`. Indica el usuario asociado.
             `on_delete=models.CASCADE` asegura que cuando se elimine el usuario estándar, también
             se eliminará la instancia asociada de `Usuario`.
@@ -19,7 +19,7 @@ class Usuario(models.Model):
         estadoUsuario (CharField): Campo opcional para indicar el estado del usuario.
             Máximo 50 caracteres. Permite valores nulos y en blanco.
 
-    Métodos:
+    Methods:
         __str__(): Retorna el nombre de usuario (`username`) del usuario asociado.
     """
 

@@ -1,0 +1,107 @@
+{% extends 'encabezado.html' %}
+{% block content %}
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tablero Kanban</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <style>
+      *{
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      .lanes {
+        width: 100%;
+        text-align: center;
+        text-align-last: center;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .swim-lane {
+        flex: 1;
+        margin: 10px;
+        padding: 10px;
+        box-sizing: border-box; 
+        background-color: #202124;
+      }
+
+      .heading {
+        text-align: center;
+      }
+
+      .task {
+        color: #FFFFFF;
+        padding: 8px;
+        margin: 5px 0;
+        border-radius: 5px;
+        background-color: #171717;
+        cursor: move;
+      }
+
+      .task:hover{
+        filter: brightness(0.9)
+      }
+
+      .board{
+        border-radius: 15px;
+      }
+
+      .category-title {
+        text-align: center;
+        font-size: 24px;
+        color: #FFFFFF;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <br>
+    <div class="board">
+      <!-- Mostrar el nombre de la categoría activa -->
+      <h2 class="category-title">Categoría: {{ categoria.descripcion_corta }}</h2>
+      
+      <div class="lanes">
+        <!-- Borrador -->
+        <div class="swim-lane" id="todo-lane" data-state="borrador">
+          <h3 class="heading">Borrador</h3>
+          {% for publicacion in borrador %}
+            <p class="task" draggable="true" data-id="{{ publicacion.id }}">{{ publicacion.titulo }}</p>
+          {% endfor %}
+        </div>
+
+        <!-- Revisión -->
+        <div class="swim-lane" data-state="revision">
+          <h3 class="heading">Revisión</h3>
+          {% for publicacion in revision %}
+            <p class="task" draggable="true" data-id="{{ publicacion.id }}">{{ publicacion.titulo }}</p>
+          {% endfor %}
+        </div>
+
+        <!-- Publicado -->
+        <div class="swim-lane" data-state="publicado">
+          <h3 class="heading">Publicado</h3>
+          {% for publicacion in publicado %}
+            <p class="task" draggable="true" data-id="{{ publicacion.id }}">{{ publicacion.titulo }}</p>
+          {% endfor %}
+        </div>
+
+        <!-- Rechazado -->
+        <div class="swim-lane" data-state="rechazado">
+          <h3 class="heading">Rechazado</h3>
+          {% for publicacion in rechazado %}
+            <p class="task" draggable="true" data-id="{{ publicacion.id }}">{{ publicacion.titulo }}</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'drag.js' %}"></script>
+    <script src="{% static 'todo.js' %}"></script>
+  </body>
+</html>
+{% endblock %}

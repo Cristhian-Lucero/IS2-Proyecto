@@ -254,7 +254,7 @@
             width: 100%; /* Ajustar al tamaño del contenedor */
             height: 150px; /* Altura del textarea */
         }
-        input[type="text"], select {
+        input[type="text"],  input[type="email"], select {
             
             padding: 8px;
             box-sizing: border-box;
@@ -340,7 +340,7 @@
                                 <ul class="dropdown-menu">
                                     {% for i in categorias %}
                                         {% if i.estado == 'Activo' and 'rechazar contenido' in permisos_categoria|get_item:i.id %}
-                                            <li><a href="#">{{ i.descripcion_corta }}</a></li>
+                                            <li><a href="{% url 'kanban_board' i.id %}">{{ i.descripcion_corta }}</a></li>
                                         {% endif %}
                                     {% endfor %}
                                 </ul>
@@ -369,14 +369,14 @@
                 </li>
 
                 <li class="dropdown"> <!-- MI CUENTA -->
-                    <a href="#">MI CUENTA</a>
+                    <a href="/ajustes">MI CUENTA</a>
                     <!-- Menú desplegable -->
                     <ul class="dropdown-menu">
-                        <li><a style="text-transform: uppercase;" href="#">{{userlogeado}}</a></li>
+                        <li><a style="text-transform: uppercase;" href="/perfil/{{request.user.username}}">{{userlogeado}}</a></li>
                         <hr style="border: .5px solid #606368;">
-                        <li><a href="#">PERSONAL</a></li>
-                        <li><a href="#">SEGURIDAD</a></li>
-                        <li><a href="#">NOTIFICACION</a></li>
+                        <li><a href="/ajustes/#Personal">PERSONAL</a></li>
+                        <li><a href="/ajustes/#Seguridad">SEGURIDAD</a></li>
+                        <li><a href="/ajustes/#Notificacion">NOTIFICACION</a></li>
                         <li><a href="{% url 'exit' %}">CERRAR SESION</a></li> 
                     </ul>
                 </li>
@@ -385,7 +385,7 @@
         </nav>
     </header>
 
-    <div style='min-height: 48vh;' class="contenido_principal">
+    <div style='min-height: 48vh; margin-inline: 3%;' class="contenido_principal">
     {% block content %}
     <!-- El contenido específico de cada página se insertará aquí -->
     {% endblock %}
@@ -410,10 +410,10 @@
             <div class="footer-right">
                 <h4>Síguenos</h4>
                 <ul class="social-icons">
-                    <li><a href="#"><img src="icon-facebook.png" alt="Facebook"></a></li>
-                    <li><a href="#"><img src="icon-twitter.png" alt="Twitter"></a></li>
-                    <li><a href="#"><img src="icon-instagram.png" alt="Instagram"></a></li>
-                    <li><a href="#"><img src="icon-linkedin.png" alt="LinkedIn"></a></li>
+                    <li><a href="#">FB</a></li>
+                    <li><a href="#">TW</a></li>
+                    <li><a href="#">IG</a></li>
+                    <li><a href="#">LI</a></li>
                 </ul>
             </div>
         </div>

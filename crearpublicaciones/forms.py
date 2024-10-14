@@ -3,7 +3,7 @@ Formularios para el modelo 'crearpublicaciones'.
 """
 
 from django import forms
-from .models import Publicacion
+from .models import Publicacion, Comentario
 
 class PublicacionForm(forms.ModelForm):
     """Este formulario utiliza 'ModelForm' para facilitar la creación y validación
@@ -17,18 +17,9 @@ class PublicacionForm(forms.ModelForm):
 
     class Meta:
         model = Publicacion
-        fields = ['titulo', 'texto_corto', 'texto_largo', 'cita', 'imagen1', 'imagen2']
+        fields = ['titulo', 'contenido_html', 'estado', 'categoria']  
 
-    def clean(self):
-        cleaned_data = super().clean()
-
-        # Verificar que solo se suban hasta dos imágenes
-        imagen1 = cleaned_data.get("imagen1")
-        imagen2 = cleaned_data.get("imagen2")
-
-        if not imagen1 and not imagen2:
-            raise forms.ValidationError("Debes subir al menos una imagen.")
-
-        texto_corto = cleaned_data.get("texto_corto")
-        if len(texto_corto) > 150:
-            self.add_error('texto_corto', 'El texto corto no puede tener más de 150 caracteres.')
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['descripcion']  # Campos del formulario que vas a incluir

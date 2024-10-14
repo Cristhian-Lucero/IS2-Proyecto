@@ -95,22 +95,61 @@ para que pueda ser gestionado a través de la interfaz de administrador.</p>
 <p>Modelo que extiende el modelo de usuario estándar de Django para añadir información adicional.</p>
 <p>Este modelo utiliza una relación Uno a Uno con el modelo <cite>User</cite> de Django para almacenar
 información adicional sobre el usuario, como su logo, descripción y estado.</p>
-<dl class="simple">
-<dt>Atributos:</dt><dd><dl class="simple">
-<dt>user (OneToOneField): Relación uno a uno con el modelo <cite>User</cite>. Indica el usuario asociado.</dt><dd><p><cite>on_delete=models.CASCADE</cite> asegura que cuando se elimine el usuario estándar, también
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Perfil.models.Usuario.user">
+<span class="sig-name descname"><span class="pre">user</span></span><a class="headerlink" href="#Perfil.models.Usuario.user" title="Link to this definition">¶</a></dt>
+<dd><p>Relación uno a uno con el modelo <cite>User</cite>. Indica el usuario asociado.
+<cite>on_delete=models.CASCADE</cite> asegura que cuando se elimine el usuario estándar, también
 se eliminará la instancia asociada de <cite>Usuario</cite>.</p>
-</dd>
-<dt>logo (ImageField): Campo opcional para almacenar una imagen de logo asociada al usuario.</dt><dd><p>Las imágenes se subirán al directorio <cite>media/logos/</cite>. Permite valores nulos y en blanco.</p>
-</dd>
-<dt>descripcion (TextField): Campo opcional para almacenar una descripción del usuario.</dt><dd><p>Permite valores nulos y en blanco.</p>
-</dd>
-<dt>estadoUsuario (CharField): Campo opcional para indicar el estado del usuario.</dt><dd><p>Máximo 50 caracteres. Permite valores nulos y en blanco.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>OneToOneField</p>
 </dd>
 </dl>
-</dd>
-<dt>Métodos:</dt><dd><p>__str__(): Retorna el nombre de usuario (<cite>username</cite>) del usuario asociado.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Perfil.models.Usuario.logo">
+<span class="sig-name descname"><span class="pre">logo</span></span><a class="headerlink" href="#Perfil.models.Usuario.logo" title="Link to this definition">¶</a></dt>
+<dd><p>Campo opcional para almacenar una imagen de logo asociada al usuario.
+Las imágenes se subirán al directorio <cite>media/logos/</cite>. Permite valores nulos y en blanco.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ImageField</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Perfil.models.Usuario.descripcion">
+<span class="sig-name descname"><span class="pre">descripcion</span></span><a class="headerlink" href="#Perfil.models.Usuario.descripcion" title="Link to this definition">¶</a></dt>
+<dd><p>Campo opcional para almacenar una descripción del usuario.
+Permite valores nulos y en blanco.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>TextField</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Perfil.models.Usuario.estadoUsuario">
+<span class="sig-name descname"><span class="pre">estadoUsuario</span></span><a class="headerlink" href="#Perfil.models.Usuario.estadoUsuario" title="Link to this definition">¶</a></dt>
+<dd><p>Campo opcional para indicar el estado del usuario.
+Máximo 50 caracteres. Permite valores nulos y en blanco.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CharField</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Perfil.models.Usuario.__str__">
+<span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Perfil.models.Usuario.__str__" title="Link to this definition">¶</a></dt>
+<dd><p>Retorna el nombre de usuario (<cite>username</cite>) del usuario asociado.</p>
+</dd></dl>
+
 <dl class="py exception">
 <dt class="sig sig-object py" id="Perfil.models.Usuario.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#Perfil.models.Usuario.DoesNotExist" title="Link to this definition">¶</a></dt>
@@ -124,15 +163,15 @@ se eliminará la instancia asociada de <cite>Usuario</cite>.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="Perfil.models.Usuario.descripcion">
-<span class="sig-name descname"><span class="pre">descripcion</span></span><a class="headerlink" href="#Perfil.models.Usuario.descripcion" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">descripcion</span></span><a class="headerlink" href="#id0" title="Link to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="Perfil.models.Usuario.estadoUsuario">
-<span class="sig-name descname"><span class="pre">estadoUsuario</span></span><a class="headerlink" href="#Perfil.models.Usuario.estadoUsuario" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">estadoUsuario</span></span><a class="headerlink" href="#id1" title="Link to this definition">¶</a></dt>
 <dd><p>A wrapper for a deferred-loading field. When the value is read from this
 object the first time, the query is executed.</p>
 </dd></dl>
@@ -145,8 +184,8 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="Perfil.models.Usuario.logo">
-<span class="sig-name descname"><span class="pre">logo</span></span><a class="headerlink" href="#Perfil.models.Usuario.logo" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">logo</span></span><a class="headerlink" href="#id2" title="Link to this definition">¶</a></dt>
 <dd><p>Just like the FileDescriptor, but for ImageFields. The only difference is
 assigning the width/height to the width_field/height_field, if appropriate.</p>
 </dd></dl>
@@ -157,8 +196,8 @@ assigning the width/height to the width_field/height_field, if appropriate.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="Perfil.models.Usuario.user">
-<span class="sig-name descname"><span class="pre">user</span></span><a class="headerlink" href="#Perfil.models.Usuario.user" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">user</span></span><a class="headerlink" href="#id3" title="Link to this definition">¶</a></dt>
 <dd><p>Accessor to the related object on the forward side of a one-to-one relation.</p>
 <p>In the example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
@@ -197,31 +236,79 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dt class="sig sig-object py" id="Perfil.signals.create_user_profile">
 <span class="sig-prename descclassname"><span class="pre">Perfil.signals.</span></span><span class="sig-name descname"><span class="pre">create_user_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Perfil.signals.create_user_profile" title="Link to this definition">¶</a></dt>
 <dd><p>Crea un perfil de Usuario asociado cada vez que se crea un nuevo User.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Perfil.signals.sender">
+<span class="sig-prename descclassname"><span class="pre">Perfil.signals.</span></span><span class="sig-name descname"><span class="pre">sender</span></span><a class="headerlink" href="#Perfil.signals.sender" title="Link to this definition">¶</a></dt>
+<dd><p>La clase del modelo que envía la señal (User).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>sender</strong> (<em>Model</em>) – La clase del modelo que envía la señal (User).</p></li>
-<li><p><strong>instance</strong> (<em>User</em>) – La instancia del modelo User que se ha guardado.</p></li>
-<li><p><strong>created</strong> (<em>bool</em>) – Indica si se ha creado una nueva instancia.</p></li>
-<li><p><strong>**kwargs</strong> – Parámetros adicionales clave-valor.</p></li>
-</ul>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Model</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Perfil.signals.instance">
+<span class="sig-prename descclassname"><span class="pre">Perfil.signals.</span></span><span class="sig-name descname"><span class="pre">instance</span></span><a class="headerlink" href="#Perfil.signals.instance" title="Link to this definition">¶</a></dt>
+<dd><p>La instancia del modelo User que se ha guardado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>User</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Perfil.signals.created">
+<span class="sig-prename descclassname"><span class="pre">Perfil.signals.</span></span><span class="sig-name descname"><span class="pre">created</span></span><a class="headerlink" href="#Perfil.signals.created" title="Link to this definition">¶</a></dt>
+<dd><p>Indica si se ha creado una nueva instancia.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">\*\*kwargs</span></span></dt>
+<dd><p>Parámetros adicionales clave-valor.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Perfil.signals.save_user_profile">
 <span class="sig-prename descclassname"><span class="pre">Perfil.signals.</span></span><span class="sig-name descname"><span class="pre">save_user_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Perfil.signals.save_user_profile" title="Link to this definition">¶</a></dt>
 <dd><p>Guarda el perfil de Usuario asociado cada vez que se guarda un User.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-prename descclassname"><span class="pre">Perfil.signals.</span></span><span class="sig-name descname"><span class="pre">sender</span></span><a class="headerlink" href="#id4" title="Link to this definition">¶</a></dt>
+<dd><p>La clase del modelo que envía la señal (User).</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>sender</strong> (<em>Model</em>) – La clase del modelo que envía la señal (User).</p></li>
-<li><p><strong>instance</strong> (<em>User</em>) – La instancia del modelo User que se ha guardado.</p></li>
-<li><p><strong>**kwargs</strong> – Parámetros adicionales clave-valor.</p></li>
-</ul>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Model</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-prename descclassname"><span class="pre">Perfil.signals.</span></span><span class="sig-name descname"><span class="pre">instance</span></span><a class="headerlink" href="#id5" title="Link to this definition">¶</a></dt>
+<dd><p>La instancia del modelo User que se ha guardado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>User</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">\*\*kwargs</span></span></dt>
+<dd><p>Parámetros adicionales clave-valor.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -242,15 +329,42 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Perfil.views.</span></span><span class="sig-name descname"><span class="pre">PerfilDetailView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Perfil.views.PerfilDetailView" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DetailView</span></code></p>
 <p>Vista basada en clases para mostrar el perfil del usuario autenticado.</p>
-<dl class="simple">
-<dt>Atributos:</dt><dd><p>model (Model): Modelo que representa el perfil de usuario (Usuario).
-template_name (str): Plantilla que se usará para renderizar la vista.
-context_object_name (str): Nombre con el que se accederá al objeto en la plantilla.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Perfil.views.PerfilDetailView.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#Perfil.views.PerfilDetailView.model" title="Link to this definition">¶</a></dt>
+<dd><p>Modelo que representa el perfil de usuario (Usuario).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Model</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Perfil.views.PerfilDetailView.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><a class="headerlink" href="#Perfil.views.PerfilDetailView.template_name" title="Link to this definition">¶</a></dt>
+<dd><p>Plantilla que se usará para renderizar la vista.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="Perfil.views.PerfilDetailView.context_object_name">
-<span class="sig-name descname"><span class="pre">context_object_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'usuario'</span></em><a class="headerlink" href="#Perfil.views.PerfilDetailView.context_object_name" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">context_object_name</span></span><a class="headerlink" href="#Perfil.views.PerfilDetailView.context_object_name" title="Link to this definition">¶</a></dt>
+<dd><p>Nombre con el que se accederá al objeto en la plantilla.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">context_object_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'usuario'</span></em><a class="headerlink" href="#id6" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -261,14 +375,14 @@ Usamos el método get_object para obtener el perfil del usuario actual.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="Perfil.views.PerfilDetailView.model">
-<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#Perfil.views.PerfilDetailView.model" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#id7" title="Link to this definition">¶</a></dt>
 <dd><p>alias de <a class="reference internal" href="#Perfil.models.Usuario" title="Perfil.models.Usuario"><code class="xref py py-class docutils literal notranslate"><span class="pre">Usuario</span></code></a></p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="Perfil.views.PerfilDetailView.template_name">
-<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'perfil/ver_perfil.html'</span></em><a class="headerlink" href="#Perfil.views.PerfilDetailView.template_name" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'perfil/ver_perfil.html'</span></em><a class="headerlink" href="#id8" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -314,6 +428,9 @@ Usamos el método get_object para obtener el perfil del usuario actual.</p>
 <li class="toctree-l2"><a class="reference internal" href="login.html">login package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="publicacion.html">publicacion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Tablero.html">Tablero package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="login.templatetags.html">login.templatetags package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
 </ul>
 </li>
 </ul>
