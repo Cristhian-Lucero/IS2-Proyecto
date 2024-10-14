@@ -9,4 +9,6 @@ from .views import *
 
 urlpatterns = [
     path('', PerfilDetailView.as_view(), name='ver_perfil'),
+    path('perfil/', perfil_update, name='perfil'),
 ]
+

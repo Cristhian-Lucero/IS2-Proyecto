@@ -94,7 +94,7 @@
     <div class="profile-container">
         <div class="profile-header">
             {% if usuario_extra.logo %}
-                <img src="{{ user.perfil.logo.url }}" alt="Foto de perfil" class="profile-pic">
+                <img src="/media/{{ usuario_extra.logo }}" alt="Foto de perfil" class="profile-pic">
             {% else %}
                 <img src="/media/imagenes/sin_perfil.png" alt="Foto de perfil" class="profile-pic">
             {% endif %}

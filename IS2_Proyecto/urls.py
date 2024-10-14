@@ -47,6 +47,7 @@ urlpatterns = [
     
     path('publicaciones/', include('crearpublicaciones.urls')),
     path('crearpublicaciones/', include('crearpublicaciones.urls')),
+    path('reportes/', include('reporte.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

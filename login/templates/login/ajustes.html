@@ -125,16 +125,15 @@
                 <input type="text" id="apellido" name="apellido" value="{{ request.user.last_name }}">
             </div>
             
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}  <!-- Esto generará los campos de tu formulario, incluido el de imagen -->
-                <button type="submit">Guardar cambios</button>
-            </form>
-            
-
             <button class="submit-btn">GUARDAR</button>
-        </div>
         
+            <form method="POST" enctype="multipart/form-data" >
+                {% csrf_token %}
+                {{ form.as_p }} 
+                <button class="submit-btn" type="submit">GUARDAR</button>
+            </form>
+        </div>
+
         <!-- Seguridad -->
         <div class="form-section">
             <h2 id="Seguridad">SEGURIDAD</h2>

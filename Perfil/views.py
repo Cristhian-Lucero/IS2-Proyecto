@@ -35,3 +35,20 @@ class PerfilDetailView(LoginRequiredMixin, DetailView):
 
 # Create your views here.
 
+from django.shortcuts import render, redirect
+from .forms import PerfilForm
+
+def perfil_update(request):
+    # Obtener el usuario actual
+    if request.method == 'POST':
+        usuario_actual = request.user
+        instancia = Usuario.objects.get(user_id=usuario_actual)
+        form = PerfilForm(request.POST, request.FILES, instance=instancia)  # instance vincula con el usuario actual
+        if form.is_valid():
+            form.save()  # Guarda los datos en la base de datos
+            return redirect('perfil')  # Redirige a alguna página (ajusta según tu ruta)
+    else:
+        form = PerfilForm(instance=request.user.usuario)  # Cargar el formulario con datos existentes del usuario
+
+    return render(request, 'perfil.html', {'form': form})
+
