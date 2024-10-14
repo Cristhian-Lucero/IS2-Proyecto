@@ -3,4 +3,5 @@ from .views import *
 
 urlpatterns = [
     path('masVistos', masVistos, name='masVistos'),
+    path('masLikeados', masLikeados, name='masLikeados'),
 ]
