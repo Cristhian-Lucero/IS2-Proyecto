@@ -393,12 +393,12 @@ def ajustes(request):
     perfil = request.user
     if request.method == 'POST':
         # Pasamos los archivos subidos (FILES) y los datos del formulario (POST)
-        form = PerfilForm(request.POST, request.FILES, instance=perfil)
-        
-        if form.is_valid():
-            form.save() 
-            return redirect(reverse('perfil', kwargs={'username': request.user.username}))  # Redirige al perfil después de guardar
+        instancia = Usuario.objects.get(user_id=perfil.id)
+        form = PerfilForm(request.POST, request.FILES, instance=instancia)
 
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('perfil', kwargs={'username': request.user.username}))  # Redirige al perfil después de guardar
     else:
         
         form = PerfilForm(instance=perfil)
