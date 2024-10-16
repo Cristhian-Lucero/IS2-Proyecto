@@ -60,3 +60,53 @@ class CreateNewRol(forms.Form):
             widget=forms.CheckboxSelectMultiple
         )
 
+class UpdateNombreApellido(forms.Form):
+
+    box_nombre = forms.CharField(label="Nombre", max_length=150)
+    box_apellido = forms.CharField(label="Apellido", max_length=150)
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)  # Guardamos el request en self.request
+        super(UpdateNombreApellido, self).__init__(*args, **kwargs)
+        
+        if self.request:
+            usuario = self.request.user
+            self.fields['box_nombre'].initial = usuario.first_name  # Asigna el valor inicial
+            self.fields['box_apellido'].initial = usuario.last_name  # Asigna el valor inicial
+    
+    def save(self):
+        if self.request:
+            usuario = self.request.user
+            # Actualizamos el usuario con los valores del formulario
+            usuario.first_name = self.cleaned_data['box_nombre']
+            usuario.last_name = self.cleaned_data['box_apellido']
+            usuario.save()  # Guardamos los cambios en el modelo User
+
+class UpdateEmail(forms.Form):
+
+    box_email_nuevo = forms.CharField(label="Email Nuevo", max_length=100)
+    box_email_repetido = forms.CharField(label="Repetir Email", max_length=100)
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)  # Guardamos el request en self.request
+        super(UpdateEmail, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        # Validamos que los dos emails coincidan
+        cleaned_data = super().clean()
+        email_nuevo = cleaned_data.get('box_email_nuevo')
+        email_repetido = cleaned_data.get('box_email_repetido')
+
+        if email_nuevo != email_repetido:
+            raise forms.ValidationError("Los emails no coinciden.")
+
+        return cleaned_data
+
+    def save(self):
+        if self.request:
+            usuario = self.request.user
+
+            # Solo guardamos el nuevo email si todo está validado
+            usuario.email = self.cleaned_data['box_email_nuevo']
+            usuario.save()  # Guardamos los cambios en el modelo User
+

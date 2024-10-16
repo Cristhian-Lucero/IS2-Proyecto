@@ -99,6 +99,8 @@
                 <img src="/media/imagenes/sin_perfil.png" alt="Foto de perfil" class="profile-pic">
             {% endif %}
             <div class="profile-name">@{{usuario.username}}</div>
+            <div class="profile-name"><strong>{{usuario.first_name}} {{usuario.last_name}}</strong></div>
+            
             <div class="profile-bio">{{ usuario_extra.descripcion }}</div>
         </div>
 

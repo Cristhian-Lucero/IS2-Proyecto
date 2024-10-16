@@ -388,22 +388,47 @@ def seleccionar_plantilla(request, categoria_id):
         'categoria_id': categoria_id
     })
 
+
 @login_required
 def ajustes(request):
     perfil = request.user
+    instancia = Usuario.objects.get(user_id=perfil.id)  # Obtenemos la instancia de Usuario
+
     if request.method == 'POST':
-        # Pasamos los archivos subidos (FILES) y los datos del formulario (POST)
-        instancia = Usuario.objects.get(user_id=perfil.id)
-        form = PerfilForm(request.POST, request.FILES, instance=instancia)
+        form_nombre_apellido = UpdateNombreApellido(request.POST, request=request)
+        form_foto_bio = PerfilForm(request.POST, request.FILES, instance=instancia, request=request)
+        form_nuevo_email = UpdateEmail(request.POST, request=request)
 
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('perfil', kwargs={'username': request.user.username}))  # Redirige al perfil después de guardar
-    else:
+        if request.POST.get('form_type') == 'foto_bio':
+
+            if form_foto_bio.is_valid():
+                form_foto_bio.save()
+                return redirect(reverse('perfil', kwargs={'username': request.user.username}))  # Redirige al perfil después de guardar
+
+        elif request.POST.get('form_type') == 'nombre_apellido':
+
+            if form_nombre_apellido.is_valid():
+                form_nombre_apellido.save()  # Llamamos al método save para actualizar el usuario
+                return redirect(reverse('perfil', kwargs={'username': request.user.username}))  # Redirigimos al perfil
         
-        form = PerfilForm(instance=perfil)
+        elif request.POST.get('form_type') == 'email':
 
-    return render(request, 'login/ajustes.html', {'form': form})
+                if form_nuevo_email.is_valid():
+                    form_nuevo_email.save()  # Llamamos al método save para actualizar el usuario
+                    return redirect(reverse('perfil', kwargs={'username': request.user.username}))  # Redirigimos al perfil
+    
+    else:
+        form_foto_bio = PerfilForm(instance=instancia, request=request)
+        form_nombre_apellido = UpdateNombreApellido(request=request)
+        form_nuevo_email = UpdateEmail(request=request)
+
+    return render(request, 'login/ajustes.html', {
+        'form_foto_bio': form_foto_bio,
+        'form_nombre_apellido': form_nombre_apellido,
+        'form_nuevo_email': form_nuevo_email
+    })
+
+
 
 
 @login_required
@@ -415,7 +440,7 @@ def perfil(request, username):
     likes = 0
     vistas = 0
     publicacion_usuario_filtrado = []
-    for i in publicacion_usuario:
+    for i in list(publicacion_usuario.order_by('-fecha_creacion')):
         if i.estado == "publicado":
             likes += i.me_gustas
             vistas += i.vistas
