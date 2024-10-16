@@ -110,3 +110,38 @@ class UpdateEmail(forms.Form):
             usuario.email = self.cleaned_data['box_email_nuevo']
             usuario.save()  # Guardamos los cambios en el modelo User
 
+
+class UpdatePassword(forms.Form):
+
+    box_password_viejo = forms.CharField(label="Contraseña Antigua", max_length=100)
+    box_password_nuevo = forms.CharField(label="Contraseña Nueva", max_length=100)
+    box_password_repetido = forms.CharField(label="Repetir Nueva Repetida", max_length=100)
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)  # Guardamos el request en self.request
+        super(UpdatePassword, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        # Validamos que los dos emails coincidan
+        cleaned_data = super().clean()
+        password_viejo = cleaned_data.get('box_password_viejo')
+        password_nuevo = cleaned_data.get('box_password_nuevo')
+        password_repetido = cleaned_data.get('box_password_repetido')
+ 
+        if not self.request.user.check_password(password_viejo):
+            raise forms.ValidationError("La contraseña vieja no coincide")
+
+        if password_nuevo != password_repetido:
+            raise forms.ValidationError("Las contraseñas no coinciden.")
+        print(self.request.user.password)
+        return cleaned_data
+
+    def save(self):
+        if self.request:
+            usuario = self.request.user
+            # Solo guardamos el nuevo email si todo está validado
+            nuevo_password = self.cleaned_data['box_password_nuevo']
+            usuario.set_password(nuevo_password)
+            
+            usuario.save()  # Guardamos los cambios en el modelo User
+

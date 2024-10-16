@@ -141,16 +141,12 @@
         <!-- Seguridad -->
         <div class="form-section">
             <h2 id="Seguridad">SEGURIDAD</h2>
-            <label for="contraseña-actual">Contraseña Actual</label>
-            <input type="password" id="contraseña-actual" name="contraseña-actual">
-            
-            <label for="contraseña-nueva">Contraseña Nueva</label>
-            <input type="password" id="contraseña-nueva" name="contraseña-nueva">
-            
-            <label for="confirmar-contraseña">Confirmar Contraseña Nueva</label>
-            <input type="password" id="confirmar-contraseña" name="confirmar-contraseña">
-            
-            <button class="submit-btn">GUARDAR</button>
+            <form method="POST" enctype="multipart/form-data" >
+                {% csrf_token %}
+                {{ form_nueva_contrasena.as_p }} 
+                <input type="hidden" name="form_type" value="contrasena">
+                <button class="submit-btn" type="submit">GUARDAR</button>
+            </form>
         </div>
 
         <!-- Notificacion -->

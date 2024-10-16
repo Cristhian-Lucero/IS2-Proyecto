@@ -398,6 +398,7 @@ def ajustes(request):
         form_nombre_apellido = UpdateNombreApellido(request.POST, request=request)
         form_foto_bio = PerfilForm(request.POST, request.FILES, instance=instancia, request=request)
         form_nuevo_email = UpdateEmail(request.POST, request=request)
+        form_nueva_contrasena = UpdatePassword(request.POST, request=request)
 
         if request.POST.get('form_type') == 'foto_bio':
 
@@ -416,16 +417,24 @@ def ajustes(request):
                 if form_nuevo_email.is_valid():
                     form_nuevo_email.save()  # Llamamos al método save para actualizar el usuario
                     return redirect(reverse('perfil', kwargs={'username': request.user.username}))  # Redirigimos al perfil
+        
+        elif request.POST.get('form_type') == 'contrasena':
+
+                if form_nueva_contrasena.is_valid():
+                    form_nueva_contrasena.save()  # Llamamos al método save para actualizar el usuario
+                    return redirect(reverse('perfil', kwargs={'username': request.user.username}))  # Redirigimos al perfil
     
     else:
         form_foto_bio = PerfilForm(instance=instancia, request=request)
         form_nombre_apellido = UpdateNombreApellido(request=request)
         form_nuevo_email = UpdateEmail(request=request)
-
+        form_nueva_contrasena = UpdatePassword(request=request)
+        
     return render(request, 'login/ajustes.html', {
         'form_foto_bio': form_foto_bio,
         'form_nombre_apellido': form_nombre_apellido,
-        'form_nuevo_email': form_nuevo_email
+        'form_nuevo_email': form_nuevo_email,
+        'form_nueva_contrasena': form_nueva_contrasena
     })
 
 
