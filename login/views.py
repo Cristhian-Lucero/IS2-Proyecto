@@ -231,8 +231,6 @@ def eliminarRol(request, rol_id):
     if rol_id > 5:
         rol_seleccionado = get_object_or_404(Rol, id=rol_id)
         rol_seleccionado.delete()
-    rol_seleccionado = get_object_or_404(Rol, id=rol_id)
-    rol_seleccionado.delete()
     return redirect('adicionrol')
 
 @login_required
@@ -429,7 +427,7 @@ def ajustes(request):
         form_nombre_apellido = UpdateNombreApellido(request=request)
         form_nuevo_email = UpdateEmail(request=request)
         form_nueva_contrasena = UpdatePassword(request=request)
-        
+
     return render(request, 'login/ajustes.html', {
         'form_foto_bio': form_foto_bio,
         'form_nombre_apellido': form_nombre_apellido,

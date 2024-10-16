@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from .models import Usuario, Rol, Categoria, UsuarioRolCategoria
 
@@ -46,3 +46,26 @@ def asignar_rol_a_usuarios(sender, instance, created, **kwargs):
                 rol=suscriptor_rol,
                 categoria=instance
             )
+
+@receiver(pre_delete, sender=Rol)
+def actualizar_usuarios_tras_eliminar_rol(sender, instance, **kwargs):
+    """
+    Cambia el rol de los usuarios a 'Suscriptor' cuando se elimina un rol.
+    """
+    # Obtenemos el rol que se está eliminando
+    rol_eliminado = instance
+    
+    # Buscamos el rol 'Suscriptor' (asegurándonos de que existe)
+    try:
+        suscriptor = Rol.objects.get(nombre='Suscriptor')
+    except Rol.DoesNotExist:
+        print("El rol 'Suscriptor' no existe. Por favor, créalo primero.")
+        return  # Detenemos la ejecución si no existe el rol 'Suscriptor'
+    
+    # Encontramos los usuarios que tenían el rol que se va a eliminar
+    usuarios_a_modificar = UsuarioRolCategoria.objects.filter(rol=rol_eliminado)
+    
+    # Actualizamos los usuarios para que ahora pertenezcan al rol 'Suscriptor'
+    for usuario in usuarios_a_modificar:
+        usuario.rol = suscriptor  # Asignamos el rol 'Suscriptor'
+        usuario.save()
