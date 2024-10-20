@@ -209,3 +209,15 @@ def eliminarReporte(request, reporte_id):
 
     reportes = Reporte.objects.all()
     return redirect('listaReportes')
+
+@login_required
+def dashboard(request):
+    nro_publicado= Publicacion.objects.filter(estado="publicado")
+    nro_revision= Publicacion.objects.filter(estado="borrador")
+    mas_interactuado = Publicacion.objects.all().order_by('-me_gustas')
+    return render(request, 'dashboard.html', {
+        'nro_publicado': len(nro_publicado),
+        'nro_revision': len(nro_revision),
+        'mas_interactuado': mas_interactuado[0],
+        'publicaciones': nro_revision
+    })

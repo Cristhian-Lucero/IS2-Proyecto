@@ -8,4 +8,5 @@ urlpatterns = [
     path('listaReportes', listaReportes, name='listaReportes'),
     path('visualizarReporte/<int:reporte_id>', visualizarReporte, name='visualizarReporte'),
     path('eliminarReporte/<int:reporte_id>', eliminarReporte, name='eliminarReporte'),
+    path('dashboard', dashboard, name='dashboard'),
 ]

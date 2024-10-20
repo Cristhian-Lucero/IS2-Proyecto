@@ -1,0 +1,162 @@
+{% extends 'encabezado.html' %}
+
+{% block content%}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Gestión de Publicaciones</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body{
+            background-color: #202124;
+        }
+        h1, h2, h3, p, th, td, select, input{
+            color: white;
+        }
+        .form-control {
+            padding: 8px;
+            box-sizing: border-box;
+            background-color: #202124;
+            color: #FFFFFF;
+            border: 1px solid #606368;
+            border-radius: 10px;
+        }
+        .dashboard-section {
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            padding: 15px;
+            background-color: #171717;
+            border-radius: 8px;
+        }
+        .stat-card h3 {
+            font-size: 18px;
+        }
+        .chart-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Dashboard de Gestión de Publicaciones</h1>
+
+        <!-- Sección de estadísticas -->
+        <div class="row dashboard-section">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Total de Publicaciones</h3>
+                    <p>{{nro_publicado}}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Publicaciones Pendientes</h3>
+                    <p>{{nro_revision}}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Más Interacciones</h3>
+                    <p><a href="{% url 'previsualizar_publicacion' mas_interactuado.id %}">{{mas_interactuado.titulo}}</a></p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Publicaciones Eliminadas</h3>
+                    <p>12</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Filtros y Búsquedas -->
+        <div class="dashboard-section">
+            <h2>Filtros y Búsquedas</h2>
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="filter-status">Estado</label>
+                        <select id="filter-status" class="form-control">
+                            <option selected>Todos</option>
+                            <option>Pendientes</option>
+                            <option>Publicadas</option>
+                            <option>Eliminadas</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="author">Buscar por Autor</label>
+                        <input type="text" class="form-control" id="author" placeholder="Nombre del Autor">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="date-range">Rango de Fechas</label>
+                        <input type="date" class="form-control" id="date-range">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+            </form>
+        </div>
+
+        <!-- Sección de Reportes -->
+        <div class="dashboard-section">
+            <h2>Publicaciones Pendientes</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Categoria</th>
+                        <th>Autor</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in publicaciones %}
+                        <tr>
+                            <td><a href="{% url 'previsualizar_publicacion' mas_interactuado.id %}">{{i.titulo}}</a></td>
+                            <td>{{i.user}}</td>
+                            <td>{{i.categoria}}</td>
+                            <td>{{i.estado}}</td>
+                            <td>{{i.fecha_creacion}}</td>
+                            <td>
+                                <a href="#" class="btn btn-success btn-sm">Aprobar</a>
+                                <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <!-- Más filas aquí -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sección de Gráficos y Visualizaciones -->
+        <div class="dashboard-section chart-container">
+            <h2>Gráficos y Estadísticas</h2>
+            <canvas id="publicacionesChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Sección de Atajos -->
+        <div class="dashboard-section">
+            <h2>Acciones Rápidas</h2>
+            <a href="#" class="btn btn-primary">Crear Nueva Publicación</a>
+            <a href="#" class="btn btn-secondary">Revisión Masiva</a>
+        </div>
+    </div>
+
+    <!-- Cargar Chart.js para el gráfico -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Código para el gráfico de publicaciones
+        var ctx = document.getElementById('publicacionesChart').getContext('2d');
+        var publicacionesChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Publicadas', 'Pendientes', 'Eliminadas'],
+                datasets: [{
+                    label: 'Cantidad de Publicaciones',
+                    data: [{{nro_publicado}}, {{nro_revision}}, 12],
+                    backgroundColor: ['#4CAF50', '#FF9800', '#F44336']
+                }]
+            }
+        });
+    </script>
+{% endblock %}
