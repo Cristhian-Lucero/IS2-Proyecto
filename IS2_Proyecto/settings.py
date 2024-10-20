@@ -104,6 +104,7 @@ TEMPLATES = [
                 'utils.context_processors.categorias_context',
                 'utils.context_processors.permisos_usuario_context',
                 'utils.context_processors.permisos_categoria_usuario_context',
+                'utils.context_processors.autores_context',
             ],
         },
     },

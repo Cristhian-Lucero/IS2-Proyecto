@@ -182,7 +182,14 @@
 
             <div class="form-group">
                 <label for="autor">Autor</label>
-                <input type="text" id="autor" name="autor" placeholder="Buscar Autor..." value="{{ autor }}">
+                <select id="autor" name="autor">
+                    <option value="">Ninguno</option>
+                    {% for i in autores %}
+                        <option value="{{ i.username }}" {% if autor == i.username %}selected{% endif %}>
+                            {{ i.username }}
+                        </option>
+                    {% endfor %}
+                </select>
             </div>
 
             <button type="submit">Buscar</button>
