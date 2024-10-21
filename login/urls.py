@@ -31,7 +31,7 @@ urlpatterns = [
 
     path('ajustes/', ajustes, name='ajustes'),
     path('perfil/<str:username>/', perfil, name='perfil'),
-
+    path('eliminar_user/<int:user_id>/', eliminar_usuario, name='eliminar_usuario'),
 ]
 
 

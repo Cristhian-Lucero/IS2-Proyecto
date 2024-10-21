@@ -436,8 +436,6 @@ def ajustes(request):
     })
 
 
-
-
 @login_required
 def perfil(request, username):
     usuario = User.objects.get(username=username)
@@ -460,3 +458,9 @@ def perfil(request, username):
         'likes': likes,
         'vistas': vistas
     })
+
+@login_required
+def eliminar_usuario(request, user_id):
+    usuario = User.objects.get(id=user_id)
+    usuario.delete()
+    return redirect('home')

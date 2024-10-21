@@ -167,8 +167,9 @@
          <div class="form-section">
             <h2 id="Sesion">Sesión</h2>
             <a class="btn-delete" href="{% url 'exit' %}">CERRAR SESION</a>
-            <a class="btn-delete" href="{% url 'exit' %}">ELIMINAR CUENTA</a>
-        </div>
+            <a class="btn-delete" href="{% url 'eliminar_usuario' request.user.id %}" 
+            onclick="return confirm('¿Estás seguro que quieres eliminar tu cuenta?')">ELIMINAR CUENTA</a>
+         </div>
     </div>
 </div>
 

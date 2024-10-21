@@ -1,14 +1,13 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
 {% extends 'encabezado.html' %}
 
 {% block content%}
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard de Gestión de Publicaciones</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body{
-            background-color: #202124;
-        }
         h1, h2, h3, p, th, td, select, input{
             color: white;
         }
@@ -21,15 +20,27 @@
             border-radius: 10px;
         }
         .dashboard-section {
-            margin-bottom: 20px;
+            justify-content: space-between;
         }
+
         .stat-card {
-            padding: 15px;
             background-color: #171717;
+            padding: 20px;
             border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex: 1; /* Hace que todas las tarjetas ocupen el mismo espacio */
+            margin: 0 10px; /* Espacio entre tarjetas */
+            min-height: 150px; /* Asegura una altura mínima consistente */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .stat-card h3 {
+            margin-bottom: 10px;
             font-size: 18px;
+        }
+        .stat-card p {
+            font-size: 16px;
         }
         .chart-container {
             margin-top: 20px;
@@ -44,29 +55,37 @@
         <div class="row dashboard-section">
             <div class="col-md-3">
                 <div class="stat-card">
-                    <h3>Total de Publicaciones</h3>
+                    <h3>Artículos Publicados</h3>
                     <p>{{nro_publicado}}</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card">
-                    <h3>Publicaciones Pendientes</h3>
+                    <h3>Artículos en Borrador</h3>
+                    <p>{{nro_borrador}}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Artículos en Revision</h3>
                     <p>{{nro_revision}}</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-card">
-                    <h3>Más Interacciones</h3>
-                    <p><a href="{% url 'previsualizar_publicacion' mas_interactuado.id %}">{{mas_interactuado.titulo}}</a></p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stat-card">
-                    <h3>Publicaciones Eliminadas</h3>
-                    <p>12</p>
+                    <h3>Publicaciones Rechazados</h3>
+                    <p>{{nro_rechazado}}</p>
                 </div>
             </div>
         </div>
+        <br><br>
+
+        <!-- Sección de Gráficos y Visualizaciones -->
+        <div class="dashboard-section chart-container">
+            <h2>Gráfico de Publicaciones</h2>
+            <canvas id="publicacionesChart" width="400" height="200"></canvas>
+        </div>
+        <br><br>
 
         <!-- Sección de Filtros y Búsquedas -->
         <div class="dashboard-section">
@@ -94,6 +113,7 @@
                 <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
             </form>
         </div>
+        <br><br>
 
         <!-- Sección de Reportes -->
         <div class="dashboard-section">
@@ -112,14 +132,14 @@
                 <tbody>
                     {% for i in publicaciones %}
                         <tr>
-                            <td><a href="{% url 'previsualizar_publicacion' mas_interactuado.id %}">{{i.titulo}}</a></td>
+                            <td><a href="{% url 'previsualizar_publicacion' i.id %}">{{i.titulo}}</a></td>
                             <td>{{i.user}}</td>
                             <td>{{i.categoria}}</td>
                             <td>{{i.estado}}</td>
                             <td>{{i.fecha_creacion}}</td>
                             <td>
                                 <a href="#" class="btn btn-success btn-sm">Aprobar</a>
-                                <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                                <a href="{% url 'eliminar_publicacion' i.id %}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta publicación?');">Eliminar</a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -127,12 +147,14 @@
                 </tbody>
             </table>
         </div>
+        <br><br>
 
         <!-- Sección de Gráficos y Visualizaciones -->
         <div class="dashboard-section chart-container">
-            <h2>Gráficos y Estadísticas</h2>
-            <canvas id="publicacionesChart" width="400" height="200"></canvas>
+            <h2>Gráfico de Roles por Categoria </h2>
+            <canvas id="usuariosChart" width="400" height="200"></canvas>
         </div>
+        <br><br>
 
         <!-- Sección de Atajos -->
         <div class="dashboard-section">
@@ -146,15 +168,28 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Código para el gráfico de publicaciones
+        var ctx = document.getElementById('usuariosChart').getContext('2d');
+        var usuariosChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Suscriptor', 'Editor', 'Publicador', 'Autor', 'Admin'],
+                datasets: [{
+                    label: 'Rol de Usuario-Categoria',
+                    data: [{{nro_suscriptor}}, {{nro_editor}}, {{nro_publicador}}, {{nro_autor}}, {{nro_administrador}}],
+                    backgroundColor: ['#4CAF50', '#FF9800', '#F44336', "#123456", "654321"]
+                }]
+            }
+        });
+
         var ctx = document.getElementById('publicacionesChart').getContext('2d');
         var publicacionesChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Publicadas', 'Pendientes', 'Eliminadas'],
+                labels: ['Publicadas', 'Borrador', 'Revision', 'Rechazado'],
                 datasets: [{
                     label: 'Cantidad de Publicaciones',
-                    data: [{{nro_publicado}}, {{nro_revision}}, 12],
-                    backgroundColor: ['#4CAF50', '#FF9800', '#F44336']
+                    data: [{{nro_publicado}}, {{nro_borrador}}, {{nro_revision}}, {{nro_rechazado}}],
+                    backgroundColor: ['#4CAF50', '#FF9800', '#F44336', "#123456"]
                 }]
             }
         });

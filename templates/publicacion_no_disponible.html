@@ -1,0 +1,51 @@
+{% extends 'encabezado.html' %}
+
+{% block content%}
+<head>
+    <title>Lista de Categorias</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+
+        h1 {
+            text-align: center; 
+            margin-bottom: 5%; 
+            font-family: 'Yanone Kaffeesatz';
+            font-size: 40px;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        .article-container {
+            display: flex;
+            align-items: flex-start;
+            background-color: #171717;
+            padding: 20px;
+            border-radius: 20px;
+            margin-left: 15%;
+            margin-right: 15%;
+            margin-bottom: 2%;
+
+        }
+
+        .article-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Esta publicación no existe o no está disponible para su visualización :-[</h1>
+    <p>Si deseas el acceso a esta area ponte en contacto con nuestro Administrador para realizar una solicitud de ascenso de Rol</p>
+    <p>email: admin@journalx.com</p>
+    
+{% endblock %}

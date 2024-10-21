@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from crearpublicaciones.models import *
 from login.models import *
 from .models import *
+from login.models import *
 
 # Create your views here.
 
@@ -212,12 +213,36 @@ def eliminarReporte(request, reporte_id):
 
 @login_required
 def dashboard(request):
-    nro_publicado= Publicacion.objects.filter(estado="publicado")
-    nro_revision= Publicacion.objects.filter(estado="borrador")
-    mas_interactuado = Publicacion.objects.all().order_by('-me_gustas')
+    nro_publicado = Publicacion.objects.filter(estado="publicado")
+    nro_borrador = Publicacion.objects.filter(estado="borrador")
+    nro_revision = Publicacion.objects.filter(estado="revision")
+    nro_rechazado = Publicacion.objects.filter(estado="rechazado")
+
+    suscriptor = Rol.objects.get(nombre='Suscriptor')
+    nro_suscriptor= UsuarioRolCategoria.objects.filter(rol=suscriptor)
+
+    editor = Rol.objects.get(nombre='Editor')
+    nro_editor= UsuarioRolCategoria.objects.filter(rol=editor)
+
+    publicador = Rol.objects.get(nombre='Publicador')
+    nro_publicador= UsuarioRolCategoria.objects.filter(rol=publicador)
+
+    autor = Rol.objects.get(nombre='Autor')
+    nro_autor = UsuarioRolCategoria.objects.filter(rol=autor)
+
+    administrador = Rol.objects.get(nombre='Administrador')
+    nro_administrador = UsuarioRolCategoria.objects.filter(rol=administrador)
+    
     return render(request, 'dashboard.html', {
         'nro_publicado': len(nro_publicado),
         'nro_revision': len(nro_revision),
-        'mas_interactuado': mas_interactuado[0],
-        'publicaciones': nro_revision
+        'nro_borrador': len(nro_borrador),
+        'nro_rechazado': len(nro_rechazado),
+        'publicaciones': Publicacion.objects.exclude(estado="publicado"),
+
+        'nro_suscriptor': len(nro_suscriptor),
+        'nro_editor': len(nro_editor),
+        'nro_publicador': len(nro_publicador),
+        'nro_autor': len(nro_autor),
+        'nro_administrador': len(nro_administrador)
     })
