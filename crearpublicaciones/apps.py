@@ -14,3 +14,6 @@ class CrearpublicacionesConfig(AppConfig):
 
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'crearpublicaciones'
+
+    def ready(self):
+        import crearpublicaciones.signals
