@@ -1,4 +1,6 @@
-
+'''
+Signals para notificaciones de cambios en publicaciones y nuevos comentarios.
+'''
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.core.mail import send_mail, EmailMultiAlternatives
@@ -9,6 +11,19 @@ from .models import Publicacion, Comentario
 
 @receiver(pre_save, sender=Publicacion)
 def notificar_cambios_publicacion(sender, instance, **kwargs):
+    """
+    Envía una notificación por correo electrónico al usuario cuando se detectan cambios en una publicación.
+
+    Esta función se ejecuta antes de guardar una instancia de 'Publicacion'.
+    Verifica si el estado, el título o el contenido han cambiado en comparación
+    con la instancia anterior y, de ser así, envía un correo electrónico al usuario correspondiente.
+
+    Args:
+        sender (class): El modelo que envía la señal (en este caso, 'Publicacion').
+        instance (Publicacion): La instancia de la publicación que se va a guardar.
+        **kwargs: Argumentos adicionales proporcionados por la señal.
+    """
+    
     if instance.id is not None:
         publicacion_anterior = Publicacion.objects.get(id=instance.id)
         usuario = instance.user
@@ -38,6 +53,20 @@ def notificar_cambios_publicacion(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Comentario)
 def notificar_nuevo_comentario(sender, instance, created, **kwargs):
+    """
+    Envía una notificación por correo electrónico al autor de una publicación cuando un nuevo comentario es agregado.
+
+    Esta función se ejecuta después de guardar una instancia de 'Comentario'.
+    Verifica si el comentario fue creado por un usuario distinto al autor de la publicación
+    y, de ser así, envía un correo electrónico al autor de la publicación.
+
+    Args:
+        sender (class): El modelo que envía la señal (en este caso, 'Comentario').
+        instance (Comentario): La instancia del comentario que se ha guardado.
+        created (bool): Indica si la instancia del comentario fue creada o solo modificada.
+        **kwargs: Argumentos adicionales proporcionados por la señal.
+    """
+    
     if created:
         publicacion = instance.publicacion
         autor_publicacion = publicacion.user

@@ -110,6 +110,12 @@ de administración predeterminada.</p>
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'crearpublicaciones'</span></em><a class="headerlink" href="#crearpublicaciones.apps.CrearpublicacionesConfig.name" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="crearpublicaciones.apps.CrearpublicacionesConfig.ready">
+<span class="sig-name descname"><span class="pre">ready</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.apps.CrearpublicacionesConfig.ready" title="Link to this definition">¶</a></dt>
+<dd><p>Override this method in subclasses to run code when Django starts.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -519,6 +525,47 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
+</dd></dl>
+
+</section>
+<section id="crearpublicaciones-signals-module">
+<h2>crearpublicaciones.signals module<a class="headerlink" href="#crearpublicaciones-signals-module" title="Link to this heading">¶</a></h2>
+<p id="module-crearpublicaciones.signals">Signals para notificaciones de cambios en publicaciones y nuevos comentarios.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="crearpublicaciones.signals.notificar_cambios_publicacion">
+<span class="sig-prename descclassname"><span class="pre">crearpublicaciones.signals.</span></span><span class="sig-name descname"><span class="pre">notificar_cambios_publicacion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.signals.notificar_cambios_publicacion" title="Link to this definition">¶</a></dt>
+<dd><p>Envía una notificación por correo electrónico al usuario cuando se detectan cambios en una publicación.</p>
+<p>Esta función se ejecuta antes de guardar una instancia de “Publicacion”.
+Verifica si el estado, el título o el contenido han cambiado en comparación
+con la instancia anterior y, de ser así, envía un correo electrónico al usuario correspondiente.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sender</strong> (<em>class</em>) – El modelo que envía la señal (en este caso, “Publicacion”).</p></li>
+<li><p><strong>instance</strong> (<a class="reference internal" href="#crearpublicaciones.models.Publicacion" title="crearpublicaciones.models.Publicacion"><em>Publicacion</em></a>) – La instancia de la publicación que se va a guardar.</p></li>
+<li><p><strong>**kwargs</strong> – Argumentos adicionales proporcionados por la señal.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="crearpublicaciones.signals.notificar_nuevo_comentario">
+<span class="sig-prename descclassname"><span class="pre">crearpublicaciones.signals.</span></span><span class="sig-name descname"><span class="pre">notificar_nuevo_comentario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.signals.notificar_nuevo_comentario" title="Link to this definition">¶</a></dt>
+<dd><p>Envía una notificación por correo electrónico al autor de una publicación cuando un nuevo comentario es agregado.</p>
+<p>Esta función se ejecuta después de guardar una instancia de “Comentario”.
+Verifica si el comentario fue creado por un usuario distinto al autor de la publicación
+y, de ser así, envía un correo electrónico al autor de la publicación.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sender</strong> (<em>class</em>) – El modelo que envía la señal (en este caso, “Comentario”).</p></li>
+<li><p><strong>instance</strong> (<a class="reference internal" href="#crearpublicaciones.models.Comentario" title="crearpublicaciones.models.Comentario"><em>Comentario</em></a>) – La instancia del comentario que se ha guardado.</p></li>
+<li><p><strong>created</strong> (<em>bool</em>) – Indica si la instancia del comentario fue creada o solo modificada.</p></li>
+<li><p><strong>**kwargs</strong> – Argumentos adicionales proporcionados por la señal.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

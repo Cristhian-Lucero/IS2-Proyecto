@@ -171,6 +171,105 @@ permisos (MultipleChoiceField): Campo para seleccionar múltiples permisos asoci
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="login.forms.UpdateEmail">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">login.forms.</span></span><span class="sig-name descname"><span class="pre">UpdateEmail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.forms.UpdateEmail" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.forms.UpdateEmail.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'box_email_nuevo':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'box_email_repetido':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#login.forms.UpdateEmail.base_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="login.forms.UpdateEmail.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#login.forms.UpdateEmail.clean" title="Link to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
+called on every field. Any ValidationError raised by this method will
+not be associated with a particular field; it will have a special-case
+association with the field named “__all__”.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.forms.UpdateEmail.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'box_email_nuevo':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'box_email_repetido':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#login.forms.UpdateEmail.declared_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="login.forms.UpdateEmail.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#login.forms.UpdateEmail.media" title="Link to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="login.forms.UpdateEmail.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#login.forms.UpdateEmail.save" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="login.forms.UpdateNombreApellido">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">login.forms.</span></span><span class="sig-name descname"><span class="pre">UpdateNombreApellido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.forms.UpdateNombreApellido" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.forms.UpdateNombreApellido.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'box_apellido':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'box_nombre':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#login.forms.UpdateNombreApellido.base_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.forms.UpdateNombreApellido.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'box_apellido':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'box_nombre':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#login.forms.UpdateNombreApellido.declared_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="login.forms.UpdateNombreApellido.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#login.forms.UpdateNombreApellido.media" title="Link to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="login.forms.UpdateNombreApellido.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#login.forms.UpdateNombreApellido.save" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="login.forms.UpdatePassword">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">login.forms.</span></span><span class="sig-name descname"><span class="pre">UpdatePassword</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.forms.UpdatePassword" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.forms.UpdatePassword.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'box_password_nuevo':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'box_password_repetido':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'box_password_viejo':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#login.forms.UpdatePassword.base_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="login.forms.UpdatePassword.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#login.forms.UpdatePassword.clean" title="Link to this definition">¶</a></dt>
+<dd><p>Hook for doing any extra form-wide cleaning after Field.clean() has been
+called on every field. Any ValidationError raised by this method will
+not be associated with a particular field; it will have a special-case
+association with the field named “__all__”.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="login.forms.UpdatePassword.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'box_password_nuevo':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'box_password_repetido':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'box_password_viejo':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#login.forms.UpdatePassword.declared_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="login.forms.UpdatePassword.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#login.forms.UpdatePassword.media" title="Link to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="login.forms.UpdatePassword.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#login.forms.UpdatePassword.save" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-login.models">
 <span id="login-models-module"></span><h2>login.models module<a class="headerlink" href="#module-login.models" title="Link to this heading">¶</a></h2>
@@ -539,6 +638,12 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 <section id="module-login.signals">
 <span id="login-signals-module"></span><h2>login.signals module<a class="headerlink" href="#module-login.signals" title="Link to this heading">¶</a></h2>
 <dl class="py function">
+<dt class="sig sig-object py" id="login.signals.actualizar_usuarios_tras_eliminar_rol">
+<span class="sig-prename descclassname"><span class="pre">login.signals.</span></span><span class="sig-name descname"><span class="pre">actualizar_usuarios_tras_eliminar_rol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.signals.actualizar_usuarios_tras_eliminar_rol" title="Link to this definition">¶</a></dt>
+<dd><p>Cambia el rol de los usuarios a “Suscriptor” cuando se elimina un rol.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="login.signals.asignar_rol_a_usuarios">
 <span class="sig-prename descclassname"><span class="pre">login.signals.</span></span><span class="sig-name descname"><span class="pre">asignar_rol_a_usuarios</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.signals.asignar_rol_a_usuarios" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -596,6 +701,26 @@ form (Form): Instancia del formulario para crear un nuevo rol.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="login.views.ajustes">
+<span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">ajustes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.ajustes" title="Link to this definition">¶</a></dt>
+<dd><p>Vista para la gestión de los ajustes de usuario, permitiendo actualizar nombre y apellido, foto de perfil, biografía, email y contraseña.</p>
+<p>Muestra diferentes formularios dependiendo del tipo de ajuste seleccionado.</p>
+<dl class="simple">
+<dt>Argumentos:</dt><dd><p>request (HttpRequest): La solicitud HTTP que contiene la información del formulario enviado (si corresponde).</p>
+</dd>
+<dt>Formularios manejados:</dt><dd><ul class="simple">
+<li><p><cite>foto_bio</cite>: Actualización de foto de perfil y biografía.</p></li>
+<li><p><cite>nombre_apellido</cite>: Actualización de nombre y apellido.</p></li>
+<li><p><cite>email</cite>: Actualización de email.</p></li>
+<li><p><cite>contrasena</cite>: Actualización de la contraseña.</p></li>
+</ul>
+</dd>
+<dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla “login/ajustes.html” con los formularios correspondientes y sus instancias.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="login.views.editarCategoria">
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">editarCategoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">categoria_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.editarCategoria" title="Link to this definition">¶</a></dt>
 <dd><p>Permite editar una categoría existente.</p>
@@ -642,6 +767,19 @@ No se eliminan los roles con ID menores o iguales a 5, ya que son fundamentales 
 <dt>Argumentos:</dt><dd><p>rol_id (int): El ID del rol a eliminar.</p>
 </dd>
 <dt>Retorna:</dt><dd><p>HttpResponse: Redirige a “adicionrol” después de eliminar el rol.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="login.views.eliminar_usuario">
+<span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">eliminar_usuario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.eliminar_usuario" title="Link to this definition">¶</a></dt>
+<dd><p>Vista para eliminar un usuario específico basado en su ID.</p>
+<dl class="simple">
+<dt>Argumentos:</dt><dd><p>request (HttpRequest): La solicitud HTTP.
+user_id (int): El ID del usuario que se desea eliminar.</p>
+</dd>
+<dt>Retorna:</dt><dd><p>HttpResponse: Redirige a la página principal “home” después de eliminar el usuario.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -709,6 +847,20 @@ HttpResponse: Renderiza la plantilla “rol/gestionRol.html” en caso de GET o 
 <dt>Argumentos:</dt><dd><p>categorias (QuerySet): Lista de todas las categorías disponibles.</p>
 </dd>
 <dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla «rol/listadoCategoria.html» con el contexto proporcionado.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="login.views.perfil">
+<span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">perfil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.perfil" title="Link to this definition">¶</a></dt>
+<dd><p>Vista para mostrar el perfil de un usuario específico basado en su nombre de usuario.</p>
+<p>Muestra las publicaciones del usuario, así como información adicional como el total de likes y vistas.</p>
+<dl class="simple">
+<dt>Argumentos:</dt><dd><p>request (HttpRequest): La solicitud HTTP.
+username (str): El nombre de usuario del perfil que se desea mostrar.</p>
+</dd>
+<dt>Retorna:</dt><dd><p>HttpResponse: Renderiza la plantilla “login/perfil.html” con la información del usuario y sus publicaciones.</p>
 </dd>
 </dl>
 </dd></dl>

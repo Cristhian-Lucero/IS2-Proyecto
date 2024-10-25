@@ -104,6 +104,12 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Perfil.html#module-Perfil.tests">Perfil.tests module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Perfil.html#module-Perfil.urls">Perfil.urls module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Perfil.html#module-Perfil.util">Perfil.util module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Perfil.html#Perfil.util.enviar_notificacion_cambio_estado"><code class="docutils literal notranslate"><span class="pre">enviar_notificacion_cambio_estado()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Perfil.html#Perfil.util.enviar_notificacion_comentario"><code class="docutils literal notranslate"><span class="pre">enviar_notificacion_comentario()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="Perfil.html#Perfil.util.enviar_notificacion_modificacion"><code class="docutils literal notranslate"><span class="pre">enviar_notificacion_modificacion()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="Perfil.html#module-Perfil.views">Perfil.views module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Perfil.html#Perfil.views.PerfilDetailView"><code class="docutils literal notranslate"><span class="pre">PerfilDetailView</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="Perfil.html#Perfil.views.PerfilDetailView.model"><code class="docutils literal notranslate"><span class="pre">PerfilDetailView.model</span></code></a></li>
@@ -115,6 +121,7 @@
 <li class="toctree-l4"><a class="reference internal" href="Perfil.html#id8"><code class="docutils literal notranslate"><span class="pre">PerfilDetailView.template_name</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="Perfil.html#Perfil.views.perfil_update"><code class="docutils literal notranslate"><span class="pre">perfil_update()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Perfil.html#module-Perfil">Module contents</a></li>
@@ -139,6 +146,7 @@
 <li class="toctree-l3"><a class="reference internal" href="crearpublicaciones.html#crearpublicaciones.apps.CrearpublicacionesConfig"><code class="docutils literal notranslate"><span class="pre">CrearpublicacionesConfig</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="crearpublicaciones.html#crearpublicaciones.apps.CrearpublicacionesConfig.default_auto_field"><code class="docutils literal notranslate"><span class="pre">CrearpublicacionesConfig.default_auto_field</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="crearpublicaciones.html#crearpublicaciones.apps.CrearpublicacionesConfig.name"><code class="docutils literal notranslate"><span class="pre">CrearpublicacionesConfig.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="crearpublicaciones.html#crearpublicaciones.apps.CrearpublicacionesConfig.ready"><code class="docutils literal notranslate"><span class="pre">CrearpublicacionesConfig.ready()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -212,6 +220,11 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="crearpublicaciones.html#crearpublicaciones-signals-module">crearpublicaciones.signals module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="crearpublicaciones.html#crearpublicaciones.signals.notificar_cambios_publicacion"><code class="docutils literal notranslate"><span class="pre">notificar_cambios_publicacion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="crearpublicaciones.html#crearpublicaciones.signals.notificar_nuevo_comentario"><code class="docutils literal notranslate"><span class="pre">notificar_nuevo_comentario()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="crearpublicaciones.html#module-crearpublicaciones.tests">crearpublicaciones.tests module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="crearpublicaciones.html#module-crearpublicaciones.urls">crearpublicaciones.urls module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="crearpublicaciones.html#module-crearpublicaciones.views">crearpublicaciones.views module</a><ul>
@@ -274,6 +287,29 @@
 <li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.CreateNewRol.media"><code class="docutils literal notranslate"><span class="pre">CreateNewRol.media</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="login.html#login.forms.UpdateEmail"><code class="docutils literal notranslate"><span class="pre">UpdateEmail</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdateEmail.base_fields"><code class="docutils literal notranslate"><span class="pre">UpdateEmail.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdateEmail.clean"><code class="docutils literal notranslate"><span class="pre">UpdateEmail.clean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdateEmail.declared_fields"><code class="docutils literal notranslate"><span class="pre">UpdateEmail.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdateEmail.media"><code class="docutils literal notranslate"><span class="pre">UpdateEmail.media</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdateEmail.save"><code class="docutils literal notranslate"><span class="pre">UpdateEmail.save()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="login.html#login.forms.UpdateNombreApellido"><code class="docutils literal notranslate"><span class="pre">UpdateNombreApellido</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdateNombreApellido.base_fields"><code class="docutils literal notranslate"><span class="pre">UpdateNombreApellido.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdateNombreApellido.declared_fields"><code class="docutils literal notranslate"><span class="pre">UpdateNombreApellido.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdateNombreApellido.media"><code class="docutils literal notranslate"><span class="pre">UpdateNombreApellido.media</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdateNombreApellido.save"><code class="docutils literal notranslate"><span class="pre">UpdateNombreApellido.save()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="login.html#login.forms.UpdatePassword"><code class="docutils literal notranslate"><span class="pre">UpdatePassword</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdatePassword.base_fields"><code class="docutils literal notranslate"><span class="pre">UpdatePassword.base_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdatePassword.clean"><code class="docutils literal notranslate"><span class="pre">UpdatePassword.clean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdatePassword.declared_fields"><code class="docutils literal notranslate"><span class="pre">UpdatePassword.declared_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdatePassword.media"><code class="docutils literal notranslate"><span class="pre">UpdatePassword.media</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="login.html#login.forms.UpdatePassword.save"><code class="docutils literal notranslate"><span class="pre">UpdatePassword.save()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="login.html#module-login.models">login.models module</a><ul>
@@ -327,6 +363,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="login.html#module-login.signals">login.signals module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="login.html#login.signals.actualizar_usuarios_tras_eliminar_rol"><code class="docutils literal notranslate"><span class="pre">actualizar_usuarios_tras_eliminar_rol()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.signals.asignar_rol_a_usuarios"><code class="docutils literal notranslate"><span class="pre">asignar_rol_a_usuarios()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.signals.asignar_rol_suscriptor"><code class="docutils literal notranslate"><span class="pre">asignar_rol_suscriptor()</span></code></a></li>
 </ul>
@@ -338,16 +375,19 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="login.html#module-login.views">login.views module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.agregarRol"><code class="docutils literal notranslate"><span class="pre">agregarRol()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="login.html#login.views.ajustes"><code class="docutils literal notranslate"><span class="pre">ajustes()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.editarCategoria"><code class="docutils literal notranslate"><span class="pre">editarCategoria()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.editarRol"><code class="docutils literal notranslate"><span class="pre">editarRol()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.eliminarCategoria"><code class="docutils literal notranslate"><span class="pre">eliminarCategoria()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.eliminarRol"><code class="docutils literal notranslate"><span class="pre">eliminarRol()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="login.html#login.views.eliminar_usuario"><code class="docutils literal notranslate"><span class="pre">eliminar_usuario()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.exit"><code class="docutils literal notranslate"><span class="pre">exit()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.gestionCategoria"><code class="docutils literal notranslate"><span class="pre">gestionCategoria()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.gestionarRol"><code class="docutils literal notranslate"><span class="pre">gestionarRol()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.home"><code class="docutils literal notranslate"><span class="pre">home()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.inicio"><code class="docutils literal notranslate"><span class="pre">inicio()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.listadoCategorias"><code class="docutils literal notranslate"><span class="pre">listadoCategorias()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="login.html#login.views.perfil"><code class="docutils literal notranslate"><span class="pre">perfil()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.publicacionCategoria"><code class="docutils literal notranslate"><span class="pre">publicacionCategoria()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.rol"><code class="docutils literal notranslate"><span class="pre">rol()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="login.html#login.views.seleccionar_plantilla"><code class="docutils literal notranslate"><span class="pre">seleccionar_plantilla()</span></code></a></li>

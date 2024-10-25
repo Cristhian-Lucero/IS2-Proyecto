@@ -320,6 +320,38 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <p>Configuración de URLs para la aplicación Perfil.</p>
 <p>Define las rutas para la gestión de perfiles.</p>
 </section>
+<section id="module-Perfil.util">
+<span id="perfil-util-module"></span><h2>Perfil.util module<a class="headerlink" href="#module-Perfil.util" title="Link to this heading">¶</a></h2>
+<p>Este módulo proporciona funciones para enviar notificaciones automáticas por correo en eventos relacionados con las publicaciones del usuario.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="Perfil.util.enviar_notificacion_cambio_estado">
+<span class="sig-prename descclassname"><span class="pre">Perfil.util.</span></span><span class="sig-name descname"><span class="pre">enviar_notificacion_cambio_estado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usuario</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicacion</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Perfil.util.enviar_notificacion_cambio_estado" title="Link to this definition">¶</a></dt>
+<dd><p>Envía una notificación por correo al usuario cuando su publicación ha cambiado de estado.</p>
+<p>Parametros:
+- usuario (User): Objeto de usuario que recibe la notificación. Debe tener un atributo “username” y “email”.
+- publicacion (Publicacion): Objeto de la publicación que ha cambiado de estado. Debe tener un atributo “titulo”.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Perfil.util.enviar_notificacion_comentario">
+<span class="sig-prename descclassname"><span class="pre">Perfil.util.</span></span><span class="sig-name descname"><span class="pre">enviar_notificacion_comentario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicacion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comentario</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Perfil.util.enviar_notificacion_comentario" title="Link to this definition">¶</a></dt>
+<dd><p>Envía una notificación por correo al autor de una publicación cuando hay un nuevo comentario.</p>
+<p>Parametros:
+- autor (User): Objeto de usuario que es el autor de la publicación. Debe tener un atributo “username” y “email”.
+- publicacion (Publicacion): Objeto de la publicación que ha recibido un comentario. Debe tener un atributo <cite>titulo</cite>.
+- comentario (Comentario): Objeto del comentario. Debe tener un atributo <cite>texto</cite>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Perfil.util.enviar_notificacion_modificacion">
+<span class="sig-prename descclassname"><span class="pre">Perfil.util.</span></span><span class="sig-name descname"><span class="pre">enviar_notificacion_modificacion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicacion</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Perfil.util.enviar_notificacion_modificacion" title="Link to this definition">¶</a></dt>
+<dd><p>Envía una notificación por correo al autor cuando su publicación ha sido modificada.</p>
+<p>Parametros:
+- autor (User): Objeto de usuario que es el autor de la publicación. Debe tener un atributo “username” y “email”.
+- publicacion (Publicacion): Objeto de la publicación que ha sido modificada. Debe tener un atributo “titulo”.</p>
+</dd></dl>
+
+</section>
 <section id="module-Perfil.views">
 <span id="perfil-views-module"></span><h2>Perfil.views module<a class="headerlink" href="#module-Perfil.views" title="Link to this heading">¶</a></h2>
 <p>Vistas de la aplicación Perfil.</p>
@@ -386,6 +418,11 @@ Usamos el método get_object para obtener el perfil del usuario actual.</p>
 <dd></dd></dl>
 
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Perfil.views.perfil_update">
+<span class="sig-prename descclassname"><span class="pre">Perfil.views.</span></span><span class="sig-name descname"><span class="pre">perfil_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Perfil.views.perfil_update" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </section>
 <section id="module-Perfil">

@@ -60,6 +60,14 @@ Perfil.urls module
    :undoc-members:
    :show-inheritance:
 
+Perfil.util module
+------------------
+
+.. automodule:: Perfil.util
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Perfil.views module
 -------------------
 
