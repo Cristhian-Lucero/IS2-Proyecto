@@ -327,28 +327,43 @@ class built by <code class="docutils literal notranslate"><span class="pre">crea
 <dt class="sig sig-object py" id="Perfil.util.enviar_notificacion_cambio_estado">
 <span class="sig-prename descclassname"><span class="pre">Perfil.util.</span></span><span class="sig-name descname"><span class="pre">enviar_notificacion_cambio_estado</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">usuario</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicacion</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Perfil.util.enviar_notificacion_cambio_estado" title="Link to this definition">¶</a></dt>
 <dd><p>Envía una notificación por correo al usuario cuando su publicación ha cambiado de estado.</p>
-<p>Parametros:
-- usuario (User): Objeto de usuario que recibe la notificación. Debe tener un atributo “username” y “email”.
-- publicacion (Publicacion): Objeto de la publicación que ha cambiado de estado. Debe tener un atributo “titulo”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>usuario</strong> (<em>User</em>) – Objeto de usuario que recibe la notificación. Debe tener un atributo “username” y “email”.</p></li>
+<li><p><strong>publicacion</strong> (<a class="reference internal" href="crearpublicaciones.html#crearpublicaciones.models.Publicacion" title="crearpublicaciones.models.Publicacion"><em>Publicacion</em></a>) – Objeto de la publicación que ha cambiado de estado. Debe tener un atributo “titulo”.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Perfil.util.enviar_notificacion_comentario">
 <span class="sig-prename descclassname"><span class="pre">Perfil.util.</span></span><span class="sig-name descname"><span class="pre">enviar_notificacion_comentario</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicacion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comentario</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Perfil.util.enviar_notificacion_comentario" title="Link to this definition">¶</a></dt>
 <dd><p>Envía una notificación por correo al autor de una publicación cuando hay un nuevo comentario.</p>
-<p>Parametros:
-- autor (User): Objeto de usuario que es el autor de la publicación. Debe tener un atributo “username” y “email”.
-- publicacion (Publicacion): Objeto de la publicación que ha recibido un comentario. Debe tener un atributo <cite>titulo</cite>.
-- comentario (Comentario): Objeto del comentario. Debe tener un atributo <cite>texto</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>autor</strong> (<em>User</em>) – Objeto de usuario que es el autor de la publicación. Debe tener un atributo “username” y “email”.</p></li>
+<li><p><strong>publicacion</strong> (<a class="reference internal" href="crearpublicaciones.html#crearpublicaciones.models.Publicacion" title="crearpublicaciones.models.Publicacion"><em>Publicacion</em></a>) – Objeto de la publicación que ha recibido un comentario. Debe tener un atributo <cite>titulo</cite>.</p></li>
+<li><p><strong>comentario</strong> (<a class="reference internal" href="crearpublicaciones.html#crearpublicaciones.models.Comentario" title="crearpublicaciones.models.Comentario"><em>Comentario</em></a>) – Objeto del comentario. Debe tener un atributo <cite>texto</cite>.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="Perfil.util.enviar_notificacion_modificacion">
 <span class="sig-prename descclassname"><span class="pre">Perfil.util.</span></span><span class="sig-name descname"><span class="pre">enviar_notificacion_modificacion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicacion</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Perfil.util.enviar_notificacion_modificacion" title="Link to this definition">¶</a></dt>
 <dd><p>Envía una notificación por correo al autor cuando su publicación ha sido modificada.</p>
-<p>Parametros:
-- autor (User): Objeto de usuario que es el autor de la publicación. Debe tener un atributo “username” y “email”.
-- publicacion (Publicacion): Objeto de la publicación que ha sido modificada. Debe tener un atributo “titulo”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>autor</strong> (<em>User</em>) – Objeto de usuario que es el autor de la publicación. Debe tener un atributo “username” y “email”.</p></li>
+<li><p><strong>publicacion</strong> (<a class="reference internal" href="crearpublicaciones.html#crearpublicaciones.models.Publicacion" title="crearpublicaciones.models.Publicacion"><em>Publicacion</em></a>) – Objeto de la publicación que ha sido modificada. Debe tener un atributo “titulo”.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

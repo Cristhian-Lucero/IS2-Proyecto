@@ -9,9 +9,9 @@ def enviar_notificacion_cambio_estado(usuario, publicacion):
     """
     Envía una notificación por correo al usuario cuando su publicación ha cambiado de estado.
 
-    Parametros:
-    - usuario (User): Objeto de usuario que recibe la notificación. Debe tener un atributo 'username' y 'email'.
-    - publicacion (Publicacion): Objeto de la publicación que ha cambiado de estado. Debe tener un atributo 'titulo'.
+    Args:
+        usuario (User): Objeto de usuario que recibe la notificación. Debe tener un atributo 'username' y 'email'.
+        publicacion (Publicacion): Objeto de la publicación que ha cambiado de estado. Debe tener un atributo 'titulo'.
     """
 
     asunto = 'Tu publicación ha cambiado de estado'
@@ -23,9 +23,9 @@ def enviar_notificacion_modificacion(autor, publicacion):
     """
     Envía una notificación por correo al autor cuando su publicación ha sido modificada.
 
-    Parametros:
-    - autor (User): Objeto de usuario que es el autor de la publicación. Debe tener un atributo 'username' y 'email'.
-    - publicacion (Publicacion): Objeto de la publicación que ha sido modificada. Debe tener un atributo 'titulo'.
+    Args:
+        autor (User): Objeto de usuario que es el autor de la publicación. Debe tener un atributo 'username' y 'email'.
+        publicacion (Publicacion): Objeto de la publicación que ha sido modificada. Debe tener un atributo 'titulo'.
     """
 
     asunto = 'Tu publicación ha sido modificada'
@@ -37,10 +37,10 @@ def enviar_notificacion_comentario(autor, publicacion, comentario):
     """
     Envía una notificación por correo al autor de una publicación cuando hay un nuevo comentario.
 
-    Parametros:
-    - autor (User): Objeto de usuario que es el autor de la publicación. Debe tener un atributo 'username' y 'email'.
-    - publicacion (Publicacion): Objeto de la publicación que ha recibido un comentario. Debe tener un atributo `titulo`.
-    - comentario (Comentario): Objeto del comentario. Debe tener un atributo `texto`.
+    Args:
+        autor (User): Objeto de usuario que es el autor de la publicación. Debe tener un atributo 'username' y 'email'.
+        publicacion (Publicacion): Objeto de la publicación que ha recibido un comentario. Debe tener un atributo `titulo`.
+        comentario (Comentario): Objeto del comentario. Debe tener un atributo `texto`.
     """
 
     asunto = 'Nuevo comentario en tu publicación'
