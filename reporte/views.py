@@ -11,6 +11,17 @@ from login.models import *
 
 @login_required
 def masVistos(request):
+    """
+    Vista para mostrar las publicaciones más vistas basadas en los filtros especificados (rango de fechas y categorías).
+    Si el método de la solicitud es POST, genera un informe con las 10 publicaciones más vistas.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP que contiene parámetros GET opcionales: 'start_date', 'end_date', 'categories'.
+
+    Returns:
+        HttpResponse: HTML renderizado con una lista de las publicaciones más vistas o una redirección a 'listaReportes' tras la creación del informe.
+    """
+
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
     categories = request.GET.getlist('categories')  # Esto obtiene una lista de categorías seleccionadas
@@ -72,6 +83,17 @@ def masVistos(request):
 
 @login_required
 def masLikeados(request):
+    """
+    Vista para mostrar las publicaciones con más likes basadas en los filtros especificados (rango de fechas y categorías).
+    Si el método de la solicitud es POST, genera un informe con las 10 publicaciones con más likes.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP que contiene parámetros GET opcionales: 'start_date', 'end_date', 'categories'.
+
+    Returns:
+        HttpResponse: HTML renderizado con una lista de las publicaciones con más likes o una redirección a 'listaReportes' tras la creación del informe.
+    """
+
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
     categories = request.GET.getlist('categories')  # Esto obtiene una lista de categorías seleccionadas
@@ -131,6 +153,17 @@ def masLikeados(request):
 
 @login_required
 def porTiempo(request):
+    """
+    Vista para mostrar las publicaciones redactadas en un rango de tiempo especificado y basadas en categorías seleccionadas.
+    Si el método de la solicitud es POST, genera un informe con todas las publicaciones redactadas en el tiempo especificado.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP que contiene parámetros GET opcionales: 'start_date', 'end_date', 'categories'.
+
+    Returns:
+        HttpResponse: HTML renderizado con una lista de publicaciones por tiempo o una redirección a 'listaReportes' tras la creación del informe.
+    """
+
     start_date = request.GET.get('start_date')
     end_date = request.GET.get('end_date')
     categories = request.GET.getlist('categories')  # Esto obtiene una lista de categorías seleccionadas
@@ -190,6 +223,16 @@ def porTiempo(request):
 
 @login_required
 def listaReportes(request):
+    """
+    Vista para mostrar la lista de reportes generados en el sistema ordenados por la fecha de creación.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP.
+
+    Returns:
+        HttpResponse: HTML renderizado con una lista de reportes ordenados.
+    """
+
     reportes = Reporte.objects.all()
     return render(request, 'lista_reportes.html', {
         'reportes': list(reportes.order_by('-fecha_creacion'))
@@ -197,6 +240,17 @@ def listaReportes(request):
 
 @login_required
 def visualizarReporte(request, reporte_id):
+    """
+    Vista para mostrar el contenido de un reporte específico basado en su ID.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP.
+        reporte_id (int): El ID del reporte a visualizar.
+
+    Returns:
+        HttpResponse: HTML renderizado con el contenido del reporte seleccionado.
+    """
+
     reporte = Reporte.objects.get(id=reporte_id)
 
     return render(request, 'visualizar_reporte.html', {
@@ -205,6 +259,17 @@ def visualizarReporte(request, reporte_id):
 
 @login_required
 def eliminarReporte(request, reporte_id):
+    """
+    Vista para eliminar un reporte basado en su ID.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP.
+        reporte_id (int): El ID del reporte a eliminar.
+
+    Returns:
+        HttpResponse: Redirección a la lista de reportes después de la eliminación.
+    """
+
     reporte = Reporte.objects.get(id=reporte_id)
     reporte.delete()
 
@@ -213,6 +278,16 @@ def eliminarReporte(request, reporte_id):
 
 @login_required
 def dashboard(request):
+    """
+    Vista del tablero que muestra estadísticas sobre las publicaciones y roles en el sistema.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP.
+
+    Returns:
+        HttpResponse: HTML renderizado con estadísticas sobre publicaciones y usuarios según sus roles.
+    """
+    
     nro_publicado = Publicacion.objects.filter(estado="publicado")
     nro_borrador = Publicacion.objects.filter(estado="borrador")
     nro_revision = Publicacion.objects.filter(estado="revision")

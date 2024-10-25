@@ -389,6 +389,24 @@ def seleccionar_plantilla(request, categoria_id):
 
 @login_required
 def ajustes(request):
+    """
+    Vista para la gestión de los ajustes de usuario, permitiendo actualizar nombre y apellido, foto de perfil, biografía, email y contraseña.
+
+    Muestra diferentes formularios dependiendo del tipo de ajuste seleccionado.
+
+    Argumentos:
+        request (HttpRequest): La solicitud HTTP que contiene la información del formulario enviado (si corresponde).
+
+    Formularios manejados:
+        - `foto_bio`: Actualización de foto de perfil y biografía.
+        - `nombre_apellido`: Actualización de nombre y apellido.
+        - `email`: Actualización de email.
+        - `contrasena`: Actualización de la contraseña.
+
+    Retorna:
+        HttpResponse: Renderiza la plantilla 'login/ajustes.html' con los formularios correspondientes y sus instancias.
+    """
+
     perfil = request.user
     instancia = Usuario.objects.get(user_id=perfil.id)  # Obtenemos la instancia de Usuario
 
@@ -438,6 +456,19 @@ def ajustes(request):
 
 @login_required
 def perfil(request, username):
+    """
+    Vista para mostrar el perfil de un usuario específico basado en su nombre de usuario.
+
+    Muestra las publicaciones del usuario, así como información adicional como el total de likes y vistas.
+
+    Argumentos:
+        request (HttpRequest): La solicitud HTTP.
+        username (str): El nombre de usuario del perfil que se desea mostrar.
+
+    Retorna:
+        HttpResponse: Renderiza la plantilla 'login/perfil.html' con la información del usuario y sus publicaciones.
+    """
+
     usuario = User.objects.get(username=username)
     publicacion_usuario = Publicacion.objects.filter(user=usuario)
     usuario_datos_extra = Usuario.objects.get(user_id=usuario.id)
@@ -461,6 +492,17 @@ def perfil(request, username):
 
 @login_required
 def eliminar_usuario(request, user_id):
+    """
+    Vista para eliminar un usuario específico basado en su ID.
+
+    Argumentos:
+        request (HttpRequest): La solicitud HTTP.
+        user_id (int): El ID del usuario que se desea eliminar.
+
+    Retorna:
+        HttpResponse: Redirige a la página principal 'home' después de eliminar el usuario.
+    """
+    
     usuario = User.objects.get(id=user_id)
     usuario.delete()
     return redirect('home')
