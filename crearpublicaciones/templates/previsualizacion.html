@@ -4,6 +4,17 @@
 {% load custom_filters %}
 <head>
     <style>
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Espacio entre los botones */
+        }
+
+        .button-container form,
+        .button-container button {
+            margin: 0; /* Asegura que no haya márgenes adicionales */
+        }
+
         .contenido img {
             max-width: 100%;
             height: auto;
@@ -49,14 +60,17 @@
             <p><strong>Categoría:</strong> {{ publicacion.categoria.descripcion_corta }}</p>
             <p><strong>Fecha de Creación:</strong> {{ publicacion.fecha_creacion }}</p>
             <p><strong>Estado:</strong> {{ publicacion.get_estado_display }}</p>
-
-            {% if request.user == publicacion.user or 'gestionar contenido otros' in permisos_categoria|get_item:publicacion.categoria.id %}
-                <form action="{% url 'eliminar_publicacion' publicacion.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn-delete" onclick="return confirm('¿Está seguro que desea eliminar esta publicación?')">Eliminar Publicación</button>
-                </form>
-                <button class="btn-edit" onclick="window.location.href='{% url 'modificar_publicacion' publicacion.id %}'">Modificar Publicacion</button>
-            {% endif %}
+            <br>
+            <div class="button-container">
+                {% if request.user == publicacion.user or 'gestionar contenido otros' in permisos_categoria|get_item:publicacion.categoria.id %}
+                    <form action="{% url 'eliminar_publicacion' publicacion.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-delete" onclick="return confirm('¿Está seguro que desea eliminar esta publicación?')">Eliminar Publicación</button>
+                    </form>
+                    <button class="submit" onclick="window.location.href='{% url 'modificar_publicacion' publicacion.id %}'">Modificar Publicacion</button>
+                {% endif %}
+            </div>
+            
         </div>
     
         <div style="text-align: center; margin-top: 20px;">
