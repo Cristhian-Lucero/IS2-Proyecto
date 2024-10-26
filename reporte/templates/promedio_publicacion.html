@@ -1,0 +1,131 @@
+{% extends 'encabezado.html' %}
+
+{% block content%}
+{% load custom_filters %}
+<head>
+    <title>Promedio de tiempo de publicacion</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: #171717;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .filter-form {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        .filter-form .date-fields {
+            display: flex;
+            justify-content: space-between;
+        }
+        .filter-form label {
+            margin-bottom: 10px;
+        }
+        .filter-form input, .filter-form select {
+            padding: 8px;
+            margin-bottom: 15px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .filter-form .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .categories label {
+            margin-right: 10px;
+        }
+        .btn {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .articles {
+            margin-top: 20px;
+        }
+        .article {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .filter-form .date-field {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .filter-form .date-field:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Promedio de Tiempo de publicacion</h1>
+<div class="container">
+    <!-- Formulario para seleccionar fechas y categorías -->
+    <form class="filter-form" action="" method="GET">
+        <!-- Seleccionar fechas -->
+        <div class="date-fields">
+            <div class="date-field">
+                <label for="start-date">Fecha de Inicio:</label>
+                <input type="date" id="start-date" name="start-date">
+            </div>
+            <div class="date-field">
+                <label for="end-date">Fecha de Fin:</label>
+                <input type="date" id="end-date" name="end-date">
+            </div>
+        </div>
+
+        <!-- Seleccionar categorías -->
+        <label>Categorías:</label>
+        <div class="categories">
+            {% for i in categorias %}
+                <p><label><input type="checkbox" name="categories" value="{{i.descripcion_corta}}">{{i.descripcion_corta}}</label></p>
+                {% endfor %}
+        </div>
+
+        <button type="submit" class="btn">Filtrar</button>
+    </form>
+
+    <div class="articles">
+        <h2 style="text-align: center;">10 publicaciones más recientes</h2>
+        <br><hr>
+        {% for i in publicaciones|slice:":10" %}
+            <div class="article">
+                <h2  style="text-transform: uppercase;">{{i.titulo}}</h2>
+                
+                <h3>Tiempo en revisión: {{ i.fecha_publicacion|resta_fechas:i.fecha_creacion }}</h3>
+                <a href="{% url 'categoria' i.categoria.descripcion_corta %}">{{ i.categoria.descripcion_corta }} <br></a> 
+                <p>Autor: <a href="/perfil/{{i.user }}">{{ i.user }}</a></p>
+                 
+                <p>{{ i.contenido_html|solo_parrafos|slice:":255" }}...</p>
+                <p>Fecha de creación: {{ i.fecha_creacion }} </p>
+                <p>Fecha de publicacion: {{ i.fecha_publicacion }} </p>
+                <a class="read-more" href="{% url 'previsualizar_publicacion' i.id %}">LEER MÁS</a>
+            </div>
+        {% endfor %}
+        <form class="create-report" method="POST">
+            {% csrf_token %}
+            <br>
+            <label for="titulo">Título del Reporte:</label>
+            <input type="text" id="titulo" name="titulo" placeholder="Ingresa el título del reporte" required>        
+            <br>
+            <button type="submit" class="btn">Guardar Reporte</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

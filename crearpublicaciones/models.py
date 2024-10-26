@@ -25,6 +25,7 @@ class Publicacion(models.Model):
     estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, default='borrador')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_publicacion = models.DateTimeField(null=True, blank=True)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     vistas = models.IntegerField(default=0)
     me_gustas = models.IntegerField(default=0)

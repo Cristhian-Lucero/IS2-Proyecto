@@ -5,7 +5,7 @@ Este archivo define las vistas para manejar la creación, modificación,
 previsualización, y eliminación de publicaciones, así como la selección
 de plantillas y la personalización de las publicaciones.
 """
-
+from login.utils import *
 from django.shortcuts import render
 from .forms import *
 from .models import *
@@ -16,7 +16,7 @@ from utils.decorators import *
 import time
 import json
 from bs4 import BeautifulSoup
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
@@ -50,6 +50,7 @@ def crear_publicacion(request, categoria_id):
             publicacion = form.save(commit=False)
             publicacion.user = request.user  # Asigna el usuario autenticado
             publicacion.categoria = Categoria.objects.get(id=categoria_id)
+            publicacion.fecha_publicacion = null
             publicacion.save()  # Guarda la publicación
             time.sleep(1)
             return redirect('mis_publicaciones')  # Redirige a la página "Mis Publicaciones"
@@ -77,17 +78,27 @@ def previsualizar_publicacion(request, publicacion_id):
     """
     
     # Obtener la publicación por su ID
-    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
-    comentarios = Comentario.objects.filter(publicacion=publicacion_id)
-    #publicacion.vistas += 1
-    #publicacion.save()
-    likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
-    # Renderizar la plantilla de previsualización
-    return render(request, 'previsualizacion.html', {
-        'publicacion': publicacion,
-        'comentarios': comentarios,
-        'likeado': likeado
-        })
+    try:
+        publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+
+        if (request.user != publicacion.user and publicacion.estado != 'publicado') or publicacion.categoria.estado == 'Inactivo':
+            print('aprobao')
+            if not verificar_permisos_categoria_id(request, ['aprobar contenido', 'rechazar contenido', 'publicar contenido', 'cambiar estado publicacion', 'visualizar historial cambios', 'gestionar contenido otros'], publicacion.categoria_id):
+                return render(request, 'publicacion_no_disponible.html')
+
+        comentarios = Comentario.objects.filter(publicacion=publicacion_id)
+        #publicacion.vistas += 1
+        #publicacion.save()
+        likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
+        # Renderizar la plantilla de previsualización
+        return render(request, 'previsualizacion.html', {
+            'publicacion': publicacion,
+            'comentarios': comentarios,
+            'likeado': likeado
+            })
+    except Http404:
+        # Renderiza un HTML específico si la publicación no existe
+        return render(request, 'publicacion_no_existe.html')
 
 @csrf_exempt
 def incrementar_vistas(request, publicacion_id):

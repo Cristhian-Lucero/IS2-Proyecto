@@ -6,6 +6,7 @@ from crearpublicaciones.models import *
 from login.models import *
 from .models import *
 from login.models import *
+from datetime import timedelta
 
 # Create your views here.
 
@@ -22,8 +23,8 @@ def masVistos(request):
         HttpResponse: HTML renderizado con una lista de las publicaciones más vistas o una redirección a 'listaReportes' tras la creación del informe.
     """
 
-    start_date = request.GET.get('start_date')
-    end_date = request.GET.get('end_date')
+    start_date = request.GET.get('start-date')
+    end_date = request.GET.get('end-date')
     categories = request.GET.getlist('categories')  # Esto obtiene una lista de categorías seleccionadas
 
     # Realiza la consulta a la base de datos utilizando los filtros obtenidos
@@ -94,8 +95,8 @@ def masLikeados(request):
         HttpResponse: HTML renderizado con una lista de las publicaciones con más likes o una redirección a 'listaReportes' tras la creación del informe.
     """
 
-    start_date = request.GET.get('start_date')
-    end_date = request.GET.get('end_date')
+    start_date = request.GET.get('start-date')
+    end_date = request.GET.get('end-date')
     categories = request.GET.getlist('categories')  # Esto obtiene una lista de categorías seleccionadas
     
     # Realiza la consulta a la base de datos utilizando los filtros obtenidos
@@ -164,8 +165,8 @@ def porTiempo(request):
         HttpResponse: HTML renderizado con una lista de publicaciones por tiempo o una redirección a 'listaReportes' tras la creación del informe.
     """
 
-    start_date = request.GET.get('start_date')
-    end_date = request.GET.get('end_date')
+    start_date = request.GET.get('start-date')
+    end_date = request.GET.get('end-date')
     categories = request.GET.getlist('categories')  # Esto obtiene una lista de categorías seleccionadas
 
     # Realiza la consulta a la base de datos utilizando los filtros obtenidos
@@ -220,6 +221,91 @@ def porTiempo(request):
 
         nuevo_reporte.save()
         return redirect('listaReportes')
+
+@login_required
+def promedioRevision(request):
+
+    start_date = request.GET.get('start-date')
+    end_date = request.GET.get('end-date')
+    categories = request.GET.getlist('categories')  # Esto obtiene una lista de categorías seleccionadas
+    
+    # Realiza la consulta a la base de datos utilizando los filtros obtenidos
+    publicaciones = Publicacion.objects.filter(estado='publicado')
+    publicaciones = publicaciones.order_by('-fecha_creacion')
+
+    if start_date and end_date:
+        publicaciones = publicaciones.filter(fecha_creacion__range=[start_date, end_date])
+
+    if categories:
+        publicaciones = publicaciones.filter(categoria__descripcion_corta__in=categories)
+
+    if request.method == 'GET':
+
+        return render(request, 'promedio_publicacion.html', {
+            'publicaciones': list(publicaciones.order_by('-fecha_creacion')), 
+            'categorias': Categoria.objects.all()
+            })
+    else:
+        promedio = timedelta() 
+        for i in publicaciones:
+            promedio += i.fecha_publicacion - i.fecha_creacion
+
+        promedio = promedio / len(publicaciones)
+
+        dias = promedio.days
+        segundos_totales = promedio.seconds
+        horas = segundos_totales // 3600
+        minutos = (segundos_totales % 3600) // 60
+        segundos = segundos_totales % 60
+
+
+        html_content = f"""
+            <div class="articles">
+                <h2 style="text-align: center;">Promedio de revision de los siguientes artículos</h2>
+                <h3style="text-align: center;"> {dias} días {horas} horas {minutos} minutos y {segundos} segundos</h3>
+                <br><hr>
+            </div>
+        """
+        titulo = request.POST.get('titulo')
+        
+        for i in publicaciones[:10]:
+            en_revision = i.fecha_publicacion - i.fecha_creacion
+
+            dias = en_revision.days
+            segundos_totales = en_revision.seconds
+            horas = segundos_totales // 3600
+            minutos = (segundos_totales % 3600) // 60
+            segundos = segundos_totales % 60
+
+            texto = f"""
+            <div class="article">
+                <h2 style="text-transform: uppercase;">{ i.titulo }</h2>
+                <h3>Likes: { i.me_gustas }</h3>
+                <a href="/home/categoria/{i.categoria.descripcion_corta}">{ i.categoria.descripcion_corta } <br></a> 
+                <p>Autor: <a href="/perfil/{i.user}">{i.user}</a></p>
+                <h3>Tiempo en revisión: {dias} días {horas} horas {minutos} minutos y {segundos} segundos</h3>
+                <p>Fecha creacion: { i.fecha_creacion } </p>
+                <p>Fecha publicacion: { i.fecha_publicacion } </p>
+                <button class="toggle-button" onclick="toggleContent('contenido-{i.id}')">Mostrar contenido</button>
+                <a class="read-more" href="/crearpublicaciones/previsualizar/{ i.id }">IR A PAGINA</a>
+                <div id="contenido-{i.id}" class="contenido"> {i.contenido_html} </div>
+            </div>
+            """
+            html_content += texto  # Esta línea debería estar alineada correctamente dentro del bucle.
+
+        html_content += "</div>"  # Añadido fuera del bucle.
+
+
+        nuevo_reporte = Reporte.objects.create()
+
+        nuevo_reporte.titulo = titulo
+        nuevo_reporte.html_content = html_content
+        nuevo_reporte.user = request.user.username
+        nuevo_reporte.tipo = 'tiempo de revision'
+
+        nuevo_reporte.save()
+        return redirect('listaReportes')
+
 
 @login_required
 def listaReportes(request):

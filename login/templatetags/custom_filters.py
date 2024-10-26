@@ -13,3 +13,30 @@ def solo_parrafos(html_content):
     paragraphs = soup.find_all('p')
     return ' '.join([p.get_text() for p in paragraphs])
 
+@register.filter
+def resta_fechas(fecha_publicacion, fecha_creacion):
+    delta = fecha_publicacion - fecha_creacion
+
+    dias = delta.days
+    segundos_totales = delta.seconds
+    horas = segundos_totales // 3600
+    minutos = (segundos_totales % 3600) // 60
+    segundos = segundos_totales % 60
+
+    # Formatear la cadena de salida
+    resultado = f"{dias} días {horas} horas {minutos} minutos y {segundos} segundos"
+    return resultado
+
+@register.filter
+def formatear_timedelta(delta):
+    # Extraer días, segundos, horas, y minutos del timedelta
+    dias = delta.days
+    segundos_totales = delta.seconds
+    horas = segundos_totales // 3600
+    minutos = (segundos_totales % 3600) // 60
+    segundos = segundos_totales % 60
+
+    # Formatear la cadena de salida
+    resultado = f"{dias} días {horas} horas {minutos} minutos y {segundos} segundos"
+    return resultado
+

@@ -6,6 +6,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt  # Asegúrate de importar csrf_exempt
 import json
 from login.utils import *
+from datetime import datetime
+from django.utils import timezone
 
 @login_required
 def kanban_board(request, categoria_id=None):
@@ -93,6 +95,7 @@ def update_task_state(request, task_id):
             # Obtener la publicación y actualizar su estado
             publicacion = get_object_or_404(Publicacion, id=task_id)
             publicacion.estado = new_state
+            publicacion.fecha_publicacion = timezone.now()
             publicacion.save()
 
             return JsonResponse({"message": "Estado actualizado correctamente"}, status=200)
