@@ -55,7 +55,9 @@
                     <div class="category"> <a style="text-transform: uppercase;" href="{% url 'categoria' i.categoria.descripcion_corta %}">{{ i.categoria.descripcion_corta }}</a> </div>
                     <div class="description">
                         <a href="/perfil/{{i.user }}"><h3>Autor: {{ i.user }}</h3></a>
-                        {{ i.contenido_html|slice:":255"|safe }}...
+                        {% load custom_filters %}
+
+                        {{ i.contenido_html|solo_parrafos|slice:":255" }}...
                     </div>
                     <a class="read-more" href="{% url 'previsualizar_publicacion' i.id %}">LEER MÁS</a>
                     <p style="text-align: right;"><strong>Visualizaciones:</strong> {{ i.vistas }} | <strong>Likes: </strong>{{ i.me_gustas }}</p>

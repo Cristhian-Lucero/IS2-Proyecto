@@ -133,7 +133,6 @@ class UpdatePassword(forms.Form):
 
         if password_nuevo != password_repetido:
             raise forms.ValidationError("Las contraseñas no coinciden.")
-        print(self.request.user.password)
         return cleaned_data
 
     def save(self):

@@ -127,7 +127,8 @@
         <div class="report">
             <div class="report-title">{{ i.titulo }}</div>
             <div class="report-text"> <strong>{{ i.categoria }}</strong></div>
-            <div class="report-text">{{ i.contenido_html|slice:":255"|safe }}...</div>
+            {% load custom_filters %}
+            <div class="report-text">{{ i.contenido_html|solo_parrafos|slice:":255" }}...</div>
             <a href="{% url 'previsualizar_publicacion' i.id %}"> Leer más</a>
             <div class="report-date" style="font-size: 12px;">Publicado: {{ i.fecha_creacion }}</div>
         </div>

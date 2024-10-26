@@ -134,14 +134,12 @@ def gestionarRol(request):
     if request.method == 'POST':
         # Obtener los valores seleccionados
         usuario_id = request.POST.get('usuario')
-        print(f'el user id del form es {usuario_id}')
         categoria_id = request.POST.get('categoria')
         rol_id = request.POST.get('rol')
 
         try:
             # Buscar la relación en UsuarioRolCategoria
             usuario_instancia = Usuario.objects.get(user_id=usuario_id)
-            print(f'el user id del filtrado es {usuario_instancia}')
             usuario_rol_categoria = UsuarioRolCategoria.objects.get(usuario_id=usuario_instancia, categoria_id=categoria_id)
 
             # Actualizar el rol
