@@ -1,8 +1,9 @@
 {% extends 'encabezado.html' %}
 
 {% block content%}
+{% load custom_filters %}
 <head>
-    <title>Top Artículos redactados por tiempo</title>
+    <title>listado publicado por tiempo</title>
     <style>
         .container {
             width: 80%;
@@ -75,7 +76,7 @@
 </head>
 <body>
 
-<h1>Artículos Redactados Por Fecha</h1>
+<h1>Artículos Publicados Por Fecha</h1>
 <div class="container">
     <!-- Formulario para seleccionar fechas y categorías -->
     <form class="filter-form" action="" method="GET">
@@ -111,10 +112,8 @@
                 <h3>Likes: {{ i.me_gustas }}</h2>
                 <a href="{% url 'categoria' i.categoria.descripcion_corta %}">{{ i.categoria.descripcion_corta }} <br></a> 
                 <p>Autor: <a href="/perfil/{{i.user }}">{{ i.user }}</a></p>
-                {% load custom_filters %}
-
-                        {{ i.contenido_html|solo_parrafos|slice:":255" }}...
-                <p>Fecha: {{ i.fecha_creacion }} </p>
+                {{ i.contenido_html|solo_parrafos|slice:":255" }}...
+                <p>Fecha publicacion: {{ i.fecha_publicacion }} </p>
                 <a class="read-more" href="{% url 'previsualizar_publicacion' i.id %}">LEER MÁS</a>
             </div>
         {% endfor %}

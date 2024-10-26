@@ -111,7 +111,9 @@
                 <h3>Likes: {{ i.me_gustas }}</h2>
                 <a href="{% url 'categoria' i.categoria.descripcion_corta %}">{{ i.categoria.descripcion_corta }} <br></a> 
                 <p>Autor: <a href="/perfil/{{i.user }}">{{ i.user }}</a></p>
-                <p>{{ i.contenido_html|slice:":255"|safe }}...</p>
+                {% load custom_filters %}
+
+                        {{ i.contenido_html|solo_parrafos|slice:":255" }}...
                 <p>Fecha: {{ i.fecha_creacion }} </p>
                 <a class="read-more" href="{% url 'previsualizar_publicacion' i.id %}">LEER MÁS</a>
             </div>

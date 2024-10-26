@@ -5,6 +5,7 @@ urlpatterns = [
     path('masVistos', masVistos, name='masVistos'),
     path('masLikeados', masLikeados, name='masLikeados'),
     path('porTiempo', porTiempo, name='porTiempo'),
+    path('publicadoPorTiempo', publicadoPorTiempo, name='publicadoPorTiempo'),
     path('promedioRevision', promedioRevision, name='promedioRevision'),
     path('listaReportes', listaReportes, name='listaReportes'),
     path('visualizarReporte/<int:reporte_id>', visualizarReporte, name='visualizarReporte'),
