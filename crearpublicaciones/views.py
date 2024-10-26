@@ -91,6 +91,8 @@ def previsualizar_publicacion(request, publicacion_id):
         #publicacion.save()
         likeado = Likes.objects.filter(user=request.user, publicacion=publicacion_id).exists()
         # Renderizar la plantilla de previsualización
+        
+
         return render(request, 'previsualizacion.html', {
             'publicacion': publicacion,
             'comentarios': comentarios,
@@ -343,7 +345,7 @@ def eliminar_publicacion(request, publicacion_id):
 
     if request.method == 'POST':
         publicacion.delete()
-        return redirect('mis_publicaciones')
+        return redirect('home')
     return render(request, 'eliminarpublicacion.html', {'publicacion': publicacion})
 
 @login_required
