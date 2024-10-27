@@ -1,5 +1,7 @@
+from crearpublicaciones.models import Publicacion
 from login.models import Categoria, UsuarioRolCategoria
 from Perfil.models import Usuario
+from django.contrib.auth.models import User
 
 def categorias_context(request):
     categorias = Categoria.objects.all()
@@ -65,4 +67,12 @@ def permisos_categoria_usuario_context(request):
         'userlogeado': user.user
         }
 
+def autores_context (request):
+    autores = User.objects.all()
+    autores_filtrado = []
+    for i in autores:
+        publicaciones_autor = list( Publicacion.objects.filter(user=i, estado='publicado') )
+        if len(publicaciones_autor) > 0:
+            autores_filtrado.append(i)
+    return {'autores': autores_filtrado}
 

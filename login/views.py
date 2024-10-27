@@ -23,6 +23,7 @@ from utils.decorators import check_permiso_categoria
 from .utils import *
 from django.contrib.auth.models import User
 
+from django.db.models import Q
 
 @login_required
 def home(request):
@@ -479,7 +480,7 @@ def perfil(request, username):
             likes += i.me_gustas
             vistas += i.vistas
             publicacion_usuario_filtrado.append(i)
-    
+
     return render(request, 'login/perfil.html', {
         'usuario': usuario,
         'publicaciones': publicacion_usuario_filtrado,
@@ -504,3 +505,54 @@ def eliminar_usuario(request, user_id):
     usuario = User.objects.get(id=user_id)
     usuario.delete()
     return redirect('home')
+
+def search(request):
+
+    return render(request, 'search/busqueda_contenido.html', {
+        'publicaciones': list((Publicacion.objects.all()).order_by('-fecha_creacion'))
+    })
+
+def filtrar_publicaciones(request):
+    """
+    Filtra las publicaciones según los parámetros proporcionados en la solicitud GET.
+
+    Parameters:
+        request (HttpRequest): Objeto de solicitud que contiene los parámetros de búsqueda.
+            - keyword (str): Palabra clave para buscar en el título o contenido de las publicaciones.
+            - category (str): Categoría de la publicación.
+            - status (str): Estado de la publicación.
+            - date-from (str): Fecha desde la cual filtrar las publicaciones.
+            - autor (str): Nombre de usuario del autor de la publicación.
+
+    Returns:
+        HttpResponse: Renderiza la pagina con el contexto de las publicaciones filtradas.
+    """
+    # Obtener los valores del filtro desde la URL (GET)
+    keyword = request.GET.get('keyword', '')
+    categoria = request.GET.get('category', '')
+    fecha = request.GET.get('date-from', '')
+    autor = request.GET.get('autor', '')
+
+    # Filtrar las publicaciones
+    publicaciones = Publicacion.objects.all().order_by('-fecha_creacion')
+
+    if keyword:
+        publicaciones = publicaciones.filter(Q(titulo__icontains=keyword) | Q(contenido_html__icontains=keyword))
+    if categoria:
+        publicaciones = publicaciones.filter(categoria__descripcion_corta__iexact=categoria)
+    if fecha:
+        publicaciones = publicaciones.filter(fecha_creacion__gte=fecha)
+    if autor:
+        publicaciones = publicaciones.filter(user__username__icontains=autor)
+
+    # Paginación de las publicaciones filtradas
+    paginator = Paginator(publicaciones, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'rol/home.html', {
+        'page_obj': page_obj,
+        'keyword': keyword,
+        'categoria': categoria,
+        'fecha': fecha,
+        'autor': autor})

@@ -1,0 +1,180 @@
+{% extends 'encabezado.html' %}
+
+{% block content %}
+<head>
+    <title>Filtros de Búsqueda</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #202124;
+            color: white;
+        }
+
+        .filter-container {
+            background-color: #171717;
+            padding: 20px;
+            margin: 20px auto;
+            border-radius: 15px;
+            max-width: 800px;
+        }
+
+        .filter-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+        }
+
+        /* Encabezado de cada filtro con el checkbox alineado */
+        .filter-group-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .filter-group-header input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .filter-group-header label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Campos de entrada y selección */
+        .filter-group input[type="text"], 
+        .filter-group select, 
+        .filter-group input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #606368;
+            background-color: #202124;
+            color: white;
+        }
+
+        .disabled {
+            background-color: #3a3a3a;
+            color: #888;
+            pointer-events: none;
+        }
+
+        .filter-group button {
+            padding: 10px 20px;
+            background-color: #4C994B;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .filter-group button:hover {
+            filter: brightness(1.2);
+        }
+    </style>
+</head>
+
+<div class="filter-container">
+    <h2>Filtros de Búsqueda</h2>
+
+    <!-- Filtro por Palabras Clave (opcional) -->
+    <div class="filter-group">
+        <div class="filter-group-header">
+            <input type="checkbox" id="activate-keyword" onclick="toggleFilter('keyword')">
+            <label for="keyword">Palabras Clave</label>
+        </div>
+        <input type="text" id="keyword" name="keyword" placeholder="Ingresa una o varias palabras clave" class="disabled" disabled>
+    </div>
+
+    <!-- Filtro por Categoría (opcional) -->
+    <div class="filter-group">
+        <div class="filter-group-header">
+            <input type="checkbox" id="activate-categoria" onclick="toggleFilter('categoria')">
+            <label for="categoria">Categoría</label>
+        </div>
+        <select id="categoria" name="categoria" class="disabled" disabled>
+            <option value="">Selecciona una Categoría</option>
+            {% for categoria in categorias %}
+            <option value="{{ categoria.id }}">{{ categoria.descripcion_corta }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- Filtro por Estado (opcional) -->
+    <div class="filter-group">
+        <div class="filter-group-header">
+            <input type="checkbox" id="activate-estado" onclick="toggleFilter('estado')">
+            <label for="estado">Estado</label>
+        </div>
+        <select id="estado" name="estado" class="disabled" disabled>
+            <option value="">Selecciona un Estado</option>
+            <option value="borrador">Borrador</option>
+            <option value="revision">Revisión</option>
+            <option value="publicado">Publicado</option>
+            <option value="rechazado">Rechazado</option>
+            <option value="inactivo">Inactivo</option>
+        </select>
+    </div>
+
+    <!-- Filtro por Fecha (opcional) -->
+    <div class="filter-group">
+        <div class="filter-group-header">
+            <input type="checkbox" id="activate-fecha" onclick="toggleFilter('fecha')">
+            <label for="fecha">Fecha</label>
+        </div>
+        <input type="date" id="fecha" name="fecha" class="disabled" disabled>
+    </div>
+
+    <!-- Filtro por Autor (opcional) -->
+    <div class="filter-group">
+        <div class="filter-group-header">
+            <input type="checkbox" id="activate-autor" onclick="toggleFilter('autor')">
+            <label for="autor">Autor</label>
+        </div>
+        <input type="text" id="autor" name="autor" placeholder="Ingresa el nombre del autor" class="disabled" disabled>
+    </div>
+
+    <!-- Botón de Búsqueda -->
+    <div class="filter-group">
+        <button type="button" onclick="filterResults()">Buscar</button>
+    </div>
+</div>
+
+<script>
+    // Función para activar/desactivar filtros
+    function toggleFilter(filterId) {
+        const filterElement = document.getElementById(filterId);
+        const isChecked = document.getElementById(`activate-${filterId}`).checked;
+
+        if (isChecked) {
+            filterElement.disabled = false;
+            filterElement.classList.remove('disabled');
+        } else {
+            filterElement.disabled = true;
+            filterElement.classList.add('disabled');
+        }
+    }
+
+    // Función para buscar con los filtros activados
+    function filterResults() {
+        const keyword = document.getElementById('keyword').disabled ? '' : document.getElementById('keyword').value;
+        const categoria = document.getElementById('categoria').disabled ? '' : document.getElementById('categoria').value;
+        const estado = document.getElementById('estado').disabled ? '' : document.getElementById('estado').value;
+        const fecha = document.getElementById('fecha').disabled ? '' : document.getElementById('fecha').value;
+        const autor = document.getElementById('autor').disabled ? '' : document.getElementById('autor').value;
+
+        // Construir la URL con los filtros activados
+        let searchUrl = `/buscar?`;
+        if (keyword) searchUrl += `keyword=${keyword}&`;
+        if (categoria) searchUrl += `categoria=${categoria}&`;
+        if (estado) searchUrl += `estado=${estado}&`;
+        if (fecha) searchUrl += `fecha=${fecha}&`;
+        if (autor) searchUrl += `autor=${autor}`;
+
+        // Redirigir a la URL de búsqueda
+        window.location.href = searchUrl;
+    }
+</script>
+{% endblock %}
