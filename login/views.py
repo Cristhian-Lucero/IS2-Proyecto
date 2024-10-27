@@ -533,8 +533,8 @@ def filtrar_publicaciones(request):
     fecha = request.GET.get('date-from', '')
     autor = request.GET.get('autor', '')
 
-    # Filtrar las publicaciones
-    publicaciones = Publicacion.objects.all().order_by('-fecha_creacion')
+    # Filtrar las publicaciones publicadas
+    publicaciones = Publicacion.objects.filter(estado='publicado').order_by('-fecha_creacion')
 
     if keyword:
         publicaciones = publicaciones.filter(Q(titulo__icontains=keyword) | Q(contenido_html__icontains=keyword))
