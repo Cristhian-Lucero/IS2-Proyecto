@@ -1,0 +1,56 @@
+{% extends 'encabezado.html' %}
+
+{% block content %}
+<head>
+    <title>Historial de Publicación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        h1 {
+            text-align: center;
+            margin-bottom: 5%;
+            font-family: 'Yanone Kaffeesatz';
+            font-size: 40px;
+        }
+
+        .article-container {
+            display: flex;
+            align-items: flex-start;
+            background-color: #171717;
+            padding: 20px;
+            border-radius: 20px;
+            margin-left: 15%;
+            margin-right: 15%;
+            margin-bottom: 2%;
+        }
+
+        .article-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Historial de Cambios</h1>
+    {% for entry in historial %}
+        <div class="article-container" style="text-align: justify;">
+            <div class="article-content">
+                <h2 class="article-title">Acción: {{ entry.get_accion_display }}</h2>
+                <div class="description">
+                    <p><strong>Fecha:</strong> {{ entry.fecha_evento }}</p>
+                    {% if entry.accion == 'cambio_estado' %}
+                        <p><strong>Estado Anterior:</strong> {{ entry.estado_anterior|default:"N/A" }}</p>
+                        <p><strong>Estado Nuevo:</strong> {{ entry.estado_nuevo|default:"N/A" }}</p>
+                    {% endif %}
+                    <p><strong>Usuario:</strong> {{ entry.usuario.username }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -52,6 +52,14 @@ def crear_publicacion(request, categoria_id):
             publicacion.categoria = Categoria.objects.get(id=categoria_id)
             publicacion.fecha_publicacion = null
             publicacion.save()  # Guarda la publicación
+            
+            # Crear un registro en el historial de cambios
+            Historial.objects.create(
+            publicacion=publicacion,
+            usuario=request.user,
+            accion='creado'
+            )
+
             time.sleep(1)
             return redirect('mis_publicaciones')  # Redirige a la página "Mis Publicaciones"
     else:
@@ -280,6 +288,14 @@ def modificar_publicacion(request, publicacion_id):
         publicacion.titulo = data.get('title', publicacion.titulo)
         publicacion.contenido_html = data.get('contenido_html', publicacion.contenido_html)
         publicacion.save()
+
+        # Crear un registro en el historial de cambios
+        Historial.objects.create(
+        publicacion=publicacion,
+        usuario=request.user,
+        accion='modificado'
+        )
+
         return JsonResponse({'status': 'success'})
     else:
         return JsonResponse({'status': 'error', 'message': 'Método no permitido.'}, status=405)
@@ -316,6 +332,13 @@ def modificar_publicacion_ajax(request, id):
 
             # Guardar los cambios en la publicación
             publicacion.save()
+            
+            # Crear un registro en el historial de cambios
+            Historial.objects.create(
+            publicacion=publicacion,
+            usuario=request.user,
+            accion='modificado'
+            )
 
             return JsonResponse({'message': '¡Publicación actualizada con éxito!'})
         except Exception as e:
@@ -457,6 +480,14 @@ def guardar_publicacion_ajax(request, publicacion_id):
         publicacion.titulo = data.get('title', publicacion.titulo)
         publicacion.contenido_html = data.get('content', publicacion.contenido_html)
         publicacion.save()
+        
+        # Crear un registro en el historial de cambios
+        Historial.objects.create(
+        publicacion=publicacion,
+        usuario=request.user,
+        accion='modificado'
+        )
+        
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error', 'message': 'Método no permitido.'}, status=405)
 
@@ -548,9 +579,32 @@ def modificar_publicacion_ajax(request, id):
             publicacion.contenido_html = data.get('content', publicacion.contenido_html)
             publicacion.categoria_id = data.get('categoria_id', publicacion.categoria_id)
             publicacion.save()
+
+            # Crear un registro en el historial de cambios
+            Historial.objects.create(
+            publicacion=publicacion,
+            usuario=request.user,
+            accion='modificado'
+            )
+
             return JsonResponse({'message': 'Publicación actualizada con éxito.'}, status=200)
         except Publicacion.DoesNotExist:
             return JsonResponse({'message': 'Publicación no encontrada.'}, status=404)
         except Exception as e:
             return JsonResponse({'message': f'Error: {str(e)}'}, status=500)
     return JsonResponse({'message': 'Método no permitido.'}, status=405)
+
+@login_required
+def historial_publicacion(request, publicacion_id):
+    """
+    Vista para mostrar el historial de una publicación.
+    """
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+    historial = Historial.objects.filter(publicacion=publicacion).order_by('-fecha_evento')
+    
+    context = {
+        'publicacion': publicacion,
+        'historial': historial,
+    }
+    return render(request, 'historial_publicacion.html', context)
+
