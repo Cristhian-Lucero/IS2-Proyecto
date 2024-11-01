@@ -6,6 +6,9 @@ Esta clase configura la aplicación 'crearpublicaciones' dentro del proyecto IS2
 
 from django.apps import AppConfig
 
+from threading import Thread
+from .tasks import verificar_inactividad_task
+
 
 class CrearpublicacionesConfig(AppConfig):
     """
@@ -17,3 +20,8 @@ class CrearpublicacionesConfig(AppConfig):
 
     def ready(self):
         import crearpublicaciones.signals
+        
+        
+        thread = Thread(target=verificar_inactividad_task)
+        thread.daemon = True
+        thread.start()
