@@ -69,7 +69,7 @@
                     </form>
                     <button class="submit" onclick="window.location.href='{% url 'modificar_publicacion' publicacion.id %}'">Modificar Publicacion</button>
                 {% endif %}
-                <button class="submit" onclick="window.location.href='{% url 'historial_publicacion' publicacion.id %}'">Ver Historial</button>
+                <button class="btn-edit" onclick="window.location.href='{% url 'historial_publicacion' publicacion.id %}'">Ver Historial de Cambios</button>
             </div>
             
         </div>
