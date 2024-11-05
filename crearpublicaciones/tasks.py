@@ -1,6 +1,7 @@
 import time
 from datetime import timedelta, datetime
 from django.utils import timezone
+import pytz
 
 def verificar_inactividad_task():
     from .models import Publicacion
@@ -9,7 +10,7 @@ def verificar_inactividad_task():
     while True:
         if not primera_ejecucion:
             # Obtiene la fecha actual
-            fecha_actual = timezone.now()
+            fecha_actual = timezone.now().astimezone(pytz.timezone('America/Asuncion'))
 
             # Obtiene la fecha límite (hace 30 días)
             fecha_limite = fecha_actual - timedelta(days=30)
@@ -17,7 +18,7 @@ def verificar_inactividad_task():
             # Obtiene las publicaciones que caducaron
             publicaciones = Publicacion.objects.filter(fecha_publicacion__lte=fecha_limite, estado='publicado')
             # Actualiza el estado de las publicaciones a inactivo
-            #publicaciones.update(estado='inactivo')
+            publicaciones.update(estado='inactivo')
 
             # Calcula los segundos que faltan hasta medianoche
             segundos_hasta_medianoche = 86400 - ((fecha_actual.hour * 60 + fecha_actual.minute) * 60 + fecha_actual.second)
