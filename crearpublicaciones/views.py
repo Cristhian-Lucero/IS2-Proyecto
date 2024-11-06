@@ -217,7 +217,7 @@ def gestionPublicacionOtros(request, categoria_id):
 
     if not verificar_permisos_categoria_id(request, ['gestionar contenido otros'], categoria_id):
         return render(request, 'sin_permiso.html')
-
+    
     publicaciones_gestionables = Publicacion.objects.filter(categoria=categoria_id)
 
     return render(request, 'GestionPublicaciones3ros.html', {
@@ -267,6 +267,9 @@ def modificar_publicacion(request, publicacion_id):
 
     if not verificar_permisos_categoria_id(request, ['crear contenido'], publicacion.categoria_id):
         return render(request, 'sin_permiso.html')
+
+    if publicacion.estado == 'publicado':
+        return render(request, 'no_editable.html', {'categoria_publicacion': publicacion.categoria_id})
     
     if request.method == 'GET':
         blocks = parse_content(publicacion.contenido_html)

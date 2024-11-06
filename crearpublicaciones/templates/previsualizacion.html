@@ -71,7 +71,10 @@
                         {% csrf_token %}
                         <button type="submit" class="btn-delete" onclick="return confirm('¿Está seguro que desea eliminar esta publicación?')">Eliminar Publicación</button>
                     </form>
-                    <button class="submit" onclick="window.location.href='{% url 'modificar_publicacion' publicacion.id %}'">Modificar Publicacion</button>
+                    {% if  publicacion.estado != 'publicado' %}
+                        <button class="submit" onclick="window.location.href='{% url 'modificar_publicacion' publicacion.id %}'">Modificar Publicacion</button>
+                
+                    {% endif %}
                 {% endif %}
             </div>
             
