@@ -1,6 +1,7 @@
 """
 Dynamically load all Django assertion cases and expose them for importing.
 """
+
 from __future__ import annotations
 
 from functools import wraps
@@ -54,6 +55,7 @@ for assert_func in assertions_names:
 
 
 if TYPE_CHECKING:
+    from django import forms
     from django.http.response import HttpResponseBase
 
     def assertRedirects(
@@ -63,15 +65,13 @@ if TYPE_CHECKING:
         target_status_code: int = ...,
         msg_prefix: str = ...,
         fetch_redirect_response: bool = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertURLEqual(
         url1: str,
         url2: str,
         msg_prefix: str = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertContains(
         response: HttpResponseBase,
@@ -80,8 +80,7 @@ if TYPE_CHECKING:
         status_code: int = ...,
         msg_prefix: str = ...,
         html: bool = False,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertNotContains(
         response: HttpResponseBase,
@@ -89,58 +88,49 @@ if TYPE_CHECKING:
         status_code: int = ...,
         msg_prefix: str = ...,
         html: bool = False,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertFormError(
-        response: HttpResponseBase,
-        form: str,
+        form: forms.BaseForm,
         field: str | None,
         errors: str | Sequence[str],
         msg_prefix: str = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
-    def assertFormsetError(
-        response: HttpResponseBase,
-        formset: str,
+    def assertFormSetError(
+        formset: forms.BaseFormSet,
         form_index: int | None,
         field: str | None,
         errors: str | Sequence[str],
         msg_prefix: str = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertTemplateUsed(
         response: HttpResponseBase | str | None = ...,
         template_name: str | None = ...,
         msg_prefix: str = ...,
         count: int | None = ...,
-    ):
-        ...
+    ): ...
 
     def assertTemplateNotUsed(
         response: HttpResponseBase | str | None = ...,
         template_name: str | None = ...,
         msg_prefix: str = ...,
-    ):
-        ...
+    ): ...
 
     def assertRaisesMessage(
         expected_exception: type[Exception],
         expected_message: str,
         *args,
         **kwargs,
-    ):
-        ...
+    ): ...
 
     def assertWarnsMessage(
         expected_warning: Warning,
         expected_message: str,
         *args,
         **kwargs,
-    ):
-        ...
+    ): ...
 
     def assertFieldOutput(
         fieldclass,
@@ -149,58 +139,50 @@ if TYPE_CHECKING:
         field_args=...,
         field_kwargs=...,
         empty_value: str = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertHTMLEqual(
         html1: str,
         html2: str,
         msg: str | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertHTMLNotEqual(
         html1: str,
         html2: str,
         msg: str | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertInHTML(
         needle: str,
         haystack: str,
         count: int | None = ...,
         msg_prefix: str = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertJSONEqual(
         raw: str,
         expected_data: Any,
         msg: str | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertJSONNotEqual(
         raw: str,
         expected_data: Any,
         msg: str | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertXMLEqual(
         xml1: str,
         xml2: str,
         msg: str | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertXMLNotEqual(
         xml1: str,
         xml2: str,
         msg: str | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     # Removed in Django 5.1: use assertQuerySetEqual.
     def assertQuerysetEqual(
@@ -209,8 +191,7 @@ if TYPE_CHECKING:
         transform=...,
         ordered: bool = ...,
         msg: str | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertQuerySetEqual(
         qs,
@@ -218,8 +199,7 @@ if TYPE_CHECKING:
         transform=...,
         ordered: bool = ...,
         msg: str | None = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def assertNumQueries(
         num: int,
@@ -227,8 +207,7 @@ if TYPE_CHECKING:
         *args,
         using: str = ...,
         **kwargs,
-    ):
-        ...
+    ): ...
 
     # Added in Django 5.0.
     def assertMessages(
@@ -236,9 +215,7 @@ if TYPE_CHECKING:
         expected_messages: Sequence[Message],
         *args,
         ordered: bool = ...,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     # Fallback in case Django adds new asserts.
-    def __getattr__(name: str) -> Callable[..., Any]:
-        ...
+    def __getattr__(name: str) -> Callable[..., Any]: ...
