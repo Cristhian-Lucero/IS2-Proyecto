@@ -427,7 +427,7 @@ def personalizable(request, categoria_id):
         defaults={'titulo': '', 'contenido_html': ''}
     )
 
-    blocks = split_content_into_blocks(publicacion.contenido_html) if publicacion.contenido_html else []
+    blocks = parse_content(publicacion.contenido_html) if publicacion.contenido_html else []
 
     return render(request, 'personalizable.html', {
         'publicacion': publicacion,
