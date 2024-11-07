@@ -4,8 +4,7 @@ from django.utils import timezone
 import pytz
 
 def verificar_inactividad_task():
-    from .models import Publicacion
-
+    from .models import Publicacion, Historial
     primera_ejecucion = True
     while True:
         if not primera_ejecucion:
@@ -17,8 +16,20 @@ def verificar_inactividad_task():
 
             # Obtiene las publicaciones que caducaron
             publicaciones = Publicacion.objects.filter(fecha_publicacion__lte=fecha_limite, estado='publicado')
-            # Actualiza el estado de las publicaciones a inactivo
-            publicaciones.update(estado='inactivo')
+
+            # Verifica si se encontraron publicaciones inactivas
+            if publicaciones.exists():
+
+                # Actualiza el estado de las publicaciones a inactivo
+                publicaciones.update(estado='inactivo')
+
+                # Crear un registro en el historial de cambios
+                for publicacion in publicaciones:
+                    Historial.objects.create(
+                        publicacion=publicacion,
+                        usuario="Sistema",
+                        accion='inactivado'
+                    )
 
             # Calcula los segundos que faltan hasta medianoche
             segundos_hasta_medianoche = 86400 - ((fecha_actual.hour * 60 + fecha_actual.minute) * 60 + fecha_actual.second)

@@ -58,3 +58,25 @@ class Comentario(models.Model):
     def __str__(self):
         return f'{self.user.username} - {self.publicacion.titulo} - {self.fecha_creacion}'
 
+class Historial(models.Model):
+    ACCION_CHOICES = [
+        ('creado', 'Creado'),
+        ('modificado', 'Modificado'),
+        ('cambio_estado', 'Cambio de Estado'),
+        ('eliminado', 'Eliminado'), # El elimnado puede no ser necesario
+        ('inactivado', 'Inactivado')
+    ]
+
+    publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, related_name='historial')
+    usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    fecha_evento = models.DateTimeField(auto_now_add=True)
+    accion = models.CharField(max_length=20, choices=ACCION_CHOICES)
+    estado_anterior = models.CharField(max_length=10, blank=True, null=True)
+    estado_nuevo = models.CharField(max_length=10, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.publicacion.titulo} - {self.accion} - {self.fecha_evento}"
+
+    class Meta:
+        db_table = 'historial_publicacion'
+        ordering = ['-fecha_evento']

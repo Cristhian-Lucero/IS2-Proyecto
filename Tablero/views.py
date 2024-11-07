@@ -96,9 +96,19 @@ def update_task_state(request, task_id):
             
             # Obtener la publicación y actualizar su estado
             publicacion = get_object_or_404(Publicacion, id=task_id)
+            estado_anterior = publicacion.estado    # Guardar el estado anterior para el historial
             publicacion.estado = new_state
             publicacion.fecha_publicacion = timezone.now()
             publicacion.save()
+
+            # Crear un registro en el historial de la publicación
+            Historial.objects.create(
+            publicacion=publicacion,
+            usuario=request.user,
+            accion='cambio_estado',
+            estado_anterior=estado_anterior,
+            estado_nuevo=new_state
+            )
 
             return JsonResponse({"message": "Estado actualizado correctamente"}, status=200)
         except Publicacion.DoesNotExist:

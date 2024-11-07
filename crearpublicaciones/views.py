@@ -22,6 +22,11 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from login.utils import *
 
+from django.db.models import Q
+from datetime import timedelta
+from django.utils import timezone
+import pytz
+
 @login_required
 def crear_publicacion(request, categoria_id):
     """
@@ -52,6 +57,8 @@ def crear_publicacion(request, categoria_id):
             publicacion.categoria = Categoria.objects.get(id=categoria_id)
             publicacion.fecha_publicacion = null
             publicacion.save()  # Guarda la publicación
+            
+
             time.sleep(1)
             return redirect('mis_publicaciones')  # Redirige a la página "Mis Publicaciones"
     else:
@@ -458,6 +465,16 @@ def guardar_publicacion_ajax(request, publicacion_id):
         publicacion.titulo = data.get('title', publicacion.titulo)
         publicacion.contenido_html = data.get('content', publicacion.contenido_html)
         publicacion.save()
+
+        tiempo_limite = timezone.now() - timedelta(seconds=12)
+        if not Historial.objects.filter(publicacion=publicacion, fecha_evento__gt=tiempo_limite, accion='creado').exists():
+            Historial.objects.create(
+                publicacion=publicacion,
+                usuario=request.user,
+                accion='modificado'
+            )
+
+
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error', 'message': 'Método no permitido.'}, status=405)
 
@@ -549,9 +566,25 @@ def modificar_publicacion_ajax(request, id):
             publicacion.contenido_html = data.get('content', publicacion.contenido_html)
             publicacion.categoria_id = data.get('categoria_id', publicacion.categoria_id)
             publicacion.save()
+
             return JsonResponse({'message': 'Publicación actualizada con éxito.'}, status=200)
         except Publicacion.DoesNotExist:
             return JsonResponse({'message': 'Publicación no encontrada.'}, status=404)
         except Exception as e:
             return JsonResponse({'message': f'Error: {str(e)}'}, status=500)
     return JsonResponse({'message': 'Método no permitido.'}, status=405)
+
+@login_required
+def historial_publicacion(request, publicacion_id):
+    """
+    Vista para mostrar el historial de una publicación.
+    """
+    publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+    historial = Historial.objects.filter(publicacion=publicacion).order_by('-fecha_evento')
+    
+    context = {
+        'publicacion': publicacion,
+        'historial': historial,
+    }
+    return render(request, 'historial_publicacion.html', context)
+

@@ -97,6 +97,7 @@
                         <div class="publicacion-actions">
                             <a class="previsualizar" href="{% url 'previsualizar_publicacion' publicacion.id %}">Previsualizar</a>
                             <a class="modificar" href="{% url 'modificar_publicacion' publicacion.id %}">Modificar</a>
+                            <a class="btn-edit" href="{% url 'historial_publicacion' publicacion.id %}">Historial</a>
                             <a class="eliminar" href="{% url 'eliminar_publicacion' publicacion.id %}">Eliminar</a>
                         </div>
                     </li>
