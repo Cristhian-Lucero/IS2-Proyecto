@@ -6,7 +6,8 @@ from django.dispatch import receiver
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
-from .models import Publicacion, Comentario
+
+from .models import Historial, Publicacion, Comentario
 
 @receiver(post_save, sender=Publicacion)
 def notificar_cambios_publicacion(sender, instance, created, **kwargs):
@@ -18,10 +19,14 @@ def notificar_cambios_publicacion(sender, instance, created, **kwargs):
     """
 
     usuario = instance.user
-
     if created:
-        # La publicación es nueva. No enviar notificación de modificación.
-        pass
+        # La publicación es nueva. No enviar notificación de modificación, crear un registro en el historial de cambios
+
+        Historial.objects.create(
+        publicacion=instance,
+        usuario=instance.user,
+        accion='creado'
+        )
     else:
         # La publicación ha sido modificada
         asunto = 'Tu publicación ha sido modificada'

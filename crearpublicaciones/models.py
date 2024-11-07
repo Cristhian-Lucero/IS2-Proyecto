@@ -63,7 +63,8 @@ class Historial(models.Model):
         ('creado', 'Creado'),
         ('modificado', 'Modificado'),
         ('cambio_estado', 'Cambio de Estado'),
-        ('eliminado', 'Eliminado')  # El elimnado puede no ser necesario
+        ('eliminado', 'Eliminado'), # El elimnado puede no ser necesario
+        ('inactivado', 'Inactivado')
     ]
 
     publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, related_name='historial')

@@ -22,6 +22,11 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from login.utils import *
 
+from django.db.models import Q
+from datetime import timedelta
+from django.utils import timezone
+import pytz
+
 @login_required
 def crear_publicacion(request, categoria_id):
     """
@@ -429,7 +434,7 @@ def personalizable(request, categoria_id):
         defaults={'titulo': '', 'contenido_html': ''}
     )
 
-    blocks = split_content_into_blocks(publicacion.contenido_html) if publicacion.contenido_html else []
+    blocks = parse_content(publicacion.contenido_html) if publicacion.contenido_html else []
 
     return render(request, 'personalizable.html', {
         'publicacion': publicacion,
@@ -460,7 +465,16 @@ def guardar_publicacion_ajax(request, publicacion_id):
         publicacion.titulo = data.get('title', publicacion.titulo)
         publicacion.contenido_html = data.get('content', publicacion.contenido_html)
         publicacion.save()
-        
+
+        tiempo_limite = timezone.now() - timedelta(seconds=12)
+        if not Historial.objects.filter(publicacion=publicacion, fecha_evento__gt=tiempo_limite, accion='creado').exists():
+            Historial.objects.create(
+                publicacion=publicacion,
+                usuario=request.user,
+                accion='modificado'
+            )
+
+
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error', 'message': 'Método no permitido.'}, status=405)
 
