@@ -1,54 +1,38 @@
 '''
 Signals para notificaciones de cambios en publicaciones y nuevos comentarios.
 '''
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
-from django.urls import reverse
 from .models import Publicacion, Comentario
 
-@receiver(pre_save, sender=Publicacion)
-def notificar_cambios_publicacion(sender, instance, **kwargs):
+@receiver(post_save, sender=Publicacion)
+def notificar_cambios_publicacion(sender, instance, created, **kwargs):
     """
     Envía una notificación por correo electrónico al usuario cuando se detectan cambios en una publicación.
 
-    Esta función se ejecuta antes de guardar una instancia de 'Publicacion'.
-    Verifica si el estado, el título o el contenido han cambiado en comparación
-    con la instancia anterior y, de ser así, envía un correo electrónico al usuario correspondiente.
-
-    Args:
-        sender (class): El modelo que envía la señal (en este caso, 'Publicacion').
-        instance (Publicacion): La instancia de la publicación que se va a guardar.
-        **kwargs: Argumentos adicionales proporcionados por la señal.
+    Esta función se ejecuta después de guardar una instancia de 'Publicacion'.
+    Utiliza el parámetro 'created' para determinar si la instancia es nueva o existente.
     """
-    
-    if instance.id is not None:
-        publicacion_anterior = Publicacion.objects.get(id=instance.id)
-        usuario = instance.user
 
-        # Verificar si el estado ha cambiado
-        if publicacion_anterior.estado != instance.estado:
-            asunto = 'Tu publicación ha cambiado de estado'
-            mensaje_html = render_to_string('emails/publicacion_cambio_estado.html', {
-                'usuario': usuario,
-                'publicacion': instance,
-            })
-            mensaje = EmailMultiAlternatives(asunto, '', settings.EMAIL_HOST_USER, [usuario.email])
-            mensaje.attach_alternative(mensaje_html, "text/html")
-            mensaje.send()
+    usuario = instance.user
 
-        # Verificar si el título o contenido han cambiado
-        elif publicacion_anterior.titulo != instance.titulo or publicacion_anterior.contenido_html != instance.contenido_html:
-            asunto = 'Tu publicación ha sido modificada'
-            mensaje_html = render_to_string('emails/publicacion_modificada.html', {
-                'usuario': usuario,
-                'publicacion': instance,
-            })
-            mensaje = EmailMultiAlternatives(asunto, '', settings.EMAIL_HOST_USER, [usuario.email])
-            mensaje.attach_alternative(mensaje_html, "text/html")
-            mensaje.send()
+    if created:
+        # La publicación es nueva. No enviar notificación de modificación.
+        pass
+    else:
+        # La publicación ha sido modificada
+        asunto = 'Tu publicación ha sido modificada'
+        mensaje_html = render_to_string('emails/publicacion_modificada.html', {
+            'usuario': usuario,
+            'publicacion': instance,
+        })
+        mensaje = EmailMultiAlternatives(asunto, '', settings.EMAIL_HOST_USER, [usuario.email])
+        mensaje.attach_alternative(mensaje_html, "text/html")
+        mensaje.send()
+
 
 
 @receiver(post_save, sender=Comentario)
