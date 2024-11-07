@@ -45,10 +45,14 @@
         <div class="informacion-extra" style="text-align: center; margin-top: 20px;">
             <p style="text-align: right;"><strong>Visualizaciones:</strong> {{ publicacion.vistas }}</p>
             <p style="text-align: right;"><strong>
-            {% if likeado %}
-                <a href="{% url 'dislikear' publicacion.id  %}">Ya no me gusta 💔😭</a></strong>
+            {% if 'interactuar publicaciones' in permisos_categoria|get_item:publicacion.categoria.id %}
+                {% if likeado %}
+                    <a href="{% url 'dislikear' publicacion.id  %}">Ya no me gusta 💔😭</a></strong>
+                {% else %}
+                    <a href="{% url 'likear' publicacion.id %}">Me gusta 💖✨</a></strong>
+                {% endif %}
             {% else %}
-                <a href="{% url 'likear' publicacion.id %}">Me gusta 💖✨</a></strong>
+                </strong>
             {% endif %}
 
             {% if publicacion.me_gustas == 1 %}
@@ -67,7 +71,10 @@
                         {% csrf_token %}
                         <button type="submit" class="btn-delete" onclick="return confirm('¿Está seguro que desea eliminar esta publicación?')">Eliminar Publicación</button>
                     </form>
-                    <button class="submit" onclick="window.location.href='{% url 'modificar_publicacion' publicacion.id %}'">Modificar Publicacion</button>
+                    {% if  publicacion.estado != 'publicado' %}
+                        <button class="submit" onclick="window.location.href='{% url 'modificar_publicacion' publicacion.id %}'">Modificar Publicacion</button>
+                
+                    {% endif %}
                 {% endif %}
                 <button class="btn-edit" onclick="window.location.href='{% url 'historial_publicacion' publicacion.id %}'">Ver Historial de Cambios</button>
             </div>
@@ -75,14 +82,16 @@
         </div>
     
         <div style="text-align: center; margin-top: 20px;">
-            <a href="{% url 'mis_publicaciones' %}" class="btn btn-primary">Volver a mis publicaciones</a>
+            <a href="{% url 'mis_publicaciones' %}" class="btn btn-primary">Ir a mis publicaciones</a>
         </div>
     </div>
 
-    <form action="{% url 'comentario' publicacion.id %}" method="POST" style="text-align: center; margin-bottom: 2%;">
-        {% csrf_token %}
-        <button type="submit">Nuevo Comentario</button>
-    </form>
+    {% if 'interactuar publicaciones' in permisos_categoria|get_item:publicacion.categoria.id %}
+        <form action="{% url 'comentario' publicacion.id %}" method="POST" style="text-align: center; margin-bottom: 2%;">
+            {% csrf_token %}
+            <button type="submit">Nuevo Comentario</button>
+        </form>
+    {% endif %}
 
     {% for comentario in comentarios %}
         <div class="comentario-container" style="text-align: justify;">

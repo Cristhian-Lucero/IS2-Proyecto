@@ -98,6 +98,14 @@
             <p class="task" draggable="true" data-id="{{ publicacion.id }}">{{ publicacion.titulo }}</p>
           {% endfor %}
         </div>
+
+        <!-- Inactivo -->
+        <div class="swim-lane" data-state="inactivo">
+          <h3 class="heading">Inactivo</h3>
+          {% for publicacion in inactivo %}
+            <p class="task" draggable="true" data-id="{{ publicacion.id }}">{{ publicacion.titulo }}</p>
+          {% endfor %}
+        </div>
       </div>
     </div>
     <script src="{% static 'drag.js' %}"></script>

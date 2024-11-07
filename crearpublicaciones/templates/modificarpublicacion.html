@@ -142,27 +142,6 @@
         .bullet-list li {
             margin-bottom: 5px;
         }
-        /* Estilos para la barra de herramientas flotante */
-        .toolbar {
-            position: absolute;
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 5px;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-        }
-        .toolbar button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            margin: 0 2px;
-            font-size: 16px;
-        }
-        .toolbar button:hover {
-            color: #3498db;
-        }
         /* Estilo para el bloque de cita */
         .quote-block {
             font-style: italic;
@@ -188,17 +167,17 @@
         {% for block in blocks %}
             <div class="block">
                 {% if block.type == 'paragraph' %}
-                    <textarea onmouseup="showToolbar(event)" onkeyup="hideToolbar()">{{ block.content }}</textarea>
+                    <textarea>{{ block.content }}</textarea>
                 {% elif block.type == 'heading' %}
                     {% if block.level == 'h2' %}
-                        <textarea style="font-size: 24px; font-weight: bold;" onmouseup="showToolbar(event)" onkeyup="hideToolbar()">{{ block.content }}</textarea>
+                        <textarea style="font-size: 24px; font-weight: bold;">{{ block.content }}</textarea>
                     {% else %}
-                        <textarea style="font-size: 20px; font-weight: bold;" onmouseup="showToolbar(event)" onkeyup="hideToolbar()">{{ block.content }}</textarea>
+                        <textarea style="font-size: 20px; font-weight: bold;">{{ block.content }}</textarea>
                     {% endif %}
                 {% elif block.type == 'quote' %}
-                    <textarea class="quote-block" onmouseup="showToolbar(event)" onkeyup="hideToolbar()">{{ block.content }}</textarea>
+                    <textarea class="quote-block">{{ block.content }}</textarea>
                 {% elif block.type == 'list' %}
-                    <ul contenteditable="true" class="bullet-list" onmouseup="showToolbar(event)" onkeyup="hideToolbar()">
+                    <ul contenteditable="true" class="bullet-list">
                         {% for item in block.items %}
                             <li>{{ item }}</li>
                         {% endfor %}
@@ -227,14 +206,6 @@
     <button class="save-button" onclick="saveContent()">Guardar Publicación</button>
 </div>
 
-<!-- Barra de herramientas flotante -->
-<div id="toolbar" class="toolbar">
-    <button onclick="formatText('bold')"><b>B</b></button>
-    <button onclick="formatText('italic')"><i>I</i></button>
-    <button onclick="formatText('underline')"><u>U</u></button>
-    <button onclick="formatText('strikeThrough')"><s>S</s></button>
-</div>
-
 <script>
     // Inicializar Sortable para permitir arrastrar y soltar los bloques
     const editor = document.getElementById('editor');
@@ -243,10 +214,6 @@
         handle: '.block',
         ghostClass: 'sortable-ghost'
     });
-
-    // Variables para la barra de herramientas
-    let toolbar = document.getElementById('toolbar');
-    let selectedRange;
 
     // Función para crear un bloque genérico con un botón de eliminar
     function createBlock(content) {
@@ -258,7 +225,7 @@
 
     // Funciones para agregar nuevos bloques
     function addTextBlock() {
-        const block = createBlock('<textarea placeholder="Escribe aquí..." onmouseup="showToolbar(event)" onkeyup="hideToolbar()"></textarea>');
+        const block = createBlock('<textarea placeholder="Escribe aquí..."></textarea>');
         editor.appendChild(block);
         scrollToBottom();
     }
@@ -271,19 +238,19 @@
 
     function addHeadingBlock(headingType) {
         const fontSize = headingType === 'H2' ? '24px' : '20px';
-        const block = createBlock(`<textarea placeholder="Título (${headingType})" style="font-size: ${fontSize}; font-weight: bold;" oninput="autoResize(this)" onmouseup="showToolbar(event)" onkeyup="hideToolbar()"></textarea>`);
+        const block = createBlock(`<textarea placeholder="Título (${headingType})" style="font-size: ${fontSize}; font-weight: bold;"></textarea>`);
         editor.appendChild(block);
         scrollToBottom();
     }
 
     function addBulletListBlock() {
-        const block = createBlock('<ul contenteditable="true" class="bullet-list" onmouseup="showToolbar(event)" onkeyup="hideToolbar()"><li></li></ul>');
+        const block = createBlock('<ul contenteditable="true" class="bullet-list"><li></li></ul>');
         editor.appendChild(block);
         scrollToBottom();
     }
 
     function addQuoteBlock() {
-        const block = createBlock('<textarea placeholder="Escribe una cita..." class="quote-block" onmouseup="showToolbar(event)" onkeyup="hideToolbar()"></textarea>');
+        const block = createBlock('<textarea placeholder="Escribe una cita..." class="quote-block"></textarea>');
         editor.appendChild(block);
         scrollToBottom();
     }
@@ -335,7 +302,7 @@
 
         const data = {
             'title': title,
-            'contenido_html': contentHTML,
+            'content': contentHTML,
             'categoria_id': {{ publicacion.categoria.id }}
         };
 
@@ -383,62 +350,6 @@
     function scrollToBottom() {
         window.scrollTo(0, document.body.scrollHeight);
     }
-
-    // Mostrar la barra de herramientas flotante
-    function showToolbar(event) {
-        const target = event.target;
-        if (target.tagName === 'TEXTAREA' || target.isContentEditable) {
-            const selection = window.getSelection();
-            if (selection.rangeCount > 0 && !selection.isCollapsed) {
-                selectedRange = selection.getRangeAt(0);
-                const rect = selectedRange.getBoundingClientRect();
-                toolbar.style.top = (window.scrollY + rect.top - toolbar.offsetHeight - 5) + 'px';
-                toolbar.style.left = (window.scrollX + rect.left) + 'px';
-                toolbar.style.display = 'block';
-            } else {
-                toolbar.style.display = 'none';
-            }
-        }
-    }
-
-    // Ocultar la barra de herramientas
-    function hideToolbar() {
-        toolbar.style.display = 'none';
-    }
-
-    // Aplicar formato al texto seleccionado
-    function formatText(command) {
-        if (selectedRange) {
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(selectedRange);
-
-            document.execCommand(command, false, null);
-
-            selection.removeAllRanges();
-            toolbar.style.display = 'none';
-        }
-    }
-
-    // Función para autoajustar la altura del textarea
-    function autoResize(textarea) {
-        textarea.style.height = 'auto';
-        textarea.style.height = (textarea.scrollHeight) + 'px';
-    }
-
-    // Ocultar la barra de herramientas al hacer clic fuera
-    document.addEventListener('mousedown', function(event) {
-        if (!toolbar.contains(event.target)) {
-            toolbar.style.display = 'none';
-        }
-    });
-
-    // Actualizar la selección cuando se mueve el cursor
-    document.addEventListener('mouseup', function(event) {
-        if (!toolbar.contains(event.target)) {
-            showToolbar(event);
-        }
-    });
 </script>
 
 </body>

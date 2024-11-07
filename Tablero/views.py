@@ -59,6 +59,7 @@ def kanban_board(request, categoria_id=None):
     revision = Publicacion.objects.filter(estado='revision', categoria=categoria)
     publicado = Publicacion.objects.filter(estado='publicado', categoria=categoria)
     rechazado = Publicacion.objects.filter(estado='rechazado', categoria=categoria)
+    inactivo = Publicacion.objects.filter(estado='inactivo', categoria=categoria)
 
     context = {
         'categoria': categoria,  # La categoría seleccionada o la primera por defecto
@@ -66,6 +67,7 @@ def kanban_board(request, categoria_id=None):
         'revision': revision,
         'publicado': publicado,
         'rechazado': rechazado,
+        'inactivo': inactivo,
         'categorias_activas': categorias_usuario,  # Solo las categorías permitidas para el usuario
     }
 

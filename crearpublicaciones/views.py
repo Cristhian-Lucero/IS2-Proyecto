@@ -53,12 +53,6 @@ def crear_publicacion(request, categoria_id):
             publicacion.fecha_publicacion = null
             publicacion.save()  # Guarda la publicación
             
-            # Crear un registro en el historial de cambios
-            Historial.objects.create(
-            publicacion=publicacion,
-            usuario=request.user,
-            accion='creado'
-            )
 
             time.sleep(1)
             return redirect('mis_publicaciones')  # Redirige a la página "Mis Publicaciones"
@@ -225,7 +219,7 @@ def gestionPublicacionOtros(request, categoria_id):
 
     if not verificar_permisos_categoria_id(request, ['gestionar contenido otros'], categoria_id):
         return render(request, 'sin_permiso.html')
-
+    
     publicaciones_gestionables = Publicacion.objects.filter(categoria=categoria_id)
 
     return render(request, 'GestionPublicaciones3ros.html', {
@@ -260,22 +254,30 @@ def modificar_publicacion(request, publicacion_id):
     """
     Vista para modificar una publicación existente.
 
-    Permite editar el título y contenido de una publicación. Muestra el formulario con
-    el contenido existente si la solicitud es GET, y guarda los cambios si es POST.
+    Permite al usuario editar el título y el contenido de una publicación.
+    Si la solicitud es GET, se muestra el formulario con los datos actuales.
+    Si la solicitud es POST, se actualizan los datos de la publicación.
 
     Args:
         request (HttpRequest): La solicitud HTTP recibida.
         publicacion_id (int): ID de la publicación a modificar.
 
     Returns:
-        HttpResponse: Renderiza la página de modificación o devuelve un JsonResponse con el estado.
+        HttpResponse: Renderiza la página de modificación o devuelve una respuesta JSON.
     """
 
+    # Obtener la publicación por su ID
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
 
+    # Verificar permisos
     if not verificar_permisos_categoria_id(request, ['crear contenido'], publicacion.categoria_id):
         return render(request, 'sin_permiso.html')
-    
+
+    # Si la publicación está publicada, no se puede editar
+    if publicacion.estado == 'publicado':
+        return render(request, 'no_editable.html', {'categoria_publicacion': publicacion.categoria_id})
+
+    # Método GET: mostrar el formulario de modificación
     if request.method == 'GET':
         blocks = parse_content(publicacion.contenido_html)
         context = {
@@ -283,42 +285,27 @@ def modificar_publicacion(request, publicacion_id):
             'blocks': blocks,
         }
         return render(request, 'modificarpublicacion.html', context)
+
+    # Método POST: guardar cambios
     elif request.method == 'POST':
-        data = json.loads(request.body)
-        publicacion.titulo = data.get('title', publicacion.titulo)
-        publicacion.contenido_html = data.get('contenido_html', publicacion.contenido_html)
+        # Verificar si la solicitud viene en formato JSON
+        if request.content_type == 'application/json':
+            data = json.loads(request.body)
+            publicacion.titulo = data.get('title', publicacion.titulo)
+            publicacion.contenido_html = data.get('content', publicacion.contenido_html)
+        else:
+            # Si no es JSON, tomamos los datos del formulario
+            publicacion.titulo = request.POST.get('title', publicacion.titulo)
+            publicacion.contenido_html = request.POST.get('content', publicacion.contenido_html)
+
+        # Guardar los cambios en la base de datos
         publicacion.save()
 
-        # Crear un registro en el historial de cambios
-        Historial.objects.create(
-        publicacion=publicacion,
-        usuario=request.user,
-        accion='modificado'
-        )
-
+        # Respuesta de éxito
         return JsonResponse({'status': 'success'})
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Método no permitido.'}, status=405)
 
-def split_content_into_blocks(content):
-    bloques = []
-    soup = BeautifulSoup(content, 'html.parser')
-    
-    # Extraer todos los párrafos, imágenes y listas como bloques separados
-    for tag in soup.find_all(['p', 'img', 'ul', 'h2', 'h3']):
-        if tag.name == 'p':
-            bloques.append({'tipo': 'texto', 'contenido': tag.text})
-        elif tag.name == 'img':
-            bloques.append({'tipo': 'imagen', 'contenido': tag['src']})
-        elif tag.name == 'ul':
-            items = [li.get_text() for li in tag.find_all('li')]
-            bloques.append({'tipo': 'viñetas', 'contenido': items})
-        elif tag.name == 'h2':
-            bloques.append({'tipo': 'heading2', 'contenido': tag.text})
-        elif tag.name == 'h3':
-            bloques.append({'tipo': 'heading3', 'contenido': tag.text})
-    
-    return bloques
+    # Si no es un método permitido
+    return JsonResponse({'status': 'error', 'message': 'Método no permitido.'}, status=405)
 
 @csrf_exempt
 def modificar_publicacion_ajax(request, id):
@@ -332,13 +319,6 @@ def modificar_publicacion_ajax(request, id):
 
             # Guardar los cambios en la publicación
             publicacion.save()
-            
-            # Crear un registro en el historial de cambios
-            Historial.objects.create(
-            publicacion=publicacion,
-            usuario=request.user,
-            accion='modificado'
-            )
 
             return JsonResponse({'message': '¡Publicación actualizada con éxito!'})
         except Exception as e:
@@ -481,13 +461,6 @@ def guardar_publicacion_ajax(request, publicacion_id):
         publicacion.contenido_html = data.get('content', publicacion.contenido_html)
         publicacion.save()
         
-        # Crear un registro en el historial de cambios
-        Historial.objects.create(
-        publicacion=publicacion,
-        usuario=request.user,
-        accion='modificado'
-        )
-        
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error', 'message': 'Método no permitido.'}, status=405)
 
@@ -579,13 +552,6 @@ def modificar_publicacion_ajax(request, id):
             publicacion.contenido_html = data.get('content', publicacion.contenido_html)
             publicacion.categoria_id = data.get('categoria_id', publicacion.categoria_id)
             publicacion.save()
-
-            # Crear un registro en el historial de cambios
-            Historial.objects.create(
-            publicacion=publicacion,
-            usuario=request.user,
-            accion='modificado'
-            )
 
             return JsonResponse({'message': 'Publicación actualizada con éxito.'}, status=200)
         except Publicacion.DoesNotExist:
