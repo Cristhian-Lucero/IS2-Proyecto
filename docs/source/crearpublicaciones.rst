@@ -45,9 +45,17 @@ crearpublicaciones.models module
    :show-inheritance:
 
 crearpublicaciones.signals module
---------------------------------
+---------------------------------
 
 .. automodule:: crearpublicaciones.signals
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+crearpublicaciones.tasks module
+-------------------------------
+
+.. automodule:: crearpublicaciones.tasks
    :members:
    :undoc-members:
    :show-inheritance:

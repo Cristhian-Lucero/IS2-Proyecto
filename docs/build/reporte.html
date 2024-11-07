@@ -98,10 +98,13 @@
 </section>
 <section id="module-reporte.models">
 <span id="reporte-models-module"></span><h2>reporte.models module<a class="headerlink" href="#module-reporte.models" title="Link to this heading">¶</a></h2>
+<p>Modelos de la aplicación reportes.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="reporte.models.Reporte">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reporte.models.</span></span><span class="sig-name descname"><span class="pre">Reporte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reporte.models.Reporte" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Modelo “Reporte” que representa informes generados en la aplicación.
+Este modelo permite almacenar diferentes tipos de reportes con su contenido y metadata</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="reporte.models.Reporte.DoesNotExist">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#reporte.models.Reporte.DoesNotExist" title="Link to this definition">¶</a></dt>
@@ -299,6 +302,16 @@ Si el método de la solicitud es POST, genera un informe con todas las publicaci
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reporte.views.promedioRevision">
+<span class="sig-prename descclassname"><span class="pre">reporte.views.</span></span><span class="sig-name descname"><span class="pre">promedioRevision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reporte.views.promedioRevision" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reporte.views.publicadoPorTiempo">
+<span class="sig-prename descclassname"><span class="pre">reporte.views.</span></span><span class="sig-name descname"><span class="pre">publicadoPorTiempo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reporte.views.publicadoPorTiempo" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="reporte.views.visualizarReporte">

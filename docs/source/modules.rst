@@ -13,3 +13,4 @@ IS2-Proyecto
    Tablero
    login.templatetags
    utils
+   reporte

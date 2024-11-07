@@ -795,6 +795,28 @@ user_id (int): El ID del usuario que se desea eliminar.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="login.views.filtrar_publicaciones">
+<span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">filtrar_publicaciones</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.filtrar_publicaciones" title="Link to this definition">¶</a></dt>
+<dd><p>Filtra las publicaciones según los parámetros proporcionados en la solicitud GET.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – Objeto de solicitud que contiene los parámetros de búsqueda.
+- keyword (str): Palabra clave para buscar en el título o contenido de las publicaciones.
+- category (str): Categoría de la publicación.
+- status (str): Estado de la publicación.
+- date-from (str): Fecha desde la cual filtrar las publicaciones.
+- autor (str): Nombre de usuario del autor de la publicación.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>Renderiza la pagina con el contexto de las publicaciones filtradas.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="login.views.gestionCategoria">
 <span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">gestionCategoria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.gestionCategoria" title="Link to this definition">¶</a></dt>
 <dd><p>Gestiona la creación y visualización de categorías.</p>
@@ -879,6 +901,11 @@ username (str): El nombre de usuario del perfil que se desea mostrar.</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="login.views.search">
+<span class="sig-prename descclassname"><span class="pre">login.views.</span></span><span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#login.views.search" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="login.views.seleccionar_plantilla">

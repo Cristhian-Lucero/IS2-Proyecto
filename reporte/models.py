@@ -1,10 +1,15 @@
+'''
+Modelos de la aplicación reportes.
+'''
+
 from django.db import models
 
 # Create your models here.
 
 class Reporte(models.Model):
     """
-    
+    Modelo 'Reporte' que representa informes generados en la aplicación.
+    Este modelo permite almacenar diferentes tipos de reportes con su contenido y metadata
     """
 
     TIPO_CHOICES = [

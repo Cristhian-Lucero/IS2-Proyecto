@@ -69,6 +69,10 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.accion">accion (atributo de crearpublicaciones.models.Historial)</a>
+</li>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.ACCION_CHOICES">ACCION_CHOICES (atributo de crearpublicaciones.models.Historial)</a>
+</li>
       <li><a href="login.html#login.signals.actualizar_usuarios_tras_eliminar_rol">actualizar_usuarios_tras_eliminar_rol() (en el módulo login.signals)</a>
 </li>
       <li><a href="login.html#login.views.agregarRol">agregarRol() (en el módulo login.views)</a>
@@ -80,6 +84,8 @@
       <li><a href="login.html#login.signals.asignar_rol_a_usuarios">asignar_rol_a_usuarios() (en el módulo login.signals)</a>
 </li>
       <li><a href="login.html#login.signals.asignar_rol_suscriptor">asignar_rol_suscriptor() (en el módulo login.signals)</a>
+</li>
+      <li><a href="utils.html#utils.context_processors.autores_context">autores_context() (en el módulo utils.context_processors)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -241,6 +247,13 @@
 </li>
       </ul></li>
       <li>
+    crearpublicaciones.tasks
+
+      <ul>
+        <li><a href="crearpublicaciones.html#module-crearpublicaciones.tasks">module</a>
+</li>
+      </ul></li>
+      <li>
     crearpublicaciones.tests
 
       <ul>
@@ -371,10 +384,10 @@
 </li>
       <li><a href="login.html#login.views.eliminarRol">eliminarRol() (en el módulo login.views)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="Perfil.html#Perfil.util.enviar_notificacion_cambio_estado">enviar_notificacion_cambio_estado() (en el módulo Perfil.util)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="Perfil.html#Perfil.util.enviar_notificacion_comentario">enviar_notificacion_comentario() (en el módulo Perfil.util)</a>
 </li>
       <li><a href="Perfil.html#Perfil.util.enviar_notificacion_modificacion">enviar_notificacion_modificacion() (en el módulo Perfil.util)</a>
@@ -385,12 +398,16 @@
         <li><a href="login.html#login.models.Categoria.estado">(atributo de login.models.Categoria)</a>
 </li>
       </ul></li>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.estado_anterior">estado_anterior (atributo de crearpublicaciones.models.Historial)</a>
+</li>
       <li><a href="crearpublicaciones.html#crearpublicaciones.models.Publicacion.ESTADO_CHOICES">ESTADO_CHOICES (atributo de crearpublicaciones.models.Publicacion)</a>
 
       <ul>
         <li><a href="login.html#login.forms.CreateNewCategoria.ESTADO_CHOICES">(atributo de login.forms.CreateNewCategoria)</a>
 </li>
       </ul></li>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.estado_nuevo">estado_nuevo (atributo de crearpublicaciones.models.Historial)</a>
+</li>
       <li><a href="Perfil.html#Perfil.models.Usuario.estadoUsuario">estadoUsuario (atributo de Perfil.models.Usuario)</a>, <a href="Perfil.html#id1">[1]</a>
 </li>
       <li><a href="login.html#login.views.exit">exit() (en el módulo login.views)</a>
@@ -409,14 +426,22 @@
         <li><a href="reporte.html#reporte.models.Reporte.fecha_creacion">(atributo de reporte.models.Reporte)</a>
 </li>
       </ul></li>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.fecha_evento">fecha_evento (atributo de crearpublicaciones.models.Historial)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Publicacion.fecha_publicacion">fecha_publicacion (atributo de crearpublicaciones.models.Publicacion)</a>
+</li>
       <li><a href="crearpublicaciones.html#crearpublicaciones.forms.ComentarioForm.Meta.fields">fields (atributo de crearpublicaciones.forms.ComentarioForm.Meta)</a>
 
       <ul>
         <li><a href="crearpublicaciones.html#crearpublicaciones.forms.PublicacionForm.Meta.fields">(atributo de crearpublicaciones.forms.PublicacionForm.Meta)</a>
 </li>
       </ul></li>
+      <li><a href="login.html#login.views.filtrar_publicaciones">filtrar_publicaciones() (en el módulo login.views)</a>
+</li>
+      <li><a href="login.templatetags.html#login.templatetags.custom_filters.formatear_timedelta">formatear_timedelta() (en el módulo login.templatetags.custom_filters)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -428,6 +453,8 @@
       <li><a href="login.html#login.views.gestionCategoria">gestionCategoria() (en el módulo login.views)</a>
 </li>
       <li><a href="crearpublicaciones.html#crearpublicaciones.views.gestionPublicacionOtros">gestionPublicacionOtros() (en el módulo crearpublicaciones.views)</a>
+</li>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.get_accion_display">get_accion_display() (método de crearpublicaciones.models.Historial)</a>
 </li>
       <li><a href="crearpublicaciones.html#crearpublicaciones.models.Publicacion.get_estado_display">get_estado_display() (método de crearpublicaciones.models.Publicacion)</a>
 </li>
@@ -443,6 +470,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.get_next_by_fecha_evento">get_next_by_fecha_evento() (método de crearpublicaciones.models.Historial)</a>
+</li>
       <li><a href="Perfil.html#Perfil.views.PerfilDetailView.get_object">get_object() (método de Perfil.views.PerfilDetailView)</a>
 </li>
       <li><a href="crearpublicaciones.html#crearpublicaciones.models.Comentario.get_previous_by_fecha_creacion">get_previous_by_fecha_creacion() (método de crearpublicaciones.models.Comentario)</a>
@@ -453,6 +482,8 @@
         <li><a href="reporte.html#reporte.models.Reporte.get_previous_by_fecha_creacion">(método de reporte.models.Reporte)</a>
 </li>
       </ul></li>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.get_previous_by_fecha_evento">get_previous_by_fecha_evento() (método de crearpublicaciones.models.Historial)</a>
+</li>
       <li><a href="reporte.html#reporte.models.Reporte.get_tipo_display">get_tipo_display() (método de reporte.models.Reporte)</a>
 </li>
       <li><a href="crearpublicaciones.html#crearpublicaciones.views.guardar_publicacion_ajax">guardar_publicacion_ajax() (en el módulo crearpublicaciones.views)</a>
@@ -463,10 +494,20 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="login.html#login.views.home">home() (en el módulo login.views)</a>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Publicacion.historial">historial (atributo de crearpublicaciones.models.Publicacion)</a>
+</li>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial">Historial (clase en crearpublicaciones.models)</a>
+</li>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.DoesNotExist">Historial.DoesNotExist</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.MultipleObjectsReturned">Historial.MultipleObjectsReturned</a>
+</li>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.views.historial_publicacion">historial_publicacion() (en el módulo crearpublicaciones.views)</a>
+</li>
+      <li><a href="login.html#login.views.home">home() (en el módulo login.views)</a>
+</li>
       <li><a href="reporte.html#reporte.models.Reporte.html_content">html_content (atributo de reporte.models.Reporte)</a>
 </li>
   </ul></td>
@@ -478,6 +519,8 @@
       <li><a href="crearpublicaciones.html#crearpublicaciones.models.Comentario.id">id (atributo de crearpublicaciones.models.Comentario)</a>
 
       <ul>
+        <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.id">(atributo de crearpublicaciones.models.Historial)</a>
+</li>
         <li><a href="crearpublicaciones.html#crearpublicaciones.models.Likes.id">(atributo de crearpublicaciones.models.Likes)</a>
 </li>
         <li><a href="crearpublicaciones.html#crearpublicaciones.models.Publicacion.id">(atributo de crearpublicaciones.models.Publicacion)</a>
@@ -779,6 +822,8 @@
 </li>
         <li><a href="crearpublicaciones.html#module-crearpublicaciones.signals">crearpublicaciones.signals</a>
 </li>
+        <li><a href="crearpublicaciones.html#module-crearpublicaciones.tasks">crearpublicaciones.tasks</a>
+</li>
         <li><a href="crearpublicaciones.html#module-crearpublicaciones.tests">crearpublicaciones.tests</a>
 </li>
         <li><a href="crearpublicaciones.html#module-crearpublicaciones.urls">crearpublicaciones.urls</a>
@@ -949,6 +994,8 @@
       <li><a href="crearpublicaciones.html#crearpublicaciones.models.Comentario.objects">objects (atributo de crearpublicaciones.models.Comentario)</a>
 
       <ul>
+        <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.objects">(atributo de crearpublicaciones.models.Historial)</a>
+</li>
         <li><a href="crearpublicaciones.html#crearpublicaciones.models.Likes.objects">(atributo de crearpublicaciones.models.Likes)</a>
 </li>
         <li><a href="crearpublicaciones.html#crearpublicaciones.models.Publicacion.objects">(atributo de crearpublicaciones.models.Publicacion)</a>
@@ -1093,15 +1140,17 @@
 </li>
       <li><a href="utils.html#utils.context_processors.permisos_categoria_usuario_context">permisos_categoria_usuario_context() (en el módulo utils.context_processors)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="utils.html#utils.context_processors.permisos_usuario_context">permisos_usuario_context() (en el módulo utils.context_processors)</a>
 </li>
       <li><a href="crearpublicaciones.html#crearpublicaciones.views.personalizable">personalizable() (en el módulo crearpublicaciones.views)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="reporte.html#reporte.views.porTiempo">porTiempo() (en el módulo reporte.views)</a>
 </li>
       <li><a href="crearpublicaciones.html#crearpublicaciones.views.previsualizar_publicacion">previsualizar_publicacion() (en el módulo crearpublicaciones.views)</a>
+</li>
+      <li><a href="reporte.html#reporte.views.promedioRevision">promedioRevision() (en el módulo reporte.views)</a>
 </li>
       <li>
     publicacion
@@ -1113,6 +1162,8 @@
       <li><a href="crearpublicaciones.html#crearpublicaciones.models.Comentario.publicacion">publicacion (atributo de crearpublicaciones.models.Comentario)</a>
 
       <ul>
+        <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.publicacion">(atributo de crearpublicaciones.models.Historial)</a>
+</li>
         <li><a href="crearpublicaciones.html#crearpublicaciones.models.Likes.publicacion">(atributo de crearpublicaciones.models.Likes)</a>
 </li>
       </ul></li>
@@ -1174,6 +1225,8 @@
       <li><a href="crearpublicaciones.html#crearpublicaciones.models.Comentario.publicacion_id">publicacion_id (atributo de crearpublicaciones.models.Comentario)</a>
 
       <ul>
+        <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.publicacion_id">(atributo de crearpublicaciones.models.Historial)</a>
+</li>
         <li><a href="crearpublicaciones.html#crearpublicaciones.models.Likes.publicacion_id">(atributo de crearpublicaciones.models.Likes)</a>
 </li>
       </ul></li>
@@ -1186,6 +1239,8 @@
       <li><a href="crearpublicaciones.html#crearpublicaciones.forms.PublicacionForm">PublicacionForm (clase en crearpublicaciones.forms)</a>
 </li>
       <li><a href="crearpublicaciones.html#crearpublicaciones.forms.PublicacionForm.Meta">PublicacionForm.Meta (clase en crearpublicaciones.forms)</a>
+</li>
+      <li><a href="reporte.html#reporte.views.publicadoPorTiempo">publicadoPorTiempo() (en el módulo reporte.views)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1288,6 +1343,8 @@
       </ul></li>
       <li><a href="reporte.html#reporte.apps.ReporteConfig">ReporteConfig (clase en reporte.apps)</a>
 </li>
+      <li><a href="login.templatetags.html#login.templatetags.custom_filters.resta_fechas">resta_fechas() (en el módulo login.templatetags.custom_filters)</a>
+</li>
       <li><a href="login.html#login.models.UsuarioRolCategoria.rol">rol (atributo de login.models.UsuarioRolCategoria)</a>
 </li>
       <li><a href="login.html#login.models.Rol">Rol (clase en login.models)</a>
@@ -1318,9 +1375,11 @@
         <li><a href="login.html#login.models.UsuarioRolCategoria.save">(método de login.models.UsuarioRolCategoria)</a>
 </li>
       </ul></li>
+      <li><a href="Perfil.html#Perfil.signals.save_user_profile">save_user_profile() (en el módulo Perfil.signals)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="Perfil.html#Perfil.signals.save_user_profile">save_user_profile() (en el módulo Perfil.signals)</a>
+      <li><a href="login.html#login.views.search">search() (en el módulo login.views)</a>
 </li>
       <li><a href="crearpublicaciones.html#crearpublicaciones.views.seleccionar_plantilla">seleccionar_plantilla() (en el módulo crearpublicaciones.views)</a>
 
@@ -1330,7 +1389,7 @@
       </ul></li>
       <li><a href="Perfil.html#Perfil.signals.sender">sender (en el módulo Perfil.signals)</a>, <a href="Perfil.html#id4">[1]</a>
 </li>
-      <li><a href="crearpublicaciones.html#crearpublicaciones.views.split_content_into_blocks">split_content_into_blocks() (en el módulo crearpublicaciones.views)</a>
+      <li><a href="login.templatetags.html#login.templatetags.custom_filters.solo_parrafos">solo_parrafos() (en el módulo login.templatetags.custom_filters)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1446,8 +1505,12 @@
         <li><a href="Perfil.html#Perfil.models.Usuario.user_id">(atributo de Perfil.models.Usuario)</a>
 </li>
       </ul></li>
-      <li><a href="login.html#login.models.UsuarioRolCategoria.usuario">usuario (atributo de login.models.UsuarioRolCategoria)</a>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.usuario">usuario (atributo de crearpublicaciones.models.Historial)</a>
+
+      <ul>
+        <li><a href="login.html#login.models.UsuarioRolCategoria.usuario">(atributo de login.models.UsuarioRolCategoria)</a>
 </li>
+      </ul></li>
       <li><a href="Perfil.html#Perfil.models.Usuario">Usuario (clase en Perfil.models)</a>
 </li>
   </ul></td>
@@ -1456,8 +1519,12 @@
 </li>
       <li><a href="Perfil.html#Perfil.models.Usuario.MultipleObjectsReturned">Usuario.MultipleObjectsReturned</a>
 </li>
-      <li><a href="login.html#login.models.UsuarioRolCategoria.usuario_id">usuario_id (atributo de login.models.UsuarioRolCategoria)</a>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Historial.usuario_id">usuario_id (atributo de crearpublicaciones.models.Historial)</a>
+
+      <ul>
+        <li><a href="login.html#login.models.UsuarioRolCategoria.usuario_id">(atributo de login.models.UsuarioRolCategoria)</a>
 </li>
+      </ul></li>
       <li><a href="login.html#login.urls.usuario_tiene_permiso">usuario_tiene_permiso() (en el módulo login.urls)</a>
 </li>
       <li><a href="login.html#login.models.UsuarioRolCategoria">UsuarioRolCategoria (clase en login.models)</a>
@@ -1501,10 +1568,12 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Publicacion.vistas">vistas (atributo de crearpublicaciones.models.Publicacion)</a>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.tasks.verificar_inactividad_task">verificar_inactividad_task() (en el módulo crearpublicaciones.tasks)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="crearpublicaciones.html#crearpublicaciones.models.Publicacion.vistas">vistas (atributo de crearpublicaciones.models.Publicacion)</a>
+</li>
       <li><a href="reporte.html#reporte.views.visualizarReporte">visualizarReporte() (en el módulo reporte.views)</a>
 </li>
   </ul></td>

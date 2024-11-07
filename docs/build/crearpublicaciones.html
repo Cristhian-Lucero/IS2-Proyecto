@@ -302,6 +302,120 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">crearpublicaciones.models.</span></span><span class="sig-name descname"><span class="pre">Historial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicacion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usuario</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha_evento</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estado_anterior</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estado_nuevo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.models.Historial" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.ACCION_CHOICES">
+<span class="sig-name descname"><span class="pre">ACCION_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('creado',</span> <span class="pre">'Creado'),</span> <span class="pre">('modificado',</span> <span class="pre">'Modificado'),</span> <span class="pre">('cambio_estado',</span> <span class="pre">'Cambio</span> <span class="pre">de</span> <span class="pre">Estado'),</span> <span class="pre">('eliminado',</span> <span class="pre">'Eliminado'),</span> <span class="pre">('inactivado',</span> <span class="pre">'Inactivado')]</span></em><a class="headerlink" href="#crearpublicaciones.models.Historial.ACCION_CHOICES" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#crearpublicaciones.models.Historial.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#crearpublicaciones.models.Historial.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.accion">
+<span class="sig-name descname"><span class="pre">accion</span></span><a class="headerlink" href="#crearpublicaciones.models.Historial.accion" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.estado_anterior">
+<span class="sig-name descname"><span class="pre">estado_anterior</span></span><a class="headerlink" href="#crearpublicaciones.models.Historial.estado_anterior" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.estado_nuevo">
+<span class="sig-name descname"><span class="pre">estado_nuevo</span></span><a class="headerlink" href="#crearpublicaciones.models.Historial.estado_nuevo" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.fecha_evento">
+<span class="sig-name descname"><span class="pre">fecha_evento</span></span><a class="headerlink" href="#crearpublicaciones.models.Historial.fecha_evento" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.get_accion_display">
+<span class="sig-name descname"><span class="pre">get_accion_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">accion&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.models.Historial.get_accion_display" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.get_next_by_fecha_evento">
+<span class="sig-name descname"><span class="pre">get_next_by_fecha_evento</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">fecha_evento&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.models.Historial.get_next_by_fecha_evento" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.get_previous_by_fecha_evento">
+<span class="sig-name descname"><span class="pre">get_previous_by_fecha_evento</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">fecha_evento&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.models.Historial.get_previous_by_fecha_evento" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#crearpublicaciones.models.Historial.id" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#crearpublicaciones.models.Historial.objects" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.publicacion">
+<span class="sig-name descname"><span class="pre">publicacion</span></span><a class="headerlink" href="#crearpublicaciones.models.Historial.publicacion" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.publicacion_id">
+<span class="sig-name descname"><span class="pre">publicacion_id</span></span><a class="headerlink" href="#crearpublicaciones.models.Historial.publicacion_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.usuario">
+<span class="sig-name descname"><span class="pre">usuario</span></span><a class="headerlink" href="#crearpublicaciones.models.Historial.usuario" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Historial.usuario_id">
+<span class="sig-name descname"><span class="pre">usuario_id</span></span><a class="headerlink" href="#crearpublicaciones.models.Historial.usuario_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="crearpublicaciones.models.Likes">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">crearpublicaciones.models.</span></span><span class="sig-name descname"><span class="pre">Likes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.models.Likes" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
@@ -444,6 +558,13 @@ object the first time, the query is executed.</p>
 object the first time, the query is executed.</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Publicacion.fecha_publicacion">
+<span class="sig-name descname"><span class="pre">fecha_publicacion</span></span><a class="headerlink" href="#crearpublicaciones.models.Publicacion.fecha_publicacion" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="crearpublicaciones.models.Publicacion.get_estado_display">
 <span class="sig-name descname"><span class="pre">get_estado_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">estado&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.models.Publicacion.get_estado_display" title="Link to this definition">¶</a></dt>
@@ -458,6 +579,21 @@ object the first time, the query is executed.</p>
 <dt class="sig sig-object py" id="crearpublicaciones.models.Publicacion.get_previous_by_fecha_creacion">
 <span class="sig-name descname"><span class="pre">get_previous_by_fecha_creacion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">fecha_creacion&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.models.Publicacion.get_previous_by_fecha_creacion" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="crearpublicaciones.models.Publicacion.historial">
+<span class="sig-name descname"><span class="pre">historial</span></span><a class="headerlink" href="#crearpublicaciones.models.Publicacion.historial" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="crearpublicaciones.models.Publicacion.id">
@@ -528,25 +664,15 @@ object the first time, the query is executed.</p>
 </dd></dl>
 
 </section>
-<section id="crearpublicaciones-signals-module">
-<h2>crearpublicaciones.signals module<a class="headerlink" href="#crearpublicaciones-signals-module" title="Link to this heading">¶</a></h2>
-<p id="module-crearpublicaciones.signals">Signals para notificaciones de cambios en publicaciones y nuevos comentarios.</p>
+<section id="module-crearpublicaciones.signals">
+<span id="crearpublicaciones-signals-module"></span><h2>crearpublicaciones.signals module<a class="headerlink" href="#module-crearpublicaciones.signals" title="Link to this heading">¶</a></h2>
+<p>Signals para notificaciones de cambios en publicaciones y nuevos comentarios.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="crearpublicaciones.signals.notificar_cambios_publicacion">
-<span class="sig-prename descclassname"><span class="pre">crearpublicaciones.signals.</span></span><span class="sig-name descname"><span class="pre">notificar_cambios_publicacion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.signals.notificar_cambios_publicacion" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">crearpublicaciones.signals.</span></span><span class="sig-name descname"><span class="pre">notificar_cambios_publicacion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.signals.notificar_cambios_publicacion" title="Link to this definition">¶</a></dt>
 <dd><p>Envía una notificación por correo electrónico al usuario cuando se detectan cambios en una publicación.</p>
-<p>Esta función se ejecuta antes de guardar una instancia de “Publicacion”.
-Verifica si el estado, el título o el contenido han cambiado en comparación
-con la instancia anterior y, de ser así, envía un correo electrónico al usuario correspondiente.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>sender</strong> (<em>class</em>) – El modelo que envía la señal (en este caso, “Publicacion”).</p></li>
-<li><p><strong>instance</strong> (<a class="reference internal" href="#crearpublicaciones.models.Publicacion" title="crearpublicaciones.models.Publicacion"><em>Publicacion</em></a>) – La instancia de la publicación que se va a guardar.</p></li>
-<li><p><strong>**kwargs</strong> – Argumentos adicionales proporcionados por la señal.</p></li>
-</ul>
-</dd>
-</dl>
+<p>Esta función se ejecuta después de guardar una instancia de “Publicacion”.
+Utiliza el parámetro “created” para determinar si la instancia es nueva o existente.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -566,6 +692,21 @@ y, de ser así, envía un correo electrónico al autor de la publicación.</p>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+</section>
+<section id="module-crearpublicaciones.tasks">
+<span id="crearpublicaciones-tasks-module"></span><h2>crearpublicaciones.tasks module<a class="headerlink" href="#module-crearpublicaciones.tasks" title="Link to this heading">¶</a></h2>
+<p>Módulo para tareas automatizadas en la gestión de publicaciones.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="crearpublicaciones.tasks.verificar_inactividad_task">
+<span class="sig-prename descclassname"><span class="pre">crearpublicaciones.tasks.</span></span><span class="sig-name descname"><span class="pre">verificar_inactividad_task</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.tasks.verificar_inactividad_task" title="Link to this definition">¶</a></dt>
+<dd><p>Verifica periódicamente publicaciones en la aplicación de gestión de contenidos para marcar como «inactivo»
+a aquellas que llevan más de 30 días publicadas y registra el cambio en el historial.</p>
+<p>Funcionamiento:
+- Se ejecuta en segundo plano, revisando publicaciones cuyo estado es «publicado» y con más de 30 días de antigüedad.
+- Cambia el estado de estas publicaciones a «inactivo» y crea un registro en el modelo <cite>Historial</cite> con el usuario «Sistema» y la acción «inactivado».
+- La tarea se ejecuta diariamente a medianoche.</p>
 </dd></dl>
 
 </section>
@@ -761,6 +902,12 @@ específica si tiene los permisos adecuados.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="crearpublicaciones.views.historial_publicacion">
+<span class="sig-prename descclassname"><span class="pre">crearpublicaciones.views.</span></span><span class="sig-name descname"><span class="pre">historial_publicacion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicacion_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.views.historial_publicacion" title="Link to this definition">¶</a></dt>
+<dd><p>Vista para mostrar el historial de una publicación.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="crearpublicaciones.views.incrementar_vistas">
 <span class="sig-prename descclassname"><span class="pre">crearpublicaciones.views.</span></span><span class="sig-name descname"><span class="pre">incrementar_vistas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicacion_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.views.incrementar_vistas" title="Link to this definition">¶</a></dt>
 <dd><p>Vista para incrementar el contador de vistas de una publicación.</p>
@@ -824,8 +971,9 @@ en la página “Mis Publicaciones”.</p>
 <dt class="sig sig-object py" id="crearpublicaciones.views.modificar_publicacion">
 <span class="sig-prename descclassname"><span class="pre">crearpublicaciones.views.</span></span><span class="sig-name descname"><span class="pre">modificar_publicacion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicacion_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.views.modificar_publicacion" title="Link to this definition">¶</a></dt>
 <dd><p>Vista para modificar una publicación existente.</p>
-<p>Permite editar el título y contenido de una publicación. Muestra el formulario con
-el contenido existente si la solicitud es GET, y guarda los cambios si es POST.</p>
+<p>Permite al usuario editar el título y el contenido de una publicación.
+Si la solicitud es GET, se muestra el formulario con los datos actuales.
+Si la solicitud es POST, se actualizan los datos de la publicación.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parámetros<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -834,7 +982,7 @@ el contenido existente si la solicitud es GET, y guarda los cambios si es POST.<
 </ul>
 </dd>
 <dt class="field-even">Devuelve<span class="colon">:</span></dt>
-<dd class="field-even"><p>Renderiza la página de modificación o devuelve un JsonResponse con el estado.</p>
+<dd class="field-even"><p>Renderiza la página de modificación o devuelve una respuesta JSON.</p>
 </dd>
 <dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
 <dd class="field-odd"><p>HttpResponse</p>
@@ -932,11 +1080,6 @@ en la creación de publicaciones.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="crearpublicaciones.views.split_content_into_blocks">
-<span class="sig-prename descclassname"><span class="pre">crearpublicaciones.views.</span></span><span class="sig-name descname"><span class="pre">split_content_into_blocks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.views.split_content_into_blocks" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </section>
 <section id="module-crearpublicaciones">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-crearpublicaciones" title="Link to this heading">¶</a></h2>
@@ -981,6 +1124,7 @@ en la creación de publicaciones.</p>
 <li class="toctree-l2"><a class="reference internal" href="Tablero.html">Tablero package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="login.templatetags.html">login.templatetags package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reporte.html">reporte package</a></li>
 </ul>
 </li>
 </ul>
