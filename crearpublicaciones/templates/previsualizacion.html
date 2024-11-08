@@ -76,7 +76,10 @@
                 
                     {% endif %}
                 {% endif %}
-                <button class="btn-edit" onclick="window.location.href='{% url 'historial_publicacion' publicacion.id %}'">Ver Historial de Cambios</button>
+
+                {% if request.user == publicacion.user or 'acceder reportes' in permisos_categoria|get_item:publicacion.categoria.id %}
+                    <button class="btn-edit" onclick="window.location.href='{% url 'historial_publicacion' publicacion.id %}'">Ver Historial de Cambios</button>
+                {% endif %}
             </div>
             
         </div>

@@ -580,7 +580,13 @@ def historial_publicacion(request, publicacion_id):
     Vista para mostrar el historial de una publicación.
     """
     publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+
+    if(publicacion.user_id != request.user.id):
+            if not verificar_permisos_categoria_id(request, ['acceder reportes'], publicacion.categoria_id):
+                return render(request, 'sin_permiso.html')
+
     historial = Historial.objects.filter(publicacion=publicacion).order_by('-fecha_evento')
+
     
     context = {
         'publicacion': publicacion,
