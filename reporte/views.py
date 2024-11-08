@@ -310,6 +310,16 @@ def porTiempo(request):
 
 @login_required
 def publicadoPorTiempo(request):
+    """
+    Vista para mostrar las publicaciones publicadas en un rango de tiempo especificado y basadas en categorías seleccionadas.
+    Si el método de la solicitud es POST, genera un informe con todas las publicaciones publicadas en el tiempo especificado.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP que contiene parámetros GET opcionales: 'start_date', 'end_date', 'categories'.
+
+    Returns:
+        HttpResponse: HTML renderizado con una lista de publicaciones publicadas en el tiempo o una redirección a 'listaReportes' tras la creación del informe.
+    """
 
     if not verificar_permisos_admin(request, ['acceder reportes']):
         return render(request, 'sin_permiso.html')
@@ -373,6 +383,17 @@ def publicadoPorTiempo(request):
 
 @login_required
 def promedioRevision(request):
+    """
+    Vista para calcular el promedio de tiempo en revisión de las publicaciones en un rango de tiempo especificado y categorías seleccionadas.
+    Si el método de la solicitud es POST, genera un informe mostrando el promedio de tiempo en revisión de las publicaciones en el tiempo especificado.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP que contiene parámetros GET opcionales: 'start_date', 'end_date', 'categories'.
+
+    Returns:
+        HttpResponse: HTML renderizado con el promedio de tiempo de revisión o una redirección a 'listaReportes' tras la creación del informe.
+    """
+
 
     if not verificar_permisos_admin(request, ['acceder reportes']):
         return render(request, 'sin_permiso.html')
