@@ -402,6 +402,13 @@ def promedioRevision(request):
         for i in publicaciones:
             promedio += i.fecha_publicacion - i.fecha_creacion
 
+        if len(publicaciones) == 0:
+            return render(request, 'promedio_publicacion.html', {
+                'publicaciones': list(publicaciones.order_by('-fecha_creacion')), 
+                'categorias': Categoria.objects.all()
+            })
+            
+        
         promedio = promedio / len(publicaciones)
 
         dias = promedio.days
