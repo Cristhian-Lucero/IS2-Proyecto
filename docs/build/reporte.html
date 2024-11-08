@@ -326,12 +326,38 @@ Si el método de la solicitud es POST, genera un informe con todas las publicaci
 <dl class="py function">
 <dt class="sig sig-object py" id="reporte.views.promedioRevision">
 <span class="sig-prename descclassname"><span class="pre">reporte.views.</span></span><span class="sig-name descname"><span class="pre">promedioRevision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reporte.views.promedioRevision" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Vista para calcular el promedio de tiempo en revisión de las publicaciones en un rango de tiempo especificado y categorías seleccionadas.
+Si el método de la solicitud es POST, genera un informe mostrando el promedio de tiempo en revisión de las publicaciones en el tiempo especificado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – La solicitud HTTP que contiene parámetros GET opcionales: “start_date”, “end_date”, “categories”.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>HTML renderizado con el promedio de tiempo de revisión o una redirección a “listaReportes” tras la creación del informe.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="reporte.views.publicadoPorTiempo">
 <span class="sig-prename descclassname"><span class="pre">reporte.views.</span></span><span class="sig-name descname"><span class="pre">publicadoPorTiempo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#reporte.views.publicadoPorTiempo" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Vista para mostrar las publicaciones publicadas en un rango de tiempo especificado y basadas en categorías seleccionadas.
+Si el método de la solicitud es POST, genera un informe con todas las publicaciones publicadas en el tiempo especificado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – La solicitud HTTP que contiene parámetros GET opcionales: “start_date”, “end_date”, “categories”.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>HTML renderizado con una lista de publicaciones publicadas en el tiempo o una redirección a “listaReportes” tras la creación del informe.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="reporte.views.visualizarReporte">
