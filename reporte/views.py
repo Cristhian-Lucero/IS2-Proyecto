@@ -7,6 +7,8 @@ from login.models import *
 from .models import *
 from login.models import *
 from datetime import timedelta
+from login.utils import *
+
 
 # Create your views here.
 
@@ -22,6 +24,9 @@ def masVistos(request):
     Returns:
         HttpResponse: HTML renderizado con una lista de las publicaciones más vistas o una redirección a 'listaReportes' tras la creación del informe.
     """
+
+    if not verificar_permisos_admin(request, ['acceder reportes']):
+        return render(request, 'sin_permiso.html')
 
     start_date = request.GET.get('start-date')
     end_date = request.GET.get('end-date')
@@ -83,6 +88,80 @@ def masVistos(request):
         return redirect('listaReportes')
 
 @login_required
+def inactivosPorFecha(request):
+    """
+    Vista para mostrar las publicaciones inactivas basadas en los filtros especificados (rango de fechas y categorías).
+    Si el método de la solicitud es POST, genera un informe con las 10 publicaciones más vistas.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP que contiene parámetros GET opcionales: 'start_date', 'end_date', 'categories'.
+
+    Returns:
+        HttpResponse: HTML renderizado con una lista de las publicaciones más vistas o una redirección a 'listaReportes' tras la creación del informe.
+    """
+    if not verificar_permisos_admin(request, ['acceder reportes']):
+        return render(request, 'sin_permiso.html')
+
+    start_date = request.GET.get('start-date')
+    end_date = request.GET.get('end-date')
+    categories = request.GET.getlist('categories')  # Esto obtiene una lista de categorías seleccionadas
+
+    # Realiza la consulta a la base de datos utilizando los filtros obtenidos
+    publicaciones = Publicacion.objects.all()
+    publicaciones = Publicacion.objects.filter(estado='inactivo').order_by('-fecha_publicacion')
+
+
+    if start_date and end_date:
+        publicaciones = publicaciones.filter(fecha_creacion__range=[start_date, end_date])
+
+    if categories:
+        publicaciones = publicaciones.filter(categoria__descripcion_corta__in=categories)
+
+    if request.method == 'GET':
+
+        return render(request, 'inactivosPorFecha.html', {
+            'publicaciones': list(publicaciones), 
+            'categorias': Categoria.objects.all()
+            })
+    
+    else:
+        html_content = """
+            <div class="articles">
+                <h2 style="text-align: center;">Listado de Inactivos por Tiempo</h2>
+                <br><hr>
+            </div>
+        """
+        titulo = request.POST.get('titulo')
+        
+        for i in publicaciones:
+            texto = f"""
+            <div class="article">
+                <h2 style="text-transform: uppercase;">{ i.titulo }</h2>
+                <h3>Vistas: { i.vistas }</h3>
+                <a href="/home/categoria/{i.categoria.descripcion_corta}">{ i.categoria.descripcion_corta } <br></a> 
+                <p>Autor: <a href="/perfil/{i.user}">{i.user}</a></p>
+                <p>Fecha: { i.fecha_creacion } </p>
+                <button class="toggle-button" onclick="toggleContent('contenido-{i.id}')">Mostrar contenido</button>
+                <a class="read-more" href="/crearpublicaciones/previsualizar/{ i.id }">IR A PAGINA</a>
+                <div id="contenido-{i.id}" class="contenido"> {i.contenido_html} </div>
+            </div>
+            """
+            html_content += texto  # Esta línea debería estar alineada correctamente dentro del bucle.
+
+        html_content += "</div>"  # Añadido fuera del bucle.
+
+
+        nuevo_reporte = Reporte.objects.create()
+
+        nuevo_reporte.titulo = titulo
+        nuevo_reporte.html_content = html_content
+        nuevo_reporte.user = request.user.username
+        nuevo_reporte.tipo = 'articulos inactivados por tiempo'
+
+        nuevo_reporte.save()
+        return redirect('listaReportes')
+
+@login_required
 def masLikeados(request):
     """
     Vista para mostrar las publicaciones con más likes basadas en los filtros especificados (rango de fechas y categorías).
@@ -94,6 +173,9 @@ def masLikeados(request):
     Returns:
         HttpResponse: HTML renderizado con una lista de las publicaciones con más likes o una redirección a 'listaReportes' tras la creación del informe.
     """
+
+    if not verificar_permisos_admin(request, ['acceder reportes']):
+        return render(request, 'sin_permiso.html')
 
     start_date = request.GET.get('start-date')
     end_date = request.GET.get('end-date')
@@ -165,6 +247,9 @@ def porTiempo(request):
         HttpResponse: HTML renderizado con una lista de publicaciones por tiempo o una redirección a 'listaReportes' tras la creación del informe.
     """
 
+    if not verificar_permisos_admin(request, ['acceder reportes']):
+        return render(request, 'sin_permiso.html')
+
     start_date = request.GET.get('start-date')
     end_date = request.GET.get('end-date')
     categories = request.GET.getlist('categories')  # Esto obtiene una lista de categorías seleccionadas
@@ -226,6 +311,9 @@ def porTiempo(request):
 @login_required
 def publicadoPorTiempo(request):
 
+    if not verificar_permisos_admin(request, ['acceder reportes']):
+        return render(request, 'sin_permiso.html')
+
     start_date = request.GET.get('start-date')
     end_date = request.GET.get('end-date')
     categories = request.GET.getlist('categories')  # Esto obtiene una lista de categorías seleccionadas
@@ -285,6 +373,9 @@ def publicadoPorTiempo(request):
 
 @login_required
 def promedioRevision(request):
+
+    if not verificar_permisos_admin(request, ['acceder reportes']):
+        return render(request, 'sin_permiso.html')
 
     start_date = request.GET.get('start-date')
     end_date = request.GET.get('end-date')
@@ -380,6 +471,9 @@ def listaReportes(request):
         HttpResponse: HTML renderizado con una lista de reportes ordenados.
     """
 
+    if not verificar_permisos_admin(request, ['acceder reportes']):
+        return render(request, 'sin_permiso.html')
+
     reportes = Reporte.objects.all()
     return render(request, 'lista_reportes.html', {
         'reportes': list(reportes.order_by('-fecha_creacion'))
@@ -397,6 +491,9 @@ def visualizarReporte(request, reporte_id):
     Returns:
         HttpResponse: HTML renderizado con el contenido del reporte seleccionado.
     """
+
+    if not verificar_permisos_admin(request, ['acceder reportes']):
+        return render(request, 'sin_permiso.html')
 
     reporte = Reporte.objects.get(id=reporte_id)
 
@@ -417,6 +514,9 @@ def eliminarReporte(request, reporte_id):
         HttpResponse: Redirección a la lista de reportes después de la eliminación.
     """
 
+    if not verificar_permisos_admin(request, ['acceder reportes']):
+        return render(request, 'sin_permiso.html')
+
     reporte = Reporte.objects.get(id=reporte_id)
     reporte.delete()
 
@@ -434,7 +534,9 @@ def dashboard(request):
     Returns:
         HttpResponse: HTML renderizado con estadísticas sobre publicaciones y usuarios según sus roles.
     """
-    
+    if not verificar_permisos_admin(request, ['acceder reportes']):
+        return render(request, 'sin_permiso.html')
+
     nro_publicado = Publicacion.objects.filter(estado="publicado")
     nro_borrador = Publicacion.objects.filter(estado="borrador")
     nro_revision = Publicacion.objects.filter(estado="revision")
