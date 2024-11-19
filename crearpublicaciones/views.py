@@ -507,13 +507,6 @@ def guardar_publicacion_ajax(request, publicacion_id):
         publicacion.contenido_html = data.get('content', publicacion.contenido_html)
         publicacion.save()
         
-        print("publicacion antigua:")
-        print(publicacion_antigua_titulo)
-        print(publicacion_antigua_contenido)
-        print("publicacion nueva:")
-        print(publicacion.titulo)
-        print(publicacion.contenido_html)
-        
         # Si la publicación es nueva, se crea un registro en el historial
         if publicacion_antigua_titulo == "" and publicacion_antigua_contenido == "" and not Historial.objects.filter(publicacion=publicacion).exists():
             Historial.objects.create(
