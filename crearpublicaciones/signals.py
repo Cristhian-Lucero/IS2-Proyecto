@@ -20,13 +20,8 @@ def notificar_cambios_publicacion(sender, instance, created, **kwargs):
 
     usuario = instance.user
     if created:
-        # La publicación es nueva. No enviar notificación de modificación, crear un registro en el historial de cambios
-
-        Historial.objects.create(
-        publicacion=instance,
-        usuario=instance.user,
-        accion='creado'
-        )
+        # pasar si la publicación es nueva
+        pass
     else:
         # La publicación ha sido modificada
         asunto = 'Tu publicación ha sido modificada'

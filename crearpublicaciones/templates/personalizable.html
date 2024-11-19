@@ -253,6 +253,7 @@
         const categoriaId = {{ categoria.id }};  // Utilizar el categoria_id del contexto
         const blocks = editor.children;
         let contentHTML = '';
+        let publicacionId = null;
 
         for (let block of blocks) {
             if (block.querySelector('textarea')) {
@@ -299,13 +300,31 @@
         }
         const csrftoken = getCookie('csrftoken');
 
-        fetch("{% url 'guardar_publicacion_ajax' publicacion_id %}", {
+        // Realizar la petición POST para crear la publicación inicial
+        fetch("{% url 'crear_publicacion_ajax' %}", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrftoken
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({ categoria_id: categoriaId })
+        }).then(response => {
+            if (response.ok) {
+                return response.json(); // Retorna el JSON con el ID de la publicación
+            } else {
+                throw new Error('Error al crear la publicación inicial');
+            }
+        }).then(dataId=> {
+            publicacionId = dataId.publicacion_id;
+        // Realizar la petición POST para guardar la publicación
+            return fetch(`{% url 'guardar_publicacion_ajax' 0 %}`.replace('0', publicacionId), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify(data)
+            });
         }).then(response => {
             if (response.ok) {
                 alert('¡Publicación guardada!');

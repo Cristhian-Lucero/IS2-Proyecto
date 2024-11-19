@@ -26,6 +26,7 @@ from django.db.models import Q
 from datetime import timedelta
 from django.utils import timezone
 import pytz
+import traceback
 
 @login_required
 def crear_publicacion(request, categoria_id):
@@ -427,21 +428,57 @@ def personalizable(request, categoria_id):
         return render(request, 'sin_permiso.html')
 
     # Crear una nueva publicación en borrador o reutilizar una existente
-    publicacion, created = Publicacion.objects.get_or_create(
-        user=request.user,
-        categoria=categoria,
-        estado='borrador',
-        defaults={'titulo': '', 'contenido_html': ''}
-    )
+    # publicacion, created = Publicacion.objects.get_or_create(
+    #     user=request.user,
+    #     categoria=categoria,
+    #     estado='borrador',
+    #     defaults={'titulo': '', 'contenido_html': ''}
+    # )
 
-    blocks = parse_content(publicacion.contenido_html) if publicacion.contenido_html else []
+    # # Crear un registro en el historial si la publicación es nueva
+    # Historial.objects.create(
+    #     publicacion=publicacion,
+    #     usuario=publicacion.user,
+    #     accion='creado'
+    #     )
+
+    # blocks = parse_content(publicacion.contenido_html) if publicacion.contenido_html else []
 
     return render(request, 'personalizable.html', {
-        'publicacion': publicacion,
-        'blocks': blocks,
+        # 'publicacion': publicacion,
+        # 'blocks': blocks,
         'categoria': categoria,
-        'publicacion_id': publicacion.id,
+        # 'publicacion_id': publicacion.id,
     })
+
+from django.http import JsonResponse
+from .models import Publicacion
+
+def crear_publicacion_ajax(request):
+    if request.method == 'POST':
+        try:
+            # Leer los datos JSON enviados desde el cliente
+            dataId = json.loads(request.body)
+            categoria_id = dataId.get('categoria_id')
+            
+            if not categoria_id:
+                return JsonResponse({'error': 'categoria_id es requerido'}, status=400)
+            
+            # Crear la publicación inicial con estado borrador
+            publicacion = Publicacion.objects.create(
+                categoria_id=categoria_id, # Categoría enviada desde el frontend
+                estado='borrador',
+                user=request.user,
+                titulo='',
+                contenido_html=''
+            )
+            return JsonResponse({'publicacion_id': publicacion.id}, status=201)
+        except Exception as e:
+            # Log completo del error
+            error_message = traceback.format_exc()
+            print(error_message)  # Para ver en la consola del servidor
+            return JsonResponse({'error': str(e), 'details': error_message}, status=400)
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
 
 
 @login_required
@@ -461,18 +498,53 @@ def guardar_publicacion_ajax(request, publicacion_id):
 
     if request.method == 'POST':
         publicacion = get_object_or_404(Publicacion, id=publicacion_id)
+
+        publicacion_antigua_contenido = publicacion.contenido_html
+        publicacion_antigua_titulo = publicacion.titulo
+
         data = json.loads(request.body)
         publicacion.titulo = data.get('title', publicacion.titulo)
         publicacion.contenido_html = data.get('content', publicacion.contenido_html)
         publicacion.save()
-
-        tiempo_limite = timezone.now() - timedelta(seconds=12)
-        if not Historial.objects.filter(publicacion=publicacion, fecha_evento__gt=tiempo_limite, accion='creado').exists():
+        
+        # Si la publicación es nueva, se crea un registro en el historial
+        if publicacion_antigua_titulo == "" and publicacion_antigua_contenido == "" and not Historial.objects.filter(publicacion=publicacion).exists():
             Historial.objects.create(
                 publicacion=publicacion,
                 usuario=request.user,
-                accion='modificado'
+                accion='creado'
             )
+
+        #Si solo el contenido de la publicacion se cambio, se crea un registro en el historial
+        elif publicacion_antigua_contenido != publicacion.contenido_html and publicacion_antigua_titulo == publicacion.titulo:
+            Historial.objects.create(
+                publicacion=publicacion,
+                usuario=request.user,
+                accion='modificado_cuerpo'
+            )
+        # Si solo el titulo de la publicacion se cambio, se crea un registro en el historial
+        elif publicacion_antigua_titulo != publicacion.titulo and publicacion_antigua_contenido == publicacion.contenido_html:
+            Historial.objects.create(
+                publicacion=publicacion,
+                usuario=request.user,
+                accion='modificado_titulo'
+            )
+        # Si se cambio tanto el contenido como el titulo de la publicacion, se crea un registro en el historial
+        elif publicacion_antigua_titulo != publicacion.titulo and publicacion_antigua_contenido != publicacion.contenido_html:
+            Historial.objects.create(
+                publicacion=publicacion,
+                usuario=request.user,
+                accion='modificado_titulo_cuerpo'
+            )
+
+
+        # tiempo_limite = timezone.now() - timedelta(seconds=12)
+        # if not Historial.objects.filter(publicacion=publicacion, fecha_evento__gt=tiempo_limite, accion='creado').exists():
+        #     Historial.objects.create(
+        #         publicacion=publicacion,
+        #         usuario=request.user,
+        #         accion='modificado'
+        #     )
 
 
         return JsonResponse({'status': 'success'})
