@@ -11,6 +11,7 @@ from .views import *
 
 urlpatterns = [
     path('crear/<int:categoria_id>/', crear_publicacion, name='crear_publicacion'),
+    path('crear_publicacion/', crear_publicacion_ajax, name='crear_publicacion_ajax'),
     path('previsualizar/<int:publicacion_id>/', previsualizar_publicacion, name='previsualizar_publicacion'),
     path('mis-publicaciones/', mis_publicaciones, name='mis_publicaciones'),
     path('modificar/<int:publicacion_id>/', modificar_publicacion, name='modificar_publicacion'),

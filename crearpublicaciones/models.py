@@ -18,6 +18,7 @@ class Publicacion(models.Model):
         ('revision', 'En Revisión'),
         ('rechazado', 'Rechazado'),
         ('publicado', 'Publicado'),
+        ('inactivo', 'Inactivo'),
     ]
 
     titulo = models.CharField(max_length=200)
@@ -61,7 +62,9 @@ class Comentario(models.Model):
 class Historial(models.Model):
     ACCION_CHOICES = [
         ('creado', 'Creado'),
-        ('modificado', 'Modificado'),
+        ('modificado_titulo_cuerpo', 'Titulo y Cuerpo Modificado'),
+        ('modificado_titulo', 'Titulo Modificado'),
+        ('modificado_cuerpo', 'Cuerpo Modificado'),
         ('cambio_estado', 'Cambio de Estado'),
         ('eliminado', 'Eliminado'), # El elimnado puede no ser necesario
         ('inactivado', 'Inactivado')
@@ -70,7 +73,7 @@ class Historial(models.Model):
     publicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, related_name='historial')
     usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     fecha_evento = models.DateTimeField(auto_now_add=True)
-    accion = models.CharField(max_length=20, choices=ACCION_CHOICES)
+    accion = models.CharField(max_length=24, choices=ACCION_CHOICES)
     estado_anterior = models.CharField(max_length=10, blank=True, null=True)
     estado_nuevo = models.CharField(max_length=10, blank=True, null=True)
 

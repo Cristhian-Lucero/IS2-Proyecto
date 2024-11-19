@@ -12,7 +12,7 @@ def verificar_inactividad_task():
 
     Funcionamiento:
     - Se ejecuta en segundo plano, revisando publicaciones cuyo estado es "publicado" y con más de 30 días de antigüedad.
-    - Cambia el estado de estas publicaciones a "inactivo" y crea un registro en el modelo `Historial` con el usuario "Sistema" y la acción "inactivado".
+    - Cambia el estado de estas publicaciones a "inactivo" y crea un registro en el modelo "Historial" con el usuario "Sistema" y la acción "inactivado".
     - La tarea se ejecuta diariamente a medianoche.
     '''
     
