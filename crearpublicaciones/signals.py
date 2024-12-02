@@ -1,13 +1,29 @@
 '''
 Signals para notificaciones de cambios en publicaciones y nuevos comentarios.
 '''
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
+from .models import Publicacion, Comentario
 
-from .models import Historial, Publicacion, Comentario
+# Diccionario para almacenar el estado previo de las publicaciones antes de ser modificadas
+estado_anterior = {}
+
+@receiver(pre_save, sender=Publicacion)
+def guardar_estado_previo(sender, instance, **kwargs):
+    """
+    Guarda el estado anterior de la publicación antes de que sea modificada.
+    """
+    if instance.id:
+        try:
+            # Obtener la publicación previa y guardar su estado en un diccionario
+            publicacion_previa = Publicacion.objects.get(id=instance.id)
+            estado_anterior[instance.id] = publicacion_previa.estado
+        except Publicacion.DoesNotExist:
+            # Si no existe, simplemente no hacemos nada
+            estado_anterior[instance.id] = None
 
 @receiver(post_save, sender=Publicacion)
 def notificar_cambios_publicacion(sender, instance, created, **kwargs):
@@ -20,19 +36,36 @@ def notificar_cambios_publicacion(sender, instance, created, **kwargs):
 
     usuario = instance.user
     if created:
-        # pasar si la publicación es nueva
-        pass
+        # Pasar si la publicación es nueva
+        return
+
+    # Obtener el estado anterior almacenado antes del guardado
+    estado_previo = estado_anterior.get(instance.id)
+
+    # Comparar el estado anterior con el actual
+    if estado_previo and estado_previo != instance.estado:
+        # El estado ha cambiado, enviar correo de cambio de estado
+        asunto = 'El estado de tu publicación ha cambiado'
+        mensaje_html = render_to_string('emails/publicacion_cambio_estado.html', {
+            'usuario': usuario,
+            'publicacion': instance,
+        })
     else:
-        # La publicación ha sido modificada
+        # La publicación ha sido modificada (pero no el estado)
         asunto = 'Tu publicación ha sido modificada'
         mensaje_html = render_to_string('emails/publicacion_modificada.html', {
             'usuario': usuario,
             'publicacion': instance,
         })
-        mensaje = EmailMultiAlternatives(asunto, '', settings.EMAIL_HOST_USER, [usuario.email])
-        mensaje.attach_alternative(mensaje_html, "text/html")
-        mensaje.send()
 
+    # Eliminar el estado anterior del diccionario
+    if instance.id in estado_anterior:
+        del estado_anterior[instance.id]
+        
+    # Enviar el correo
+    mensaje = EmailMultiAlternatives(asunto, '', settings.EMAIL_HOST_USER, [usuario.email])
+    mensaje.attach_alternative(mensaje_html, "text/html")
+    mensaje.send()
 
 
 @receiver(post_save, sender=Comentario)
