@@ -46,7 +46,7 @@
 
     <h1>La publicacion no es editable :-[</h1>
     <p>Una vez que el artículo es publicado no puede ser editado. Si desea editarlo, el artículo debe ser cambiado de estado</p>
-    {% if 'rechazar contenido' in permisos_usuario %}
+    {% if 'cambiar estado publicacion' in permisos_usuario %}
         <p>Si desea cambiar el estado de esta publicacion dirijase a <a href="{% url 'kanban_board' categoria_publicacion %}">este enlace</a></p>
         <br><br>
     {% endif %}

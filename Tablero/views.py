@@ -22,7 +22,7 @@ def kanban_board(request, categoria_id=None):
         HttpResponse: Renderiza la plantilla 'index.html' con el contexto que incluye las publicaciones en diferentes estados y las categorías activas.
     """
 
-    if not verificar_permisos_categoria_id(request, ['rechazar contenido', 'publicar contenido', 'cambiar estado publicacion'], categoria_id):
+    if not verificar_permisos_categoria_id(request, ['cambiar estado publicacion'], categoria_id):
         return render(request, 'sin_permiso.html')
     # Obtener el usuario actual
     usuario_actual = request.user

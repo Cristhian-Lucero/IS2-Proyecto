@@ -91,7 +91,7 @@ def previsualizar_publicacion(request, publicacion_id):
 
         if (request.user != publicacion.user and publicacion.estado != 'publicado') or publicacion.categoria.estado == 'Inactivo':
             print('aprobao')
-            if not verificar_permisos_categoria_id(request, ['aprobar contenido', 'rechazar contenido', 'publicar contenido', 'cambiar estado publicacion', 'visualizar historial cambios', 'gestionar contenido otros'], publicacion.categoria_id):
+            if not verificar_permisos_categoria_id(request, ['cambiar estado publicacion', 'visualizar historial cambios', 'gestionar contenido otros'], publicacion.categoria_id):
                 return render(request, 'publicacion_no_disponible.html')
 
         comentarios = Comentario.objects.filter(publicacion=publicacion_id)

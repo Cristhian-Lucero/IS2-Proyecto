@@ -334,12 +334,12 @@
                             </li>
                         {% endif %}
 
-                        {% if 'rechazar contenido' in permisos_usuario %}
+                        {% if 'cambiar estado publicacion' in permisos_usuario %}
                             <li class="dropdown-submenu">
                                 <a style="text-transform: uppercase;" href="#">>REVISIONES</a>
                                 <ul class="dropdown-menu">
                                     {% for i in categorias %}
-                                        {% if i.estado == 'Activo' and 'rechazar contenido' in permisos_categoria|get_item:i.id %}
+                                        {% if i.estado == 'Activo' and 'cambiar estado publicacion' in permisos_categoria|get_item:i.id %}
                                             <li><a href="{% url 'kanban_board' i.id %}">{{ i.descripcion_corta }}</a></li>
                                         {% endif %}
                                     {% endfor %}
