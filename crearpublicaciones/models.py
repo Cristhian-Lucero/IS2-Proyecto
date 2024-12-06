@@ -60,6 +60,9 @@ class Comentario(models.Model):
         return f'{self.user.username} - {self.publicacion.titulo} - {self.fecha_creacion}'
 
 class Historial(models.Model):
+    """
+    Modelo que representa los historiales de cambio de una publicación.
+    """
     ACCION_CHOICES = [
         ('creado', 'Creado'),
         ('modificado_titulo_cuerpo', 'Titulo y Cuerpo Modificado'),

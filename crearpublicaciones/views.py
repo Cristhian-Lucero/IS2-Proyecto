@@ -315,6 +315,20 @@ def modificar_publicacion(request, publicacion_id):
 
 @csrf_exempt
 def modificar_publicacion_ajax(request, id):
+    """
+    Vista para modificar una publicación existente mediante una solicitud AJAX.
+
+    Permite actualizar los datos de una publicación como el título, contenido
+    y categoría. La solicitud debe incluir un JSON con los campos que se
+    desean modificar.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+        id (int): ID de la publicación a modificar.
+
+    Returns:
+        JsonResponse: Respuesta en formato JSON indicando el estado de la operación. Incluye un mensaje de éxito o error.
+    """
     if request.method == 'POST':
         publicacion = get_object_or_404(Publicacion, id=id)
 
@@ -455,6 +469,20 @@ from django.http import JsonResponse
 from .models import Publicacion
 
 def crear_publicacion_ajax(request):
+    """
+    Vista para crear una nueva publicación mediante una solicitud AJAX.
+
+    Esta vista permite crear una nueva publicación en estado "borrador"
+    asociada a una categoría específica. La solicitud debe incluir un
+    JSON con el 'categoria_id'. La publicación se crea asociada al usuario
+    autenticado.
+
+    Args:
+        request (HttpRequest): La solicitud HTTP recibida.
+
+    Returns:
+        JsonResponse: Respuesta en formato JSON con el ID de la publicación recién creada en caso de éxito o un mensaje de error en caso contrario.
+    """
     if request.method == 'POST':
         try:
             # Leer los datos JSON enviados desde el cliente

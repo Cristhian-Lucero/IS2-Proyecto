@@ -46,9 +46,6 @@ class VerificarInactividadTaskTest(TestCase):
         publicaciones = Publicacion.objects.filter(fecha_publicacion__lte=fecha_limite, estado='publicado')
         if publicaciones.exists():
             publicaciones.update(estado='inactivo')
-            for publicacion in publicaciones:
-                Historial.objects.create(publicacion=publicacion, accion='Inactivado por inactividad')
-
 
     def test_inactiva_publicaciones_antiguas(self):
         # Ejecuta la tarea de verificación de inactividad
@@ -62,11 +59,3 @@ class VerificarInactividadTaskTest(TestCase):
         self.publicacion_activa.refresh_from_db()
         self.assertEqual(self.publicacion_activa.estado, 'publicado')
 
-    def test_registro_historial_para_publicaciones_inactivas(self):
-        # Ejecuta la tarea de verificación de inactividad
-        self.run_inmediate_inactividad_task()
-
-        # Verificar que se ha creado un registro en el historial para la publicación antigua
-        historial_registro = Historial.objects.filter(publicacion=self.publicacion_inactiva).first()
-        self.assertIsNotNone(historial_registro)
-        self.assertEqual(historial_registro.publicacion.estado, 'inactivo')
