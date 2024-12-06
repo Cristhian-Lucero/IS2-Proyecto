@@ -16,6 +16,23 @@
             "groups": [],
             "user_permissions": []
         }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$870000$1YBLM6xj9doWy63tqGK5Bn$2uaetHLn8PG5MxuRK1TeMOsC80ytKVT3EG7OTX4YiVI=",
+            "last_login": "2024-09-16T02:44:57.289Z",
+            "is_superuser": false,
+            "username": "normaluser",
+            "first_name": "Normal",
+            "last_name": "User",
+            "email": "normaluser@normal.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2024-12-06T15:00:00.000Z",
+            "groups": [],
+            "user_permissions": []
+        }
     }
-    ]
-    
+]
