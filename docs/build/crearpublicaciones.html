@@ -303,11 +303,12 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="crearpublicaciones.models.Historial">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">crearpublicaciones.models.</span></span><span class="sig-name descname"><span class="pre">Historial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicacion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usuario</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fecha_evento</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estado_anterior</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estado_nuevo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.models.Historial" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">crearpublicaciones.models.</span></span><span class="sig-name descname"><span class="pre">Historial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.models.Historial" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Modelo que representa los historiales de cambio de una publicación.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="crearpublicaciones.models.Historial.ACCION_CHOICES">
-<span class="sig-name descname"><span class="pre">ACCION_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('creado',</span> <span class="pre">'Creado'),</span> <span class="pre">('modificado',</span> <span class="pre">'Modificado'),</span> <span class="pre">('cambio_estado',</span> <span class="pre">'Cambio</span> <span class="pre">de</span> <span class="pre">Estado'),</span> <span class="pre">('eliminado',</span> <span class="pre">'Eliminado'),</span> <span class="pre">('inactivado',</span> <span class="pre">'Inactivado')]</span></em><a class="headerlink" href="#crearpublicaciones.models.Historial.ACCION_CHOICES" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ACCION_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('creado',</span> <span class="pre">'Creado'),</span> <span class="pre">('modificado_titulo_cuerpo',</span> <span class="pre">'Titulo</span> <span class="pre">y</span> <span class="pre">Cuerpo</span> <span class="pre">Modificado'),</span> <span class="pre">('modificado_titulo',</span> <span class="pre">'Titulo</span> <span class="pre">Modificado'),</span> <span class="pre">('modificado_cuerpo',</span> <span class="pre">'Cuerpo</span> <span class="pre">Modificado'),</span> <span class="pre">('cambio_estado',</span> <span class="pre">'Cambio</span> <span class="pre">de</span> <span class="pre">Estado'),</span> <span class="pre">('eliminado',</span> <span class="pre">'Eliminado'),</span> <span class="pre">('inactivado',</span> <span class="pre">'Inactivado')]</span></em><a class="headerlink" href="#crearpublicaciones.models.Historial.ACCION_CHOICES" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py exception">
@@ -495,7 +496,7 @@ one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="crearpublicaciones.models.Publicacion.ESTADO_CHOICES">
-<span class="sig-name descname"><span class="pre">ESTADO_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('borrador',</span> <span class="pre">'Borrador'),</span> <span class="pre">('revision',</span> <span class="pre">'En</span> <span class="pre">Revisión'),</span> <span class="pre">('rechazado',</span> <span class="pre">'Rechazado'),</span> <span class="pre">('publicado',</span> <span class="pre">'Publicado')]</span></em><a class="headerlink" href="#crearpublicaciones.models.Publicacion.ESTADO_CHOICES" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ESTADO_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('borrador',</span> <span class="pre">'Borrador'),</span> <span class="pre">('revision',</span> <span class="pre">'En</span> <span class="pre">Revisión'),</span> <span class="pre">('rechazado',</span> <span class="pre">'Rechazado'),</span> <span class="pre">('publicado',</span> <span class="pre">'Publicado'),</span> <span class="pre">('inactivo',</span> <span class="pre">'Inactivo')]</span></em><a class="headerlink" href="#crearpublicaciones.models.Publicacion.ESTADO_CHOICES" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py exception">
@@ -668,11 +669,16 @@ object the first time, the query is executed.</p>
 <span id="crearpublicaciones-signals-module"></span><h2>crearpublicaciones.signals module<a class="headerlink" href="#module-crearpublicaciones.signals" title="Link to this heading">¶</a></h2>
 <p>Signals para notificaciones de cambios en publicaciones y nuevos comentarios.</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="crearpublicaciones.signals.guardar_estado_previo">
+<span class="sig-prename descclassname"><span class="pre">crearpublicaciones.signals.</span></span><span class="sig-name descname"><span class="pre">guardar_estado_previo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.signals.guardar_estado_previo" title="Link to this definition">¶</a></dt>
+<dd><p>Guarda el estado anterior de la publicación antes de que sea modificada.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="crearpublicaciones.signals.notificar_cambios_publicacion">
 <span class="sig-prename descclassname"><span class="pre">crearpublicaciones.signals.</span></span><span class="sig-name descname"><span class="pre">notificar_cambios_publicacion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.signals.notificar_cambios_publicacion" title="Link to this definition">¶</a></dt>
-<dd><p>Envía una notificación por correo electrónico al usuario cuando se detectan cambios en una publicación.</p>
-<p>Esta función se ejecuta después de guardar una instancia de “Publicacion”.
-Utiliza el parámetro “created” para determinar si la instancia es nueva o existente.</p>
+<dd><p>Envía una notificación por correo electrónico cuando una publicación cambia de estado o se modifica.
+No envía notificaciones al momento de crear la publicación.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -705,7 +711,7 @@ y, de ser así, envía un correo electrónico al autor de la publicación.</p>
 a aquellas que llevan más de 30 días publicadas y registra el cambio en el historial.</p>
 <p>Funcionamiento:
 - Se ejecuta en segundo plano, revisando publicaciones cuyo estado es «publicado» y con más de 30 días de antigüedad.
-- Cambia el estado de estas publicaciones a «inactivo» y crea un registro en el modelo <cite>Historial</cite> con el usuario «Sistema» y la acción «inactivado».
+- Cambia el estado de estas publicaciones a «inactivo» y crea un registro en el modelo «Historial» con el usuario «Sistema» y la acción «inactivado».
 - La tarea se ejecuta diariamente a medianoche.</p>
 </dd></dl>
 
@@ -768,6 +774,27 @@ redirige a “mis_publicaciones” después de guardar.</p>
 </dd>
 <dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
 <dd class="field-odd"><p>HttpResponse</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="crearpublicaciones.views.crear_publicacion_ajax">
+<span class="sig-prename descclassname"><span class="pre">crearpublicaciones.views.</span></span><span class="sig-name descname"><span class="pre">crear_publicacion_ajax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#crearpublicaciones.views.crear_publicacion_ajax" title="Link to this definition">¶</a></dt>
+<dd><p>Vista para crear una nueva publicación mediante una solicitud AJAX.</p>
+<p>Esta vista permite crear una nueva publicación en estado «borrador»
+asociada a una categoría específica. La solicitud debe incluir un
+JSON con el “categoria_id”. La publicación se crea asociada al usuario
+autenticado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> (<em>HttpRequest</em>) – La solicitud HTTP recibida.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>Respuesta en formato JSON con el ID de la publicación recién creada en caso de éxito o un mensaje de error en caso contrario.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JsonResponse</p>
 </dd>
 </dl>
 </dd></dl>
