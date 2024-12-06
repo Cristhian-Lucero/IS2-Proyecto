@@ -80,34 +80,54 @@
     </div>
 
     <script>
-        document.getElementById('publicacionForm').onsubmit = function(event) {
-            event.preventDefault();  // Evita el envío inmediato del formulario
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById('publicacionForm');
+            const submitButton = document.querySelector('.btn');
+            const message = document.getElementById('message');
 
-            var form = document.getElementById('publicacionForm');
-            var formData = new FormData(form);  // Crea un objeto FormData para enviar los datos
+            form.onsubmit = function (event) {
+                event.preventDefault(); // Detenemos el envío normal del formulario
 
-            // Simula el guardado y muestra el mensaje
-            var message = document.getElementById('message');
-            message.style.display = 'block';
-
-            // Realiza el POST manualmente
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Redirige a Mis Publicaciones después de que se haga el POST correctamente
-                    setTimeout(function() {
-                        window.location.href = "{% url 'mis_publicaciones' %}";
-                    }, 2000);
-                } else {
-                    // Maneja errores
-                    console.error("Error al guardar la publicación");
+                // Si el botón ya está deshabilitado, no hacemos nada
+                if (submitButton.disabled) {
+                    return;
                 }
-            })
-            .catch(error => console.error("Error de red", error));
-        };
+
+                // Deshabilitamos el botón y mostramos el mensaje de creando publicación
+                submitButton.disabled = true;
+                submitButton.textContent = "Creando publicación...";
+
+                const formData = new FormData(form);
+
+                // Realizamos la petición al servidor
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Muestra el mensaje de éxito
+                        message.style.display = 'block';
+
+                        // Redirigimos después de 2 segundos
+                        setTimeout(() => {
+                            window.location.href = "{% url 'mis_publicaciones' %}";
+                        }, 2000);
+                    } else {
+                        // Manejo de error del servidor
+                        alert("Error al guardar la publicación. Inténtalo nuevamente.");
+                        submitButton.disabled = false;
+                        submitButton.textContent = "Guardar Publicación";
+                    }
+                })
+                .catch(error => {
+                    // Manejo de error de red
+                    console.error("Error de red:", error);
+                    alert("Error de red. Inténtalo nuevamente.");
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Guardar Publicación";
+                });
+            };
+        });
     </script>
-    
 {% endblock %}
